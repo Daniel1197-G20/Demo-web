@@ -19,15 +19,15 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-tory-500 text-white hover:bg-tory-600 active:bg-tory-700 shadow-tory-sm hover:shadow-tory-md',
+      'bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900 shadow-brand-sm hover:shadow-brand-md',
     secondary:
-      'bg-tory-100 text-tory-800 hover:bg-tory-200 active:bg-tory-300 font-semibold',
+      'bg-cream-surface text-brand-700 border border-brand-300 hover:bg-brand-50 hover:border-brand-400 active:bg-brand-100 font-semibold',
     outline:
-      'border-2 border-tory-500 text-tory-500 hover:bg-tory-50 active:bg-tory-100',
+      'border-2 border-brand-700 text-brand-700 hover:bg-brand-50 active:bg-brand-100',
     ghost:
-      'text-charcoal-700 hover:bg-cream-surface hover:text-tory-500',
+      'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700',
     danger:
-      'bg-red-500 text-white hover:bg-red-600 active:bg-red-700',
+      'bg-error-500 text-white hover:bg-error-600 active:bg-error-700',
     gold:
       'bg-gold-500 text-charcoal-900 font-semibold hover:bg-gold-400 active:bg-gold-600 shadow-sm',
     white:

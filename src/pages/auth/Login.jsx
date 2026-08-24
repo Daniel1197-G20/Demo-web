@@ -55,7 +55,7 @@ export default function Login() {
   };
 
   return (
-    <Card className="p-8 shadow-tory-md border-cream-border">
+    <Card className="p-8 shadow-brand-md border-cream-border">
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
           Sign In to Your Account
@@ -88,10 +88,10 @@ export default function Login() {
 
         <div className="flex items-center justify-between text-xs">
           <label className="flex items-center gap-1.5 text-charcoal-700 cursor-pointer">
-            <input type="checkbox" className="rounded border-cream-border text-tory-500 focus:ring-tory-400" />
+            <input type="checkbox" className="rounded border-cream-border text-brand-700 focus:ring-brand-500" />
             <span>Remember me</span>
           </label>
-          <Link to="/auth/forgot-password" className="font-semibold text-tory-600 hover:underline">
+          <Link to="/auth/forgot-password" className="font-semibold text-brand-700 hover:underline">
             Forgot Password?
           </Link>
         </div>
@@ -137,7 +137,7 @@ export default function Login() {
 
       <div className="text-center mt-6 text-xs text-charcoal-700">
         Don't have an account yet?{' '}
-        <Link to="/auth/register" className="font-bold text-tory-600 hover:underline">
+        <Link to="/auth/register" className="font-bold text-brand-700 hover:underline">
           Create Account &rarr;
         </Link>
       </div>

@@ -10,16 +10,18 @@ export default function Badge({
   ...props
 }) {
   const variants = {
-    primary: 'bg-tory-500 text-white',
-    secondary: 'bg-tory-100 text-tory-800 border border-tory-200',
-    success: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-    warning: 'bg-amber-50 text-amber-800 border border-amber-200',
-    error: 'bg-rose-50 text-rose-700 border border-rose-200',
-    info: 'bg-sky-50 text-sky-700 border border-sky-200',
+    primary: 'bg-brand-700 text-white',
+    secondary: 'bg-brand-100 text-brand-900 border border-brand-200',
+    rose: 'bg-rose-100 text-rose-600 border border-rose-200',
+    success: 'bg-success-50 text-success-500 border border-success-100',
+    warning: 'bg-warning-50 text-warning-500 border border-warning-100',
+    error: 'bg-error-50 text-error-500 border border-error-100',
+    info: 'bg-info-50 text-info-500 border border-info-100',
     gold: 'bg-gold-50 text-gold-600 border border-gold-400 font-semibold',
     neutral: 'bg-charcoal-100 text-charcoal-700 border border-charcoal-300',
     outline: 'bg-transparent text-charcoal-700 border border-charcoal-300',
-    'outline-pink': 'bg-transparent text-tory-500 border border-tory-300',
+    'outline-brand': 'bg-transparent text-brand-700 border border-brand-300',
+    'outline-pink': 'bg-transparent text-brand-700 border border-brand-300',
   };
 
   const sizes = {
@@ -30,15 +32,17 @@ export default function Badge({
 
   const dotColors = {
     primary: 'bg-white',
-    secondary: 'bg-tory-500',
-    success: 'bg-emerald-500',
-    warning: 'bg-amber-500',
-    error: 'bg-rose-500',
-    info: 'bg-sky-500',
+    secondary: 'bg-brand-700',
+    rose: 'bg-rose-500',
+    success: 'bg-success-500',
+    warning: 'bg-warning-500',
+    error: 'bg-error-500',
+    info: 'bg-info-500',
     gold: 'bg-gold-500',
     neutral: 'bg-charcoal-500',
     outline: 'bg-charcoal-500',
-    'outline-pink': 'bg-tory-500',
+    'outline-brand': 'bg-brand-700',
+    'outline-pink': 'bg-brand-700',
   };
 
   return (

@@ -19,17 +19,17 @@ export default function Alert({
   const Icon = icons[type] || Info;
 
   const styles = {
-    info: 'bg-sky-50 border-sky-200 text-sky-900',
-    success: 'bg-emerald-50 border-emerald-200 text-emerald-900',
-    warning: 'bg-amber-50 border-amber-200 text-amber-900',
-    error: 'bg-rose-50 border-rose-200 text-rose-900',
+    info: 'bg-info-50 border-info-100 text-charcoal-900',
+    success: 'bg-success-50 border-success-100 text-charcoal-900',
+    warning: 'bg-warning-50 border-warning-100 text-charcoal-900',
+    error: 'bg-error-50 border-error-100 text-charcoal-900',
   };
 
   const iconColors = {
-    info: 'text-sky-500',
-    success: 'text-emerald-500',
-    warning: 'text-amber-500',
-    error: 'text-rose-500',
+    info: 'text-info-500',
+    success: 'text-success-500',
+    warning: 'text-warning-500',
+    error: 'text-error-500',
   };
 
   return (

@@ -115,22 +115,22 @@ export default function Home() {
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-tory-50/70 via-cream-base to-cream-base pt-6 pb-12 sm:pt-12 sm:pb-20">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50/70 via-cream-base to-cream-base pt-6 pb-12 sm:pt-12 sm:pb-20">
         <PageContainer>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Copy */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tory-100/80 border border-tory-200 text-tory-700 text-xs font-bold shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-tory-500" />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-xs font-bold shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-brand-700" />
                 <span>Lagos’ Premier Luxury Bakery & Catering</span>
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 font-display leading-[1.1] tracking-tight">
                 Sweet treats crafted to make every moment{' '}
-                <span className="text-tory-500 relative">
+                <span className="text-brand-700 relative">
                   unforgettable.
                   <svg
-                    className="absolute -bottom-2 left-0 w-full h-3 text-tory-300 -z-10"
+                    className="absolute -bottom-2 left-0 w-full h-3 text-brand-300 -z-10"
                     viewBox="0 0 100 20"
                     preserveAspectRatio="none"
                   >
@@ -172,7 +172,7 @@ export default function Home() {
                   <span className="text-xs text-charcoal-500 font-medium">Events Catered</span>
                 </div>
                 <div>
-                  <span className="text-2xl sm:text-3xl font-extrabold text-tory-500 font-display block">
+                  <span className="text-2xl sm:text-3xl font-extrabold text-brand-700 font-display block">
                     4.9 ★
                   </span>
                   <span className="text-xs text-charcoal-500 font-medium">Customer Rating</span>
@@ -184,7 +184,7 @@ export default function Home() {
             <div className="lg:col-span-5 relative">
               <div className="relative mx-auto max-w-md lg:max-w-none">
                 {/* Main Hero Image */}
-                <div className="relative rounded-3xl overflow-hidden shadow-tory-lg border-4 border-white aspect-[4/5] bg-cream-surface">
+                <div className="relative rounded-3xl overflow-hidden shadow-brand-lg border-4 border-white aspect-[4/5] bg-cream-surface">
                   <img
                     src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=900&auto=format&fit=crop&q=80"
                     alt="Luxury Strawberry Bakery Cake"
@@ -192,7 +192,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <span className="px-3 py-1 rounded-full bg-tory-500 text-xs font-bold uppercase tracking-wider mb-2 inline-block">
+                    <span className="px-3 py-1 rounded-full bg-brand-700 text-xs font-bold uppercase tracking-wider mb-2 inline-block">
                       Chef Special
                     </span>
                     <h3 className="text-xl font-bold font-display leading-tight">
@@ -203,7 +203,7 @@ export default function Home() {
                 </div>
 
                 {/* Floating Micro Badge 1 */}
-                <div className="absolute -top-4 -left-4 bg-white p-3.5 rounded-2xl shadow-tory-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
+                <div className="absolute -top-4 -left-4 bg-white p-3.5 rounded-2xl shadow-brand-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
                   <div className="w-10 h-10 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center font-bold">
                     ★
                   </div>
@@ -214,8 +214,8 @@ export default function Home() {
                 </div>
 
                 {/* Floating Micro Badge 2 */}
-                <div className="absolute -bottom-4 -right-4 bg-white p-3.5 rounded-2xl shadow-tory-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
-                  <div className="w-10 h-10 rounded-xl bg-tory-100 text-tory-600 flex items-center justify-center">
+                <div className="absolute -bottom-4 -right-4 bg-white p-3.5 rounded-2xl shadow-brand-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
+                  <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
                     <Truck className="w-5 h-5" />
                   </div>
                   <div>
@@ -284,10 +284,10 @@ export default function Home() {
                   <CardContent className="p-5 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <h4 className="font-bold text-charcoal-900 text-lg font-display group-hover:text-tory-500 transition-colors">
+                        <h4 className="font-bold text-charcoal-900 text-lg font-display group-hover:text-brand-700 transition-colors">
                           {cat.title}
                         </h4>
-                        <span className="text-[11px] font-bold text-tory-600 bg-tory-50 px-2 py-0.5 rounded-full">
+                        <span className="text-[11px] font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
                           {cat.count}
                         </span>
                       </div>
@@ -295,7 +295,7 @@ export default function Home() {
                         {cat.desc}
                       </p>
                     </div>
-                    <div className="pt-4 flex items-center text-xs font-bold text-tory-500 group-hover:translate-x-1 transition-transform">
+                    <div className="pt-4 flex items-center text-xs font-bold text-brand-700 group-hover:translate-x-1 transition-transform">
                       <span>Browse category</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-1" />
                     </div>
@@ -310,10 +310,10 @@ export default function Home() {
       {/* 4. BESPOKE CATERING PROMO BLOCK */}
       <section>
         <PageContainer>
-          <div className="bg-gradient-to-br from-charcoal-900 to-charcoal-800 rounded-3xl p-8 sm:p-12 lg:p-16 text-white shadow-tory-lg relative overflow-hidden">
+          <div className="bg-gradient-to-br from-charcoal-900 to-charcoal-800 rounded-3xl p-8 sm:p-12 lg:p-16 text-white shadow-brand-lg relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div className="lg:col-span-7 space-y-6">
-                <span className="px-3.5 py-1.5 rounded-full bg-tory-500 text-white text-xs font-bold uppercase tracking-wider inline-block">
+                <span className="px-3.5 py-1.5 rounded-full bg-brand-700 text-white text-xs font-bold uppercase tracking-wider inline-block">
                   Luxury Event Services
                 </span>
 
@@ -327,19 +327,19 @@ export default function Home() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-stone-200">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-tory-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-brand-400 shrink-0" />
                     <span>Custom Flavors & Dietary Menus</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-tory-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-brand-400 shrink-0" />
                     <span>On-Site Presentation & Styling</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-tory-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-brand-400 shrink-0" />
                     <span>Dedicated Event Coordinator</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-tory-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-brand-400 shrink-0" />
                     <span>Tasting Consultations Available</span>
                   </div>
                 </div>
@@ -378,7 +378,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="p-6 text-center flex flex-col items-center">
-              <div className="w-14 h-14 rounded-2xl bg-tory-100 text-tory-600 flex items-center justify-center mb-4">
+              <div className="w-14 h-14 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center mb-4">
                 <Award className="w-7 h-7" />
               </div>
               <h4 className="font-bold text-charcoal-900 text-lg font-display mb-2">
@@ -421,7 +421,7 @@ export default function Home() {
         <PageContainer>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-cream-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-tory-500 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-brand-700 text-white flex items-center justify-center">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>

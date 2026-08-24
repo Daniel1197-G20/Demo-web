@@ -33,7 +33,7 @@ export default function Contact() {
 
             <div className="space-y-3.5 text-xs sm:text-sm text-charcoal-700">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-tory-500 shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Kitchen Location</span>
                   <span>{BRAND.address}</span>
@@ -41,7 +41,7 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-tory-500 shrink-0 mt-0.5" />
+                <Phone className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Phone Line</span>
                   <span>{BRAND.phone}</span>
@@ -49,7 +49,7 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-tory-500 shrink-0 mt-0.5" />
+                <Mail className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Email Inquiries</span>
                   <span>{BRAND.email}</span>
@@ -57,7 +57,7 @@ export default function Contact() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Clock className="w-5 h-5 text-tory-500 shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Baking & Delivery Hours</span>
                   <span>{BRAND.openingHours}</span>

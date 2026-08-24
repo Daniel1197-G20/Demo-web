@@ -104,7 +104,7 @@ export default function Shop() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
                 selectedCategory === cat
-                  ? 'bg-tory-500 text-white shadow-tory-sm'
+                  ? 'bg-brand-700 text-white shadow-brand-sm'
                   : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
               }`}
             >

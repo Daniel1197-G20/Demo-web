@@ -29,7 +29,7 @@ export default function Input({
           className="text-xs font-semibold text-charcoal-700 flex items-center gap-1"
         >
           {label}
-          {required && <span className="text-tory-500 font-bold">*</span>}
+          {required && <span className="text-brand-700 font-bold">*</span>}
         </label>
       )}
 
@@ -54,8 +54,8 @@ export default function Input({
             LeadingIcon && 'pl-10',
             TrailingIcon && 'pr-10',
             error
-              ? 'border-red-400 focus-visible:ring-red-400 bg-red-50/20'
-              : 'border-cream-border hover:border-charcoal-300 focus:border-tory-500 bg-cream-base',
+              ? 'border-error-500 focus-visible:ring-error-500 bg-error-50/20'
+              : 'border-cream-border hover:border-charcoal-300 focus:border-brand-700 bg-cream-base',
             disabled && 'opacity-60 cursor-not-allowed bg-charcoal-100',
             inputClassName
           )}
@@ -70,7 +70,7 @@ export default function Input({
       </div>
 
       {error ? (
-        <p className="text-xs text-red-500 font-medium animate-fadeIn">{error}</p>
+        <p className="text-xs text-error-500 font-medium animate-fadeIn">{error}</p>
       ) : helperText ? (
         <p className="text-xs text-charcoal-500">{helperText}</p>
       ) : null}

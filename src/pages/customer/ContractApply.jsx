@@ -41,7 +41,7 @@ export default function ContractApply() {
       <div className="mb-6">
         <Link
           to={`/contracts/${slug}`}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-tory-500 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-brand-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Role Details</span>
@@ -104,10 +104,10 @@ export default function ContractApply() {
           {/* File Upload Zone */}
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-charcoal-700 block">
-              Curriculum Vitae / Resume (PDF or DOCX) <span className="text-tory-500">*</span>
+              Curriculum Vitae / Resume (PDF or DOCX) <span className="text-brand-700">*</span>
             </label>
-            <div className="border-2 border-dashed border-tory-200 hover:border-tory-500 rounded-2xl p-6 text-center bg-tory-50/30 transition-colors cursor-pointer flex flex-col items-center justify-center">
-              <Upload className="w-8 h-8 text-tory-500 mb-2" />
+            <div className="border-2 border-dashed border-brand-200 hover:border-brand-700 rounded-2xl p-6 text-center bg-brand-50/30 transition-colors cursor-pointer flex flex-col items-center justify-center">
+              <Upload className="w-8 h-8 text-brand-700 mb-2" />
               <span className="text-sm font-semibold text-charcoal-900">
                 {formData.fileName || 'Click to select or drag and drop your CV file'}
               </span>

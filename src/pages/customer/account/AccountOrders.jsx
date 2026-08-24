@@ -63,7 +63,7 @@ export default function AccountOrders() {
               <p className="text-xs text-charcoal-500">
                 Placed on {formatDate(order.date)} • {order.itemsCount} {order.itemsCount === 1 ? 'item' : 'items'}
               </p>
-              <div className="text-sm font-bold text-tory-600 pt-1">
+              <div className="text-sm font-bold text-brand-700 pt-1">
                 {formatCurrency(order.total)}
               </div>
             </div>

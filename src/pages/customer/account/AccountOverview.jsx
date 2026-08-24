@@ -31,7 +31,7 @@ export default function AccountOverview() {
       {/* Quick Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card className="p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-tory-100 text-tory-600 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
             <ShoppingBag className="w-6 h-6" />
           </div>
           <div>
@@ -67,7 +67,7 @@ export default function AccountOverview() {
           <h3 className="text-base font-bold font-display text-charcoal-900">
             Recent Orders
           </h3>
-          <Link to="/account/orders" className="text-xs font-bold text-tory-500 hover:underline flex items-center gap-1">
+          <Link to="/account/orders" className="text-xs font-bold text-brand-700 hover:underline flex items-center gap-1">
             <span>View All</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>

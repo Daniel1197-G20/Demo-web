@@ -13,24 +13,24 @@ export default function ToastItem({ toast, onDismiss }) {
   const Icon = icons[toast.type] || Info;
 
   const typeStyles = {
-    success: 'bg-white border-emerald-200 text-charcoal-900 shadow-tory-md',
-    error: 'bg-white border-rose-200 text-charcoal-900 shadow-tory-md',
-    warning: 'bg-white border-amber-200 text-charcoal-900 shadow-tory-md',
-    info: 'bg-white border-sky-200 text-charcoal-900 shadow-tory-md',
+    success: 'bg-white border-success-100 text-charcoal-900 shadow-brand-md',
+    error: 'bg-white border-error-100 text-charcoal-900 shadow-brand-md',
+    warning: 'bg-white border-warning-100 text-charcoal-900 shadow-brand-md',
+    info: 'bg-white border-info-100 text-charcoal-900 shadow-brand-md',
   };
 
   const iconColors = {
-    success: 'text-emerald-500',
-    error: 'text-rose-500',
-    warning: 'text-amber-500',
-    info: 'text-tory-500',
+    success: 'text-success-500',
+    error: 'text-error-500',
+    warning: 'text-warning-500',
+    info: 'text-info-500',
   };
 
   return (
     <div
       role="alert"
       className={cn(
-        'w-full max-w-sm p-4 rounded-xl border flex items-start gap-3 transition-all duration-300 pointer-events-auto shadow-tory-md',
+        'w-full max-w-sm p-4 rounded-xl border flex items-start gap-3 transition-all duration-300 pointer-events-auto shadow-brand-md',
         typeStyles[toast.type]
       )}
     >

@@ -50,12 +50,12 @@ export default function AdminSidebar({ isOpen, onClose }) {
         {/* Sidebar Header */}
         <div className="h-18 px-6 border-b border-cream-border flex items-center justify-between">
           <Link to="/admin" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-tory-500 flex items-center justify-center text-white shadow-sm">
+            <div className="w-8 h-8 rounded-xl bg-brand-700 flex items-center justify-center text-white shadow-sm">
               <Heart className="w-4 h-4 fill-current" />
             </div>
             <div>
               <span className="font-display font-bold text-lg text-charcoal-900 block leading-tight">
-                Tory's <span className="text-tory-500">Admin</span>
+                Tory's <span className="text-brand-700">Admin</span>
               </span>
               <span className="text-[10px] text-charcoal-500 font-semibold uppercase tracking-wider">
                 Management Portal
@@ -90,8 +90,8 @@ export default function AdminSidebar({ isOpen, onClose }) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? 'bg-tory-500 text-white shadow-tory-sm'
-                      : 'text-charcoal-700 hover:bg-cream-surface hover:text-tory-600'
+                      ? 'bg-brand-700 text-white shadow-brand-sm'
+                      : 'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700'
                   }`
                 }
               >
@@ -106,7 +106,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
         <div className="p-4 border-t border-cream-border bg-cream-surface/50">
           <Link
             to="/"
-            className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-xl border border-cream-border text-xs font-semibold text-charcoal-700 hover:bg-white hover:text-tory-600 transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-xl border border-cream-border text-xs font-semibold text-charcoal-700 hover:bg-white hover:text-brand-700 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Return to Store</span>

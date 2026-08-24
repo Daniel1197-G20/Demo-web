@@ -17,12 +17,12 @@ export default function OrderConfirmation() {
   return (
     <PageContainer size="sm">
       <div className="text-center space-y-6 py-6">
-        <div className="w-20 h-20 rounded-full bg-tory-100 text-tory-600 mx-auto flex items-center justify-center shadow-tory-sm">
+        <div className="w-20 h-20 rounded-full bg-brand-100 text-brand-700 mx-auto flex items-center justify-center shadow-brand-sm">
           <CheckCircle2 className="w-10 h-10" />
         </div>
 
         <div>
-          <span className="px-3.5 py-1 rounded-full bg-tory-50 border border-tory-200 text-tory-700 text-xs font-bold uppercase tracking-wider">
+          <span className="px-3.5 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold uppercase tracking-wider">
             Order Request Received
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-charcoal-900 font-display mt-3">
@@ -40,7 +40,7 @@ export default function OrderConfirmation() {
           </div>
           <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-charcoal-500">Next Step</span>
-            <span className="font-bold text-tory-600">Bakery Verification & Direct Contact</span>
+            <span className="font-bold text-brand-700">Bakery Verification & Direct Contact</span>
           </div>
           <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-charcoal-500">Fulfillment</span>

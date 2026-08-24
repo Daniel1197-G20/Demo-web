@@ -67,11 +67,11 @@ export default function Checkout() {
               onClick={() => setFulfillmentType('DELIVERY')}
               className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all ${
                 fulfillmentType === 'DELIVERY'
-                  ? 'border-tory-500 bg-tory-50/50 shadow-sm'
+                  ? 'border-brand-700 bg-brand-50/50 shadow-sm'
                   : 'border-cream-border hover:border-charcoal-300 bg-white'
               }`}
             >
-              <div className={`p-2 rounded-lg ${fulfillmentType === 'DELIVERY' ? 'bg-tory-500 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
+              <div className={`p-2 rounded-lg ${fulfillmentType === 'DELIVERY' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
                 <Truck className="w-5 h-5" />
               </div>
               <div>
@@ -85,11 +85,11 @@ export default function Checkout() {
               onClick={() => setFulfillmentType('PICKUP')}
               className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all ${
                 fulfillmentType === 'PICKUP'
-                  ? 'border-tory-500 bg-tory-50/50 shadow-sm'
+                  ? 'border-brand-700 bg-brand-50/50 shadow-sm'
                   : 'border-cream-border hover:border-charcoal-300 bg-white'
               }`}
             >
-              <div className={`p-2 rounded-lg ${fulfillmentType === 'PICKUP' ? 'bg-tory-500 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
+              <div className={`p-2 rounded-lg ${fulfillmentType === 'PICKUP' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
                 <Store className="w-5 h-5" />
               </div>
               <div>
@@ -200,12 +200,12 @@ export default function Checkout() {
             </div>
             <div className="flex justify-between items-center text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border">
               <span>Estimated Total</span>
-              <span className="text-xl text-tory-600 font-display">{formatCurrency(effectiveTotal || 30000)}</span>
+              <span className="text-xl text-brand-700 font-display">{formatCurrency(effectiveTotal || 30000)}</span>
             </div>
           </div>
 
           <div className="flex items-start gap-2.5 text-xs text-charcoal-700 bg-white p-3.5 rounded-xl border border-cream-border">
-            <Info className="w-4 h-4 text-tory-500 shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-brand-700 shrink-0 mt-0.5" />
             <span>
               <strong>Direct Order Verification:</strong> No online payment is processed at this stage. Our team will review treat availability, contact you via WhatsApp or phone to confirm your schedule, and provide settlement arrangements.
             </span>

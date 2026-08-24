@@ -49,7 +49,7 @@ export default function Cart() {
                   {item.name}
                 </h4>
                 <p className="text-xs text-charcoal-500 mt-0.5">{item.category}</p>
-                <div className="text-sm font-bold text-tory-600 mt-1">
+                <div className="text-sm font-bold text-brand-700 mt-1">
                   {formatCurrency(item.price)} each
                 </div>
               </div>
@@ -81,7 +81,7 @@ export default function Cart() {
               <button
                 type="button"
                 onClick={() => removeItem(item.id)}
-                className="p-2 text-charcoal-500 hover:text-red-600 transition-colors"
+                className="p-2 text-charcoal-500 hover:text-error-500 transition-colors"
                 aria-label="Remove item"
               >
                 <Trash2 className="w-4 h-4" />
@@ -110,7 +110,7 @@ export default function Cart() {
 
             <div className="border-t border-cream-border pt-4 flex justify-between items-center text-base font-extrabold text-charcoal-900">
               <span>Estimated Total</span>
-              <span className="text-xl font-display text-tory-600">{formatCurrency(total)}</span>
+              <span className="text-xl font-display text-brand-700">{formatCurrency(total)}</span>
             </div>
 
             <Link to="/checkout" className="block pt-2">

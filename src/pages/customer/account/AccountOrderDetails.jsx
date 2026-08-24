@@ -14,7 +14,7 @@ export default function AccountOrderDetails() {
       <div>
         <Link
           to="/account/orders"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-tory-500 transition-colors mb-4"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-brand-700 transition-colors mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Orders</span>
@@ -63,7 +63,7 @@ export default function AccountOrderDetails() {
           </div>
           <div className="flex justify-between text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border">
             <span>Estimated Total</span>
-            <span className="text-tory-600 font-display">{formatCurrency(30000)}</span>
+            <span className="text-brand-700 font-display">{formatCurrency(30000)}</span>
           </div>
         </div>
       </Card>

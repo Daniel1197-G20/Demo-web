@@ -25,8 +25,8 @@ export default class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-cream-base flex items-center justify-center p-6 text-center">
-          <div className="max-w-md w-full bg-white p-8 rounded-2xl border border-cream-border shadow-tory-lg flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-rose-100 text-tory-600 flex items-center justify-center mb-4">
+          <div className="max-w-md w-full bg-white p-8 rounded-2xl border border-cream-border shadow-brand-lg flex flex-col items-center">
+            <div className="w-16 h-16 rounded-full bg-rose-100 text-brand-700 flex items-center justify-center mb-4">
               <AlertOctagon className="w-8 h-8" />
             </div>
 

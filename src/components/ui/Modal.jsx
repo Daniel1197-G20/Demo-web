@@ -54,7 +54,7 @@ export default function Modal({
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative w-full bg-white rounded-2xl shadow-tory-lg border border-cream-border z-10 overflow-hidden flex flex-col max-h-[90vh] my-auto animate-scaleUp',
+          'relative w-full bg-white rounded-2xl shadow-brand-lg border border-cream-border z-10 overflow-hidden flex flex-col max-h-[90vh] my-auto animate-scaleUp',
           sizes[size],
           className
         )}

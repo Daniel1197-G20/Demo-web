@@ -79,8 +79,8 @@ export default function Contracts() {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 text-xs text-charcoal-500 pt-2">
-                <div className="flex items-center gap-1.5 font-medium text-tory-600">
-                  <DollarSign className="w-4 h-4 text-tory-500" />
+                <div className="flex items-center gap-1.5 font-medium text-brand-700">
+                  <DollarSign className="w-4 h-4 text-brand-700" />
                   <span>{contract.compensation}</span>
                 </div>
                 <div className="flex items-center gap-1.5">

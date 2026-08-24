@@ -42,7 +42,7 @@ export default function Dropdown({
       {isOpen && (
         <div
           className={cn(
-            'absolute z-40 mt-2 w-56 rounded-xl bg-white border border-cream-border shadow-tory-md py-1.5 focus:outline-none transition-all duration-200',
+            'absolute z-40 mt-2 w-56 rounded-xl bg-white border border-cream-border shadow-brand-md py-1.5 focus:outline-none transition-all duration-200',
             alignments[align],
             menuClassName
           )}
@@ -65,8 +65,8 @@ export default function Dropdown({
                     className={cn(
                       'w-full px-4 py-2.5 text-xs sm:text-sm text-left flex items-center gap-2.5 transition-colors',
                       item.danger
-                        ? 'text-red-600 hover:bg-red-50'
-                        : 'text-charcoal-700 hover:bg-cream-surface hover:text-tory-600',
+                        ? 'text-error-500 hover:bg-error-50'
+                        : 'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700',
                       item.disabled && 'opacity-50 cursor-not-allowed'
                     )}
                   >

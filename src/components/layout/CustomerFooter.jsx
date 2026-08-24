@@ -13,7 +13,7 @@ export default function CustomerFooter() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
             <div className="max-w-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-tory-600 bg-tory-100 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-100 px-3 py-1 rounded-full">
                 Sweet Perks Club
               </span>
               <h3 className="text-2xl sm:text-3xl font-bold text-charcoal-900 font-display mt-2">
@@ -52,11 +52,11 @@ export default function CustomerFooter() {
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-tory-500 flex items-center justify-center text-white shadow-tory-sm">
+              <div className="w-9 h-9 rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm">
                 <Heart className="w-4 h-4 fill-current" />
               </div>
               <span className="font-display font-extrabold text-2xl text-charcoal-900">
-                Tory's <span className="text-tory-500">Treats</span>
+                Tory's <span className="text-brand-700">Treats</span>
               </span>
             </Link>
 
@@ -66,19 +66,19 @@ export default function CustomerFooter() {
 
             <div className="space-y-2 pt-2 text-xs text-charcoal-700">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-tory-500 shrink-0" />
+                <MapPin className="w-4 h-4 text-brand-700 shrink-0" />
                 <span>{BRAND.address}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-tory-500 shrink-0" />
+                <Phone className="w-4 h-4 text-brand-700 shrink-0" />
                 <span>{BRAND.phone}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-tory-500 shrink-0" />
+                <Mail className="w-4 h-4 text-brand-700 shrink-0" />
                 <span>{BRAND.email}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-tory-500 shrink-0" />
+                <Clock className="w-4 h-4 text-brand-700 shrink-0" />
                 <span>{BRAND.openingHours}</span>
               </div>
             </div>
@@ -91,27 +91,27 @@ export default function CustomerFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
               <li>
-                <Link to="/shop" className="hover:text-tory-500 transition-colors">
+                <Link to="/shop" className="hover:text-brand-700 transition-colors">
                   Artisanal Cakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-tory-500 transition-colors">
+                <Link to="/shop" className="hover:text-brand-700 transition-colors">
                   Gourmet Cupcakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-tory-500 transition-colors">
+                <Link to="/shop" className="hover:text-brand-700 transition-colors">
                   Fresh Pastries
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-tory-500 transition-colors">
+                <Link to="/shop" className="hover:text-brand-700 transition-colors">
                   Dessert Cups & Parfaits
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-tory-500 transition-colors">
+                <Link to="/shop" className="hover:text-brand-700 transition-colors">
                   Celebration Platters
                 </Link>
               </li>
@@ -125,22 +125,22 @@ export default function CustomerFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
               <li>
-                <Link to="/catering" className="hover:text-tory-500 transition-colors font-medium text-tory-600">
+                <Link to="/catering" className="hover:text-brand-700 transition-colors font-medium text-brand-700">
                   ★ Event & Wedding Catering
                 </Link>
               </li>
               <li>
-                <Link to="/contracts" className="hover:text-tory-500 transition-colors">
+                <Link to="/contracts" className="hover:text-brand-700 transition-colors">
                   Contract Staff Roles
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-tory-500 transition-colors">
+                <Link to="/contact" className="hover:text-brand-700 transition-colors">
                   Custom Orders & Tastings
                 </Link>
               </li>
               <li>
-                <Link to="/account" className="hover:text-tory-500 transition-colors">
+                <Link to="/account" className="hover:text-brand-700 transition-colors">
                   Track Your Order
                 </Link>
               </li>
@@ -154,17 +154,17 @@ export default function CustomerFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
               <li>
-                <Link to="/contact" className="hover:text-tory-500 transition-colors">
+                <Link to="/contact" className="hover:text-brand-700 transition-colors">
                   Contact & Location
                 </Link>
               </li>
               <li>
-                <Link to="/auth/login" className="hover:text-tory-500 transition-colors">
+                <Link to="/auth/login" className="hover:text-brand-700 transition-colors">
                   Account Sign In
                 </Link>
               </li>
               <li>
-                <Link to="/admin" className="hover:text-tory-500 transition-colors text-charcoal-500">
+                <Link to="/admin" className="hover:text-brand-700 transition-colors text-charcoal-500">
                   Staff / Admin Login
                 </Link>
               </li>

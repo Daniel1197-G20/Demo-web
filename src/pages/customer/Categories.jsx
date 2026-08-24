@@ -58,10 +58,10 @@ export default function Categories() {
               </div>
               <CardContent className="md:w-1/2 p-6 flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-bold text-tory-600 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-brand-700 uppercase tracking-wider">
                     {cat.itemsCount} Bakes
                   </span>
-                  <h3 className="text-xl font-bold text-charcoal-900 font-display mt-1 mb-2 group-hover:text-tory-500 transition-colors">
+                  <h3 className="text-xl font-bold text-charcoal-900 font-display mt-1 mb-2 group-hover:text-brand-700 transition-colors">
                     {cat.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-charcoal-500 leading-relaxed">
@@ -69,7 +69,7 @@ export default function Categories() {
                   </p>
                 </div>
 
-                <div className="pt-4 flex items-center text-xs font-bold text-tory-500 group-hover:translate-x-1 transition-transform">
+                <div className="pt-4 flex items-center text-xs font-bold text-brand-700 group-hover:translate-x-1 transition-transform">
                   <span>Explore items</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </div>

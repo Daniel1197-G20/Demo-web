@@ -12,7 +12,7 @@ export function Skeleton({ className = '', ...props }) {
 
 export function ProductCardSkeleton() {
   return (
-    <div className="bg-white rounded-xl border border-cream-border p-4 flex flex-col gap-3 shadow-tory-sm">
+    <div className="bg-white rounded-xl border border-cream-border p-4 flex flex-col gap-3 shadow-brand-sm">
       <Skeleton className="w-full aspect-[4/3] rounded-lg" />
       <div className="flex justify-between items-center">
         <Skeleton className="w-20 h-4 rounded-full" />

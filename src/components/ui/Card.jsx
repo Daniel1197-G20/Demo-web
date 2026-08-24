@@ -9,10 +9,12 @@ export function Card({
   ...props
 }) {
   const variants = {
-    default: 'bg-white border border-cream-border shadow-tory-sm',
-    cream: 'bg-cream-surface border border-cream-border shadow-tory-sm',
+    default: 'bg-white border border-cream-border shadow-brand-sm',
+    cream: 'bg-cream-surface border border-cream-border shadow-brand-sm',
     flat: 'bg-white border border-cream-border',
-    pink: 'bg-tory-50 border border-tory-100 shadow-tory-sm',
+    brand: 'bg-brand-50 border border-brand-100 shadow-brand-sm',
+    rose: 'bg-rose-50 border border-rose-100 shadow-brand-sm',
+    pink: 'bg-brand-50 border border-brand-100 shadow-brand-sm',
     outlined: 'bg-transparent border-2 border-cream-border',
   };
 
@@ -21,7 +23,7 @@ export function Card({
       className={cn(
         'rounded-xl transition-all duration-300 overflow-hidden',
         variants[variant],
-        hover && 'hover:-translate-y-1 hover:shadow-tory-md cursor-pointer',
+        hover && 'hover:-translate-y-1 hover:shadow-brand-md cursor-pointer',
         className
       )}
       {...props}

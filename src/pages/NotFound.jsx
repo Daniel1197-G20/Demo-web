@@ -7,11 +7,11 @@ export default function NotFound() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center p-6 text-center">
       <div className="max-w-md w-full flex flex-col items-center">
-        <div className="w-20 h-20 rounded-full bg-tory-100 text-tory-600 flex items-center justify-center mb-6 shadow-tory-sm">
+        <div className="w-20 h-20 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center mb-6 shadow-brand-sm">
           <Cookie className="w-10 h-10" />
         </div>
 
-        <span className="text-sm font-bold text-tory-500 uppercase tracking-widest">
+        <span className="text-sm font-bold text-brand-700 uppercase tracking-widest">
           404 Page Not Found
         </span>
 

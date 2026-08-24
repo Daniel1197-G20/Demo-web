@@ -33,7 +33,7 @@ export default function ProductCard({
   return (
     <div
       className={cn(
-        'group bg-white rounded-xl border border-cream-border overflow-hidden transition-all duration-300 hover:shadow-tory-md hover:-translate-y-1 flex flex-col',
+        'group bg-white rounded-xl border border-cream-border overflow-hidden transition-all duration-300 hover:shadow-brand-md hover:-translate-y-1 flex flex-col',
         className
       )}
     >
@@ -75,7 +75,7 @@ export default function ProductCard({
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
         <div>
           <Link to={`/shop/${slug}`}>
-            <h4 className="font-bold text-charcoal-900 text-base line-clamp-1 group-hover:text-tory-500 transition-colors font-display">
+            <h4 className="font-bold text-charcoal-900 text-base line-clamp-1 group-hover:text-brand-700 transition-colors font-display">
               {name}
             </h4>
           </Link>
@@ -90,7 +90,7 @@ export default function ProductCard({
         <div className="flex items-center justify-between pt-2 border-t border-cream-border/60 mt-auto">
           <div>
             <span className="text-xs text-charcoal-500 block leading-tight">Price</span>
-            <span className="text-base sm:text-lg font-bold text-tory-600 font-display">
+            <span className="text-base sm:text-lg font-bold text-brand-700 font-display">
               {formatCurrency(price)}
             </span>
           </div>

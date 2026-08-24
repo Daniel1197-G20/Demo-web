@@ -30,7 +30,7 @@ export default function AccountLayout() {
         <div className="w-full md:w-64 shrink-0 space-y-4">
           <Card className="p-5">
             <div className="flex items-center gap-3.5 pb-4 border-b border-cream-border">
-              <div className="w-12 h-12 rounded-full bg-tory-500 text-white font-bold text-lg flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-brand-700 text-white font-bold text-lg flex items-center justify-center shadow-sm">
                 {profile?.full_name?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
@@ -52,8 +52,8 @@ export default function AccountLayout() {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                         isActive
-                          ? 'bg-tory-50 text-tory-600 font-bold'
-                          : 'text-charcoal-700 hover:bg-cream-surface hover:text-tory-500'
+                          ? 'bg-brand-50 text-brand-700 font-bold'
+                          : 'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700'
                       }`
                     }
                   >
@@ -66,7 +66,7 @@ export default function AccountLayout() {
               <button
                 type="button"
                 onClick={signOut}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 transition-colors text-left mt-2"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-error-500 hover:bg-error-50 transition-colors text-left mt-2"
               >
                 <LogOut className="w-4 h-4 shrink-0" />
                 <span>Sign Out</span>

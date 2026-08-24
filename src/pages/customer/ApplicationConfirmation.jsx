@@ -9,7 +9,7 @@ export default function ApplicationConfirmation() {
   return (
     <PageContainer size="sm">
       <div className="text-center space-y-6 py-8">
-        <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center shadow-tory-sm">
+        <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center shadow-brand-sm">
           <CheckCircle2 className="w-10 h-10" />
         </div>
 
@@ -28,7 +28,7 @@ export default function ApplicationConfirmation() {
         <Card className="p-6 text-left space-y-3 bg-cream-surface/60 max-w-md mx-auto">
           <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-charcoal-500">Review Status</span>
-            <span className="font-bold text-amber-600">Under Review</span>
+            <span className="font-bold text-warning-500">Under Review</span>
           </div>
           <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-charcoal-500">Contact Method</span>

@@ -19,7 +19,7 @@ export default function EmptyState({
         className
       )}
     >
-      <div className="w-16 h-16 rounded-full bg-tory-100 flex items-center justify-center text-tory-600 mb-4 shadow-sm relative">
+      <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 mb-4 shadow-sm relative">
         <Icon className="w-8 h-8" />
         <Sparkles className="w-4 h-4 text-gold-500 absolute -top-1 -right-1" />
       </div>

@@ -38,7 +38,7 @@ export default function ContractDetails() {
       <div className="mb-6">
         <Link
           to="/contracts"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-tory-500 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-brand-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Open Opportunities</span>
@@ -60,8 +60,8 @@ export default function ContractDetails() {
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-charcoal-700 pt-1">
-            <div className="flex items-center gap-1 font-bold text-tory-600">
-              <DollarSign className="w-4 h-4 text-tory-500" />
+            <div className="flex items-center gap-1 font-bold text-brand-700">
+              <DollarSign className="w-4 h-4 text-brand-700" />
               <span>{contract.compensation}</span>
             </div>
             <div className="flex items-center gap-1">
@@ -93,7 +93,7 @@ export default function ContractDetails() {
             <ul className="space-y-2 text-xs sm:text-sm text-charcoal-700">
               {contract.responsibilities.map((r, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-tory-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-700 shrink-0 mt-0.5" />
                   <span>{r}</span>
                 </li>
               ))}
@@ -107,7 +107,7 @@ export default function ContractDetails() {
             <ul className="space-y-2 text-xs sm:text-sm text-charcoal-700">
               {contract.requirements.map((r, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-tory-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-700 shrink-0 mt-0.5" />
                   <span>{r}</span>
                 </li>
               ))}

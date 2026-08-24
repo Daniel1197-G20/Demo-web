@@ -27,7 +27,7 @@ export default function Textarea({
           className="text-xs font-semibold text-charcoal-700 flex items-center gap-1"
         >
           {label}
-          {required && <span className="text-tory-500 font-bold">*</span>}
+          {required && <span className="text-brand-700 font-bold">*</span>}
         </label>
       )}
 
@@ -43,8 +43,8 @@ export default function Textarea({
         className={cn(
           'w-full p-3.5 bg-cream-base border rounded-md text-charcoal-900 text-sm placeholder:text-charcoal-500 transition-all duration-200 focus-ring resize-y',
           error
-            ? 'border-red-400 focus-visible:ring-red-400 bg-red-50/20'
-            : 'border-cream-border hover:border-charcoal-300 focus:border-tory-500 bg-cream-base',
+            ? 'border-error-500 focus-visible:ring-error-500 bg-error-50/20'
+            : 'border-cream-border hover:border-charcoal-300 focus:border-brand-700 bg-cream-base',
           disabled && 'opacity-60 cursor-not-allowed bg-charcoal-100',
           textareaClassName
         )}
@@ -52,7 +52,7 @@ export default function Textarea({
       />
 
       {error ? (
-        <p className="text-xs text-red-500 font-medium">{error}</p>
+        <p className="text-xs text-error-500 font-medium">{error}</p>
       ) : helperText ? (
         <p className="text-xs text-charcoal-500">{helperText}</p>
       ) : null}

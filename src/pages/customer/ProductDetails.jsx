@@ -42,7 +42,7 @@ export default function ProductDetails() {
       <div className="mb-6">
         <Link
           to="/shop"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-tory-500 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-brand-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Treats Menu</span>
@@ -52,7 +52,7 @@ export default function ProductDetails() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
         {/* Left Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-cream-surface border border-cream-border shadow-tory-md">
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-cream-surface border border-cream-border shadow-brand-md">
             <img
               src={product.images[0]}
               alt={product.name}
@@ -73,7 +73,7 @@ export default function ProductDetails() {
               {product.name}
             </h1>
 
-            <div className="text-2xl sm:text-3xl font-extrabold text-tory-600 font-display mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-brand-700 font-display mt-3">
               {formatCurrency(product.price)}
             </div>
           </div>

@@ -4,7 +4,24 @@
 
 @layer base {
   :root {
-    --color-tory-pink-500: #E82C7C;
+    --brand-primary: #6B3A32;
+    --brand-primary-dark: #542D28;
+    --brand-accent: #B66A5D;
+
+    --cream-base: #FFFDF9;
+    --cream-surface: #FAF6EE;
+    --cream-soft: #F5EEE3;
+    --cream-border: #E8DDD0;
+    --cream-dark: #E2D2C0;
+
+    --charcoal: #1C1917;
+
+    --gold: #E9A83A;
+
+    --color-success: #3F6B4F;
+    --color-warning: #A66A24;
+    --color-error: #9B3D36;
+    --color-info: #536B78;
   }
 
   html {
@@ -28,7 +45,7 @@
 @layer utilities {
   /* Custom smooth focus ring */
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-tory-500 focus-visible:ring-offset-2;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2;
   }
 
   /* Text balance for headlines */
@@ -45,10 +62,10 @@
     background: #FAF6EE;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #FDCEDC;
+    background: #E9D0CB;
     border-radius: 9999px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #FB9BB8;
+    background: #D6ADA5;
   }
 }

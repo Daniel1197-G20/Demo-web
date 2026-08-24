@@ -30,7 +30,7 @@ export default function CustomerNavbar() {
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
       {/* Top micro-announcement banner */}
-      <div className="bg-tory-500 text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
+      <div className="bg-brand-700 text-white text-[11px] sm:text-xs py-1.5 px-4 text-center font-medium flex items-center justify-center gap-2">
         <Sparkles className="w-3.5 h-3.5" />
         <span>Freshly baked daily in Victoria Island, Lagos! Same-day delivery on selected treats.</span>
         <span className="hidden md:inline font-bold underline ml-1 cursor-pointer">
@@ -42,12 +42,12 @@ export default function CustomerNavbar() {
         <div className="flex items-center justify-between h-18 sm:h-20">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-2xl bg-tory-500 flex items-center justify-center text-white shadow-tory-sm group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-5 h-5 fill-current" />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-extrabold text-xl sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
-                Tory's <span className="text-tory-500">Treats</span>
+                Tory's <span className="text-brand-700">Treats</span>
               </span>
               <span className="text-[10px] text-charcoal-500 tracking-wider font-semibold uppercase hidden sm:block">
                 Artisanal Bakery & Catering
@@ -64,8 +64,8 @@ export default function CustomerNavbar() {
                 className={({ isActive }) =>
                   `px-3.5 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors ${
                     isActive
-                      ? 'bg-tory-50 text-tory-600 font-bold'
-                      : 'text-charcoal-700 hover:text-tory-500 hover:bg-cream-surface'
+                      ? 'bg-brand-50 text-brand-700 font-bold'
+                      : 'text-charcoal-700 hover:text-brand-700 hover:bg-cream-surface'
                   }`
                 }
               >
@@ -82,9 +82,9 @@ export default function CustomerNavbar() {
                 type="button"
                 onClick={toggleRole}
                 title="Click to toggle between Customer and Admin role for UI verification"
-                className="hidden sm:flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-tory-300"
+                className="hidden sm:flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-brand-300"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-tory-500" />
+                <ShieldCheck className="w-3.5 h-3.5 text-brand-700" />
                 <span>Role: {profile?.role || 'CUSTOMER'}</span>
               </button>
             )}
@@ -94,12 +94,12 @@ export default function CustomerNavbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative text-charcoal-700 hover:text-tory-500 hover:bg-tory-50"
+                className="relative text-charcoal-700 hover:text-brand-700 hover:bg-brand-50"
                 aria-label="View Shopping Cart"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-tory-500 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm animate-scaleUp">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm animate-scaleUp">
                     {itemCount}
                   </span>
                 )}
@@ -111,8 +111,8 @@ export default function CustomerNavbar() {
               <Dropdown
                 align="right"
                 trigger={
-                  <div className="flex items-center gap-1.5 pl-2 pr-3 py-1.5 rounded-full border border-cream-border hover:border-tory-300 bg-cream-surface/50 transition-colors">
-                    <div className="w-7 h-7 rounded-full bg-tory-100 text-tory-700 font-bold text-xs flex items-center justify-center">
+                  <div className="flex items-center gap-1.5 pl-2 pr-3 py-1.5 rounded-full border border-cream-border hover:border-brand-300 bg-cream-surface/50 transition-colors">
+                    <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-800 font-bold text-xs flex items-center justify-center">
                       {profile?.full_name?.charAt(0) || 'U'}
                     </div>
                     <span className="text-xs font-semibold text-charcoal-900 hidden md:inline max-w-[100px] truncate">
@@ -148,7 +148,7 @@ export default function CustomerNavbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-tory-500"
+              className="lg:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -165,7 +165,7 @@ export default function CustomerNavbar() {
               key={link.href}
               to={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:bg-tory-50 hover:text-tory-600 transition-colors"
+              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-charcoal-700 hover:bg-brand-50 hover:text-brand-700 transition-colors"
             >
               {link.name}
             </Link>

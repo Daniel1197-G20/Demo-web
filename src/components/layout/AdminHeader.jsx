@@ -34,7 +34,7 @@ export default function AdminHeader({ onOpenSidebar }) {
         <button
           type="button"
           onClick={toggleRole}
-          className="text-xs font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-tory-300"
+          className="text-xs font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-brand-300"
           title="Toggle role"
         >
           Role: {profile?.role || 'ADMIN'}
@@ -47,15 +47,15 @@ export default function AdminHeader({ onOpenSidebar }) {
           aria-label="Notifications"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-tory-500 rounded-full" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-700 rounded-full" />
         </button>
 
         {/* Admin Profile Dropdown */}
         <Dropdown
           align="right"
           trigger={
-            <div className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full border border-cream-border hover:border-tory-300 bg-cream-surface/40 transition-colors">
-              <div className="w-7 h-7 rounded-full bg-tory-500 text-white font-bold text-xs flex items-center justify-center">
+            <div className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full border border-cream-border hover:border-brand-300 bg-cream-surface/40 transition-colors">
+              <div className="w-7 h-7 rounded-full bg-brand-700 text-white font-bold text-xs flex items-center justify-center">
                 {profile?.full_name?.charAt(0) || 'A'}
               </div>
               <span className="text-xs font-bold text-charcoal-900 hidden md:inline">

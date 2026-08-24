@@ -24,7 +24,7 @@ export default function SectionHeading({
       )}
     >
       {tag && (
-        <span className="inline-block px-3 py-1 mb-2.5 text-xs font-bold tracking-wider uppercase text-tory-600 bg-tory-100 rounded-full">
+        <span className="inline-block px-3 py-1 mb-2.5 text-xs font-bold tracking-wider uppercase text-brand-700 bg-brand-100 rounded-full">
           {tag}
         </span>
       )}
