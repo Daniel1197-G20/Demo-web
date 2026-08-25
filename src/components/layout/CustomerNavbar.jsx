@@ -13,6 +13,10 @@ import {
   ChevronDown,
   Phone,
   MessageCircle,
+  Sparkles,
+  Cake,
+  Layers,
+  ArrowRight,
 } from 'lucide-react';
 import { BRAND, NAV_LINKS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -61,13 +65,39 @@ export default function CustomerNavbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
+      {/* Top Boutique Announcement Bar (Desktop & Tablet) */}
+      <div className="hidden sm:block bg-brand-50/80 border-b border-cream-border/60 py-1 px-4 text-center text-[11px] text-charcoal-700 font-medium">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-700 animate-pulse" />
+            <span>Freshly baked daily in Victoria Island • Chilled dispatch across Lagos</span>
+          </div>
+          <div className="flex items-center gap-4 text-charcoal-600">
+            <a href={`tel:${BRAND.rawPhone}`} className="hover:text-brand-700 transition-colors flex items-center gap-1">
+              <Phone className="w-3 h-3 text-brand-700" />
+              <span>{BRAND.phone}</span>
+            </a>
+            <span className="text-cream-dark">|</span>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-emerald-700 text-emerald-700 font-semibold transition-colors flex items-center gap-1"
+            >
+              <MessageCircle className="w-3 h-3 fill-current" />
+              <span>WhatsApp Concierge</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0"
+            className="flex items-center gap-2 group shrink-0 focus-ring rounded-xl p-1"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
@@ -89,7 +119,7 @@ export default function CustomerNavbar() {
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
-                  `px-3 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors ${
+                  `px-3 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors focus-ring ${
                     isActive
                       ? 'bg-brand-50 text-brand-700 font-bold'
                       : 'text-charcoal-700 hover:text-brand-700 hover:bg-cream-surface'
@@ -148,7 +178,7 @@ export default function CustomerNavbar() {
               >
                 <ShoppingBag className="w-5 h-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm animate-in zoom-in-50 duration-150">
                     {itemCount}
                   </span>
                 )}
@@ -226,9 +256,9 @@ export default function CustomerNavbar() {
         </div>
       </div>
 
-      {/* Mobile Slide-in Drawer Navigation */}
+      {/* Mobile Slide-in Drawer Navigation Sheet */}
       {mobileMenuOpen && (
-        <div id="mobile-navigation-drawer" className="fixed inset-0 z-50 lg:hidden">
+        <div id="mobile-navigation-drawer" className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
           {/* Backdrop Overlay */}
           <div
             className="fixed inset-0 bg-charcoal-900/60 backdrop-blur-sm transition-opacity"
@@ -236,17 +266,17 @@ export default function CustomerNavbar() {
             aria-hidden="true"
           />
 
-          {/* Drawer Panel */}
-          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200">
+          {/* Full Height Drawer Panel */}
+          <div className="fixed inset-y-0 right-0 w-[88vw] max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
             {/* Drawer Header */}
             <div>
-              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/50">
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/70">
                 <Link
                   to="/"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-brand-700 flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-xl bg-brand-700 flex items-center justify-center text-white shadow-xs">
                     <Heart className="w-4 h-4 fill-current" />
                   </div>
                   <span className="font-display font-extrabold text-lg text-charcoal-900">
@@ -256,7 +286,7 @@ export default function CustomerNavbar() {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-xl text-charcoal-600 hover:text-charcoal-900 hover:bg-cream-surface transition-colors"
+                  className="p-2 rounded-xl text-charcoal-600 hover:text-charcoal-900 hover:bg-cream-surface transition-colors focus-ring"
                   aria-label="Close navigation menu"
                 >
                   <X className="w-5 h-5" />

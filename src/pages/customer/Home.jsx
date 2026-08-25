@@ -13,6 +13,8 @@ import {
   Clock,
   Heart,
   ChevronRight,
+  Star,
+  Quote,
 } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
@@ -24,6 +26,7 @@ import CategoryCard from '../../components/ui/CategoryCard';
 import BakeryHeroCollage from '../../components/ui/BakeryHeroCollage';
 import FeaturedSpotlight from '../../components/ui/FeaturedSpotlight';
 import { BRAND } from '../../lib/constants';
+import { MOCK_PRODUCTS } from '../../lib/productsData';
 import { useCart } from '../../hooks/useCart';
 import { useToast } from '../../hooks/useToast';
 
@@ -36,65 +39,11 @@ export default function Home() {
     toast.success(`Added ${product.name} to your basket!`, 'Fresh Treat Added');
   };
 
-  // Flagship Hero Product for Spotlight
-  const HERO_TREAT = {
-    id: 'treat-1',
-    slug: 'signature-strawberry-cloud-cake',
-    name: 'Signature Strawberry Cloud Cake',
-    price: 18500,
-    images: [
-      'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=900&auto=format&fit=crop&q=80',
-    ],
-    category: 'Artisanal Cakes',
-    description:
-      'Three airy sponge layers soaked in organic strawberry reduction, filled with whipped French mascarpone buttercream, and topped with mountain strawberries and 24k edible gold leaf.',
-    is_available: true,
-    is_featured: true,
-    min_order_quantity: 1,
-  };
+  // Flagship Hero Product from dataset
+  const HERO_TREAT = MOCK_PRODUCTS[0];
 
-  // Companion Spotlight Products
-  const COMPANION_TREATS = [
-    {
-      id: 'treat-2',
-      slug: 'red-velvet-gold-cupcakes-box-of-6',
-      name: 'Red Velvet Gold Cupcakes (Box of 6)',
-      price: 9500,
-      images: [
-        'https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=700&auto=format&fit=crop&q=80',
-      ],
-      category: 'Gourmet Cupcakes',
-      description: 'Moist cocoa-infused velvet sponge with Swiss cream cheese frosting and gold leaf.',
-      is_available: true,
-      is_featured: true,
-    },
-    {
-      id: 'treat-3',
-      slug: 'pistachio-butter-croissants-box-of-4',
-      name: 'Pistachio Butter Croissants (4 pcs)',
-      price: 8000,
-      images: [
-        'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=700&auto=format&fit=crop&q=80',
-      ],
-      category: 'Fresh Pastries',
-      description: '72-hour laminated French butter pastry filled with Sicilian roasted pistachio praline.',
-      is_available: true,
-      is_featured: true,
-    },
-    {
-      id: 'treat-4',
-      slug: 'mango-passionfruit-parfait-cups',
-      name: 'Mango & Passionfruit Parfait Cups (6 pcs)',
-      price: 12000,
-      images: [
-        'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=700&auto=format&fit=crop&q=80',
-      ],
-      category: 'Dessert Cups',
-      description: 'Layered Alfonso mango coulis, vanilla bean mousse, and buttery almond crumble.',
-      is_available: true,
-      is_featured: false,
-    },
-  ];
+  // Companion Spotlight Products from dataset
+  const COMPANION_TREATS = [MOCK_PRODUCTS[4], MOCK_PRODUCTS[7], MOCK_PRODUCTS[10]];
 
   // Category Collections
   const CATEGORIES = [
@@ -511,7 +460,94 @@ export default function Home() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          7. FINAL CONVERSION CTA (Warm, Focused Invitation)
+          7. CLIENT PRAISE & CELEBRATION STORIES (Editorial Social Proof)
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-cream-base">
+        <PageContainer>
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
+              Client Praises &amp; Stories
+            </span>
+            <h2 className="mt-1.5 font-display text-2xl sm:text-4xl font-extrabold text-charcoal-900">
+              Loved by Lagos’ Grandest Celebrations
+            </h2>
+            <p className="mt-2 text-xs sm:text-base text-charcoal-600">
+              From intimate Ikoyi dinner parties to high-profile wedding receptions and corporate galas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="rounded-3xl border border-cream-border bg-white p-6 sm:p-8 flex flex-col justify-between shadow-brand-sm hover:shadow-brand-md transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1 text-gold-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+                <p className="font-serif italic text-xs sm:text-sm text-charcoal-800 leading-relaxed">
+                  “The 4-tier strawberry cloud centerpiece stopped the room at our Civic Centre wedding. Guests are still asking who baked our cake months later!”
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-cream-border/60 flex items-center justify-between text-xs">
+                <div>
+                  <h4 className="font-display font-bold text-charcoal-900">Amina &amp; Tunde B.</h4>
+                  <span className="text-[11px] text-charcoal-500">Wedding Reception • Ikoyi</span>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-100">
+                  Verified Order
+                </span>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-cream-border bg-white p-6 sm:p-8 flex flex-col justify-between shadow-brand-sm hover:shadow-brand-md transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1 text-gold-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+                <p className="font-serif italic text-xs sm:text-sm text-charcoal-800 leading-relaxed">
+                  “Tory’s Treats handles our executive boardroom pastry platters and VIP product activations in VI. Impeccable packaging and unmatched French butter quality.”
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-cream-border/60 flex items-center justify-between text-xs">
+                <div>
+                  <h4 className="font-display font-bold text-charcoal-900">Ngozi O.</h4>
+                  <span className="text-[11px] text-charcoal-500">Brand Director • Victoria Island</span>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-100">
+                  Corporate Client
+                </span>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-cream-border bg-white p-6 sm:p-8 flex flex-col justify-between shadow-brand-sm hover:shadow-brand-md transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center gap-1 text-gold-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+                <p className="font-serif italic text-xs sm:text-sm text-charcoal-800 leading-relaxed">
+                  “The gold-leaf red velvet cupcakes and pistachio croissants ordered for my birthday arrived in pristine chilled condition. Truly Lagos’ finest patisserie.”
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-cream-border/60 flex items-center justify-between text-xs">
+                <div>
+                  <h4 className="font-display font-bold text-charcoal-900">Kolawole A.</h4>
+                  <span className="text-[11px] text-charcoal-500">Milestone Birthday • Banana Island</span>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-100">
+                  Verified Order
+                </span>
+              </div>
+            </div>
+          </div>
+        </PageContainer>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          8. FINAL CONVERSION CTA (Warm, Focused Invitation)
       ───────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 bg-brand-50/90 border-y border-brand-200/80">
         <PageContainer size="sm">
