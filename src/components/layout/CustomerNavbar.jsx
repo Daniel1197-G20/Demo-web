@@ -13,10 +13,6 @@ import {
   ChevronDown,
   Phone,
   MessageCircle,
-  Sparkles,
-  Cake,
-  Layers,
-  ArrowRight,
 } from 'lucide-react';
 import { BRAND, NAV_LINKS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -65,32 +61,6 @@ export default function CustomerNavbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
-      {/* Top Boutique Announcement Bar (Desktop & Tablet) */}
-      <div className="hidden sm:block bg-brand-50/80 border-b border-cream-border/60 py-1 px-4 text-center text-[11px] text-charcoal-700 font-medium">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-700 animate-pulse" />
-            <span>Freshly baked daily in Victoria Island • Chilled dispatch across Lagos</span>
-          </div>
-          <div className="flex items-center gap-4 text-charcoal-600">
-            <a href={`tel:${BRAND.rawPhone}`} className="hover:text-brand-700 transition-colors flex items-center gap-1">
-              <Phone className="w-3 h-3 text-brand-700" />
-              <span>{BRAND.phone}</span>
-            </a>
-            <span className="text-cream-dark">|</span>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-emerald-700 text-emerald-700 font-semibold transition-colors flex items-center gap-1"
-            >
-              <MessageCircle className="w-3 h-3 fill-current" />
-              <span>WhatsApp Concierge</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
