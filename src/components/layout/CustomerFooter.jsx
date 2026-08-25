@@ -125,8 +125,13 @@ export default function CustomerFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
               <li>
-                <Link to="/catering" className="hover:text-brand-700 transition-colors font-medium text-brand-700">
-                  ★ Event & Wedding Catering
+                <Link to="/events" className="hover:text-brand-700 transition-colors font-medium text-brand-700">
+                  ★ Masterclasses &amp; Tastings
+                </Link>
+              </li>
+              <li>
+                <Link to="/catering" className="hover:text-brand-700 transition-colors">
+                  Event &amp; Wedding Catering
                 </Link>
               </li>
               <li>

@@ -23,7 +23,7 @@ export default function Dashboard() {
       value: '142',
       trend: '+12 new today',
       icon: ShoppingBag,
-      color: 'bg-tory-100 text-tory-600',
+      color: 'bg-brand-100 text-brand-600',
     },
     {
       title: 'Pending Order Review',

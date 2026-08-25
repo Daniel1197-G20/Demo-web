@@ -18,7 +18,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <Card className="p-8 shadow-tory-md border-cream-border">
+    <Card className="p-8 shadow-brand-md border-cream-border">
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
           Reset Password
@@ -56,7 +56,7 @@ export default function ForgotPassword() {
           </Button>
 
           <div className="text-center pt-2">
-            <Link to="/auth/login" className="text-xs font-semibold text-charcoal-700 hover:text-tory-600 inline-flex items-center gap-1">
+            <Link to="/auth/login" className="text-xs font-semibold text-charcoal-700 hover:text-brand-600 inline-flex items-center gap-1">
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back to Sign In</span>
             </Link>

@@ -25,6 +25,8 @@ import Contracts from '../pages/customer/Contracts';
 import ContractDetails from '../pages/customer/ContractDetails';
 import ContractApply from '../pages/customer/ContractApply';
 import ApplicationConfirmation from '../pages/customer/ApplicationConfirmation';
+import Events from '../pages/customer/Events';
+import EventDetails from '../pages/customer/EventDetails';
 import Contact from '../pages/customer/Contact';
 import DesignSystemShowcase from '../pages/customer/DesignSystemShowcase';
 
@@ -77,6 +79,8 @@ export default function AppRoutes() {
         <Route path="/checkout/confirmation/:orderNumber" element={<OrderConfirmation />} />
         <Route path="/catering" element={<Catering />} />
         <Route path="/catering/confirmation/:bookingNumber" element={<CateringConfirmation />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/events/:slug" element={<EventDetails />} />
         <Route path="/contracts" element={<Contracts />} />
         <Route path="/contracts/:slug" element={<ContractDetails />} />
         <Route path="/contracts/:slug/apply" element={<ContractApply />} />

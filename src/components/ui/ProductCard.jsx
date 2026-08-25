@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, ShoppingBag, Check } from 'lucide-react';
+import { Plus, Check, ShoppingBag, Sparkles } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { formatCurrency } from '../../lib/formatters';
 import Badge from './Badge';
-import Button from './Button';
 
 export default function ProductCard({
   product,
@@ -23,105 +22,134 @@ export default function ProductCard({
     is_available = true,
     is_featured = false,
     min_order_quantity = 1,
+    description = '',
   } = product || {};
+
+  const [justAdded, setJustAdded] = useState(false);
 
   const primaryImage =
     images && images.length > 0
       ? images[0]
       : 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80';
 
+  const categoryName = typeof category === 'object' && category !== null ? category.name : category;
+
+  const handleAdd = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!is_available) return;
+
+    if (onAddToCart) {
+      onAddToCart(product);
+    }
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1400);
+  };
+
   return (
     <div
       className={cn(
-        'group bg-white rounded-xl border border-cream-border overflow-hidden transition-all duration-300 hover:shadow-brand-md hover:-translate-y-1 flex flex-col',
+        'group flex flex-col overflow-hidden rounded-2xl border border-cream-border bg-white transition-all duration-300 hover:shadow-brand-md hover:border-brand-200 hover:-translate-y-1',
         className
       )}
     >
       {/* Image Container */}
       <Link
         to={`/shop/${slug}`}
-        className="relative block aspect-[4/3] overflow-hidden bg-cream-surface"
+        className="relative block aspect-[4/3] w-full overflow-hidden bg-cream-surface focus:outline-none"
       >
         <img
           src={primaryImage}
           alt={name}
-          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
 
-        {/* Badges Overlay */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+        {/* Top Overlay Badges */}
+        <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex flex-wrap gap-1.5 z-10">
           {!is_available ? (
-            <Badge variant="error" size="sm">
+            <Badge variant="error" size="sm" className="shadow-xs font-bold">
               Sold Out
             </Badge>
           ) : is_featured ? (
-            <Badge variant="gold" size="sm">
-              ★ Chef's Pick
-            </Badge>
+            <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 text-[10px] font-bold text-charcoal-900 shadow-xs">
+              <Sparkles className="w-3 h-3" />
+              <span>Chef's Choice</span>
+            </span>
           ) : null}
         </div>
 
-        {category && (
-          <div className="absolute bottom-3 left-3 z-10">
-            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md rounded-full text-[11px] font-semibold text-charcoal-700 shadow-sm">
-              {category.name || category}
-            </span>
-          </div>
+        {/* Category Pill Tag */}
+        {categoryName && (
+          <span className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-brand-700 backdrop-blur-md shadow-xs z-10">
+            {categoryName}
+          </span>
         )}
       </Link>
 
-      {/* Product Info */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
+      {/* Product Information */}
+      <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-5 gap-3">
         <div>
-          <Link to={`/shop/${slug}`}>
-            <h4 className="font-bold text-charcoal-900 text-sm sm:text-base line-clamp-2 sm:line-clamp-1 group-hover:text-brand-700 transition-colors font-display leading-snug">
+          <Link to={`/shop/${slug}`} className="focus:outline-none">
+            <h4 className="font-display font-bold text-sm sm:text-base text-charcoal-900 group-hover:text-brand-700 transition-colors line-clamp-2 leading-snug">
               {name}
             </h4>
           </Link>
+          {description && (
+            <p className="mt-1 text-xs text-charcoal-600 line-clamp-2 leading-relaxed hidden sm:block">
+              {description}
+            </p>
+          )}
           {min_order_quantity > 1 && (
-            <p className="text-[11px] text-charcoal-500 mt-1">
-              Min. order: {min_order_quantity} pcs
+            <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-charcoal-500">
+              Min. batch: {min_order_quantity} pcs
             </p>
           )}
         </div>
 
-        {/* Price & Action Row */}
-        <div className="flex items-center justify-between pt-2.5 border-t border-cream-border/60 mt-auto">
-          <div>
-            <span className="text-[11px] text-charcoal-500 block leading-tight">Price</span>
-            <span className="text-sm sm:text-base md:text-lg font-bold text-brand-700 font-display">
+        {/* Price & Add Action */}
+        <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-cream-border/80 mt-auto">
+          <div className="min-w-0">
+            <span className="text-[10px] text-charcoal-500 uppercase tracking-wider block font-semibold leading-none mb-1">
+              Price
+            </span>
+            <span className="font-display font-extrabold text-sm sm:text-base md:text-lg text-charcoal-900 truncate block">
               {formatCurrency(price)}
             </span>
           </div>
 
-          <div>
-            {is_available ? (
-              <Button
-                size="sm"
-                variant={isInCart ? 'secondary' : 'primary'}
-                onClick={() => onAddToCart && onAddToCart(product)}
-                className="gap-1 px-3 sm:px-3.5 h-9 sm:h-8 text-xs font-semibold"
-                aria-label={`Add ${name} to cart`}
-              >
-                {isInCart ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    <span>{cartQuantity > 0 ? `(${cartQuantity})` : 'Added'}</span>
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add</span>
-                  </>
-                )}
-              </Button>
-            ) : (
-              <Button size="sm" variant="ghost" disabled className="text-xs h-9 sm:h-8">
-                Unavailable
-              </Button>
+          <button
+            type="button"
+            onClick={handleAdd}
+            disabled={!is_available}
+            aria-label={`Add ${name} to basket`}
+            className={cn(
+              'inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-xs font-bold transition-all duration-200 shadow-xs active:scale-95 shrink-0 focus-ring',
+              !is_available
+                ? 'bg-charcoal-100 text-charcoal-400 cursor-not-allowed shadow-none'
+                : justAdded || isInCart
+                ? 'bg-brand-100 text-brand-800 border border-brand-200 hover:bg-brand-200'
+                : 'bg-brand-700 text-white hover:bg-brand-800 hover:shadow-brand-sm'
             )}
-          </div>
+          >
+            {justAdded ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                <span>Added ✓</span>
+              </>
+            ) : isInCart ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                <span>{cartQuantity > 0 ? `In Basket (${cartQuantity})` : 'In Basket'}</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-3.5 h-3.5" />
+                <span>+ Add</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>

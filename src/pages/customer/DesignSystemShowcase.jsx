@@ -49,17 +49,17 @@ export default function DesignSystemShowcase() {
             1. Core Color Swatches
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            <div className="p-3 rounded-xl bg-tory-500 text-white shadow-sm text-center">
-              <span className="block text-xs font-bold">Tory Pink</span>
-              <span className="text-[10px] opacity-80">#E82C7C</span>
+            <div className="p-3 rounded-xl bg-brand-700 text-white shadow-sm text-center">
+              <span className="block text-xs font-bold">Brand Cocoa 700</span>
+              <span className="text-[10px] opacity-80">#6B3A32</span>
             </div>
-            <div className="p-3 rounded-xl bg-tory-100 text-tory-800 text-center border border-tory-200">
-              <span className="block text-xs font-bold">Soft Pink 100</span>
-              <span className="text-[10px] opacity-80">#FFE4EC</span>
+            <div className="p-3 rounded-xl bg-brand-400 text-white text-center">
+              <span className="block text-xs font-bold">Warm Berry 400</span>
+              <span className="text-[10px] opacity-80">#BC8177</span>
             </div>
-            <div className="p-3 rounded-xl bg-tory-50 text-tory-700 text-center border border-tory-100">
-              <span className="block text-xs font-bold">Light Pink 50</span>
-              <span className="text-[10px] opacity-80">#FFF1F5</span>
+            <div className="p-3 rounded-xl bg-brand-100 text-brand-800 text-center border border-brand-200">
+              <span className="block text-xs font-bold">Warm Cream 100</span>
+              <span className="text-[10px] opacity-80">#F5E9E6</span>
             </div>
             <div className="p-3 rounded-xl bg-cream-base text-charcoal-900 text-center border border-cream-border">
               <span className="block text-xs font-bold">Cream Base</span>
@@ -90,8 +90,8 @@ export default function DesignSystemShowcase() {
             2. Button Variants & States
           </h3>
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="primary">Primary Pink</Button>
-            <Button variant="secondary">Secondary Soft Pink</Button>
+            <Button variant="primary">Primary Brand Cocoa</Button>
+            <Button variant="secondary">Secondary Brand</Button>
             <Button variant="outline">Outline Button</Button>
             <Button variant="ghost">Ghost Button</Button>
             <Button variant="gold">Gold Luxury</Button>
@@ -158,7 +158,7 @@ export default function DesignSystemShowcase() {
             4. Badges & Status Chips
           </h3>
           <div className="flex flex-wrap items-center gap-2.5">
-            <Badge variant="primary">Primary Tory</Badge>
+            <Badge variant="primary">Brand Primary</Badge>
             <Badge variant="secondary">Secondary</Badge>
             <Badge variant="success" dot>
               Delivered / Approved

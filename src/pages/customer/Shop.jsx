@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
 import ProductCard from '../../components/ui/ProductCard';
@@ -9,10 +10,13 @@ import { useCart } from '../../hooks/useCart';
 import { useToast } from '../../hooks/useToast';
 
 export default function Shop() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCategory = searchParams.get('category') || 'All';
+
   const { addItem, items } = useCart();
   const toast = useToast();
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
   const CATEGORIES = ['All', 'Artisanal Cakes', 'Gourmet Cupcakes', 'Fresh Pastries', 'Dessert Cups'];
 
@@ -24,6 +28,7 @@ export default function Shop() {
       price: 18500,
       images: ['https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=700&auto=format&fit=crop&q=80'],
       category: 'Artisanal Cakes',
+      description: 'Three airy sponge layers soaked in organic strawberry reduction with mascarpone cream.',
       is_available: true,
       is_featured: true,
     },
@@ -34,6 +39,7 @@ export default function Shop() {
       price: 9500,
       images: ['https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=700&auto=format&fit=crop&q=80'],
       category: 'Gourmet Cupcakes',
+      description: 'Moist cocoa-infused velvet sponge with Swiss cream cheese frosting and gold leaf.',
       is_available: true,
       is_featured: true,
     },
@@ -44,6 +50,7 @@ export default function Shop() {
       price: 8000,
       images: ['https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=700&auto=format&fit=crop&q=80'],
       category: 'Fresh Pastries',
+      description: '72-hour laminated French butter pastry filled with Sicilian roasted pistachio praline.',
       is_available: true,
       is_featured: true,
     },
@@ -54,6 +61,7 @@ export default function Shop() {
       price: 12000,
       images: ['https://images.unsplash.com/photo-1488477181946-6428a0291777?w=700&auto=format&fit=crop&q=80'],
       category: 'Dessert Cups',
+      description: 'Layered Alfonso mango coulis, vanilla bean mousse, and buttery almond crumble.',
       is_available: true,
       is_featured: false,
     },
@@ -64,6 +72,7 @@ export default function Shop() {
       price: 22000,
       images: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&auto=format&fit=crop&q=80'],
       category: 'Artisanal Cakes',
+      description: 'Rich 70% dark Belgian chocolate sponge filled with hazelnut praline ganache.',
       is_available: true,
       is_featured: true,
     },
@@ -74,14 +83,37 @@ export default function Shop() {
       price: 7500,
       images: ['https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&auto=format&fit=crop&q=80'],
       category: 'Fresh Pastries',
+      description: 'Crisp choux pastry filled with Bourbon vanilla creme diplomat and fleur de sel caramel.',
       is_available: true,
       is_featured: false,
     },
   ];
 
+  // Update state if URL search params change
+  useEffect(() => {
+    const cat = searchParams.get('category');
+    if (cat) {
+      setSelectedCategory(cat);
+    }
+  }, [searchParams]);
+
+  const handleCategorySelect = (cat) => {
+    setSelectedCategory(cat);
+    if (cat === 'All') {
+      searchParams.delete('category');
+      setSearchParams(searchParams);
+    } else {
+      setSearchParams({ category: cat });
+    }
+  };
+
   const filtered = MOCK_PRODUCTS.filter((p) => {
-    const matchesCat = selectedCategory === 'All' || p.category === selectedCategory;
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
+    const matchesCat =
+      selectedCategory === 'All' ||
+      p.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesSearch =
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.category.toLowerCase().includes(search.toLowerCase());
     return matchesCat && matchesSearch;
   });
 
@@ -90,7 +122,7 @@ export default function Shop() {
       <SectionHeading
         tag="Oven Fresh"
         title="Explore Tory's Treats Catalog"
-        subtitle="Handcrafted daily with premium butter, Belgian chocolate, and pure passion."
+        subtitle="Handcrafted daily with premium European butter, Belgian chocolate, and pure passion."
       />
 
       {/* Filter & Search Bar */}
@@ -101,9 +133,9 @@ export default function Shop() {
             <button
               key={cat}
               type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
-                selectedCategory === cat
+              onClick={() => handleCategorySelect(cat)}
+              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
+                selectedCategory.toLowerCase() === cat.toLowerCase()
                   ? 'bg-brand-700 text-white shadow-brand-sm'
                   : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
               }`}
@@ -154,7 +186,7 @@ export default function Shop() {
             size="sm"
             onClick={() => {
               setSearch('');
-              setSelectedCategory('All');
+              handleCategorySelect('All');
             }}
           >
             Clear Filters

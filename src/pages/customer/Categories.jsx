@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
-import Card, { CardContent } from '../../components/ui/Card';
+import CategoryCard from '../../components/ui/CategoryCard';
 
 export default function Categories() {
   const CATEGORIES = [
@@ -24,7 +22,7 @@ export default function Categories() {
     {
       title: 'French Pastries',
       slug: 'french-pastries',
-      desc: 'Flaky golden croissants, fruit danishes, and rich éclairs.',
+      desc: 'Flaky golden croissants, fruit danishes, and rich chocolate éclairs.',
       image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80',
       itemsCount: 12,
     },
@@ -35,6 +33,20 @@ export default function Categories() {
       image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&auto=format&fit=crop&q=80',
       itemsCount: 8,
     },
+    {
+      title: 'Celebration Platters',
+      slug: 'celebration-platters',
+      desc: 'Curated dessert boxes for parties, office lunches, hampers & gifting.',
+      image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80',
+      itemsCount: 6,
+    },
+    {
+      title: 'Seasonal Drops',
+      slug: 'seasonal-drops',
+      desc: 'Limited-edition weekend chef specials and holiday festive bakes.',
+      image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&auto=format&fit=crop&q=80',
+      itemsCount: 5,
+    },
   ];
 
   return (
@@ -42,40 +54,12 @@ export default function Categories() {
       <SectionHeading
         tag="Sweet Collections"
         title="Browse by Category"
-        subtitle="Explore our curated baking styles and specialty menu lines."
+        subtitle="Explore our curated baking styles, artisanal pastry lines, and specialty dessert collections."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {CATEGORIES.map((cat) => (
-          <Link to={`/shop`} key={cat.slug} className="group">
-            <Card hover className="h-full bg-white flex flex-col md:flex-row overflow-hidden">
-              <div className="md:w-1/2 aspect-[4/3] md:aspect-auto overflow-hidden bg-cream-base">
-                <img
-                  src={cat.image}
-                  alt={cat.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <CardContent className="md:w-1/2 p-6 flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-bold text-brand-700 uppercase tracking-wider">
-                    {cat.itemsCount} Bakes
-                  </span>
-                  <h3 className="text-xl font-bold text-charcoal-900 font-display mt-1 mb-2 group-hover:text-brand-700 transition-colors">
-                    {cat.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-charcoal-500 leading-relaxed">
-                    {cat.desc}
-                  </p>
-                </div>
-
-                <div className="pt-4 flex items-center text-xs font-bold text-brand-700 group-hover:translate-x-1 transition-transform">
-                  <span>Explore items</span>
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+          <CategoryCard key={cat.slug} category={cat} />
         ))}
       </div>
     </PageContainer>

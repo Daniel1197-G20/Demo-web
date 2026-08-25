@@ -24,7 +24,7 @@ export default function ApplicationDetails() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/contracts/applications"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-tory-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -51,7 +51,7 @@ export default function ApplicationDetails() {
             </div>
             <div>
               <span className="text-charcoal-500 block text-xs">Applied Role</span>
-              <span className="font-bold text-tory-600">Weekend Event Pastry Chef</span>
+              <span className="font-bold text-brand-600">Weekend Event Pastry Chef</span>
             </div>
             <div>
               <span className="text-charcoal-500 block text-xs">Email</span>
@@ -66,7 +66,7 @@ export default function ApplicationDetails() {
           {/* CV Document Download Block */}
           <div className="p-4 rounded-xl bg-cream-surface border border-cream-border flex items-center justify-between gap-4 mt-2">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-tory-100 text-tory-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-brand-100 text-brand-600 flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
               <div>

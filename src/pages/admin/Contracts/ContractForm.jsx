@@ -49,7 +49,7 @@ export default function ContractForm() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/contracts"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-tory-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -142,7 +142,7 @@ export default function ContractForm() {
                 type="checkbox"
                 checked={formData.isPublished}
                 onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
-                className="w-4 h-4 rounded text-tory-500 focus:ring-tory-400"
+                className="w-4 h-4 rounded text-brand-500 focus:ring-brand-400"
               />
               <span>Published (Accepting Applications)</span>
             </label>
@@ -152,7 +152,7 @@ export default function ContractForm() {
                 type="checkbox"
                 checked={formData.isPublicVisible}
                 onChange={(e) => setFormData({ ...formData, isPublicVisible: e.target.checked })}
-                className="w-4 h-4 rounded text-tory-500 focus:ring-tory-400"
+                className="w-4 h-4 rounded text-brand-500 focus:ring-brand-400"
               />
               <span>Visible in Public Careers Section</span>
             </label>
@@ -162,7 +162,7 @@ export default function ContractForm() {
                 type="checkbox"
                 checked={formData.isClosed}
                 onChange={(e) => setFormData({ ...formData, isClosed: e.target.checked })}
-                className="w-4 h-4 rounded text-tory-500 focus:ring-tory-400"
+                className="w-4 h-4 rounded text-brand-500 focus:ring-brand-400"
               />
               <span>Mark as Closed</span>
             </label>

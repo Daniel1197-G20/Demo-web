@@ -8,12 +8,9 @@ import {
   Heart,
   Calendar,
   Briefcase,
-  Layers,
-  Sparkles,
   ShieldCheck,
   LogOut,
   ChevronDown,
-  Cake,
   Phone,
 } from 'lucide-react';
 import { BRAND, NAV_LINKS } from '../../lib/constants';
@@ -57,28 +54,19 @@ export default function CustomerNavbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
-      {/* Top micro-announcement banner */}
-      <div className="bg-brand-700 text-white text-[11px] sm:text-xs py-1.5 px-3 sm:px-4 text-center font-medium flex items-center justify-center gap-1.5 sm:gap-2">
-        <Sparkles className="w-3.5 h-3.5 shrink-0" />
-        <span className="truncate">Freshly baked daily in Victoria Island, Lagos!</span>
-        <span className="hidden sm:inline font-bold underline ml-1 cursor-pointer">
-          <Link to="/catering">Book Catering &rarr;</Link>
-        </span>
-      </div>
-
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
+          <Link to="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-lg sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
+              <span className="font-display font-extrabold text-base sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
                 Tory's <span className="text-brand-700">Treats</span>
               </span>
               <span className="text-[9px] sm:text-[10px] text-charcoal-500 tracking-wider font-semibold uppercase hidden md:block">
-                Artisanal Bakery & Catering
+                Artisanal Bakery &amp; Catering
               </span>
             </div>
           </Link>
@@ -102,8 +90,18 @@ export default function CustomerNavbar() {
             ))}
           </nav>
 
-          {/* Right Actions: Test Switcher, Cart, Account, Hamburger */}
+          {/* Right Actions */}
           <div className="flex items-center gap-1.5 sm:gap-3">
+            {/* Quick Call Icon (Mobile only) */}
+            <a
+              href={`tel:${BRAND.phone.replace(/[^0-9+]/g, '')}`}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-cream-border bg-white text-charcoal-800 transition-colors hover:border-brand-400 hover:text-brand-700 lg:hidden shadow-xs"
+              aria-label="Call bakery directly"
+              title={`Call ${BRAND.phone}`}
+            >
+              <Phone className="w-4 h-4 text-brand-700" />
+            </a>
+
             {/* Quick Test Switcher (Reviewer Convenience) */}
             {isAuthenticated && (
               <button
@@ -174,10 +172,10 @@ export default function CustomerNavbar() {
               </Link>
             )}
 
-            {/* Mobile Profile Icon (Direct link to /account or /auth/login) */}
+            {/* Mobile Profile Icon */}
             <Link
               to={isAuthenticated ? '/account' : '/auth/login'}
-              className="sm:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
+              className="sm:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
               aria-label={isAuthenticated ? 'My Account' : 'Sign In'}
             >
               {isAuthenticated ? (
@@ -193,7 +191,7 @@ export default function CustomerNavbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700 transition-colors focus-ring"
+              className="lg:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700 transition-colors focus-ring"
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
             >
@@ -214,7 +212,7 @@ export default function CustomerNavbar() {
           />
 
           {/* Drawer Panel */}
-          <div className="fixed inset-y-0 right-0 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
+          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
             {/* Drawer Header */}
             <div>
               <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/40">
@@ -239,8 +237,8 @@ export default function CustomerNavbar() {
               {/* User Greeting (if logged in) */}
               {isAuthenticated && (
                 <div className="p-4 bg-brand-50/60 border-b border-brand-100 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-brand-700 text-white font-bold text-sm flex items-center justify-center shadow-sm">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-brand-700 text-white font-bold text-sm flex items-center justify-center shadow-sm shrink-0">
                       {profile?.full_name?.charAt(0) || 'U'}
                     </div>
                     <div className="min-w-0">
@@ -254,7 +252,7 @@ export default function CustomerNavbar() {
                   <button
                     type="button"
                     onClick={toggleRole}
-                    className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-brand-200 text-brand-700 shrink-0"
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-brand-200 text-brand-700 shrink-0 ml-2"
                   >
                     {profile?.role || 'CUSTOMER'}
                   </button>
@@ -272,7 +270,7 @@ export default function CustomerNavbar() {
                     to={link.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors ${
+                      `flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors ${
                         isActive
                           ? 'bg-brand-50 text-brand-700 font-bold'
                           : 'text-charcoal-800 hover:bg-cream-surface hover:text-brand-700'
@@ -280,8 +278,44 @@ export default function CustomerNavbar() {
                     }
                   >
                     <span>{link.name}</span>
+                    <span className="text-xs text-charcoal-400">→</span>
                   </NavLink>
                 ))}
+
+                {/* Shopping Basket Drawer Link */}
+                <NavLink
+                  to="/cart"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors ${
+                      isActive
+                        ? 'bg-brand-50 text-brand-700 font-bold'
+                        : 'text-charcoal-800 hover:bg-cream-surface hover:text-brand-700'
+                    }`
+                  }
+                >
+                  <div className="flex items-center gap-3">
+                    <ShoppingBag className="w-4 h-4 text-brand-700" />
+                    <span>Shopping Basket</span>
+                  </div>
+                  {itemCount > 0 && (
+                    <span className="px-2 py-0.5 rounded-full bg-brand-700 text-white text-xs font-bold">
+                      {itemCount}
+                    </span>
+                  )}
+                </NavLink>
+
+                {/* Quick Call in Drawer */}
+                <a
+                  href={`tel:${BRAND.phone.replace(/[^0-9+]/g, '')}`}
+                  className="mt-2 flex items-center justify-between rounded-xl border border-cream-border bg-cream-surface/70 px-4 py-3 text-xs font-semibold text-charcoal-900 active:bg-cream-soft"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Phone className="w-4 h-4 text-brand-700" />
+                    <span>Call Boutique: {BRAND.phone}</span>
+                  </div>
+                  <span className="text-brand-700 font-bold">Call</span>
+                </a>
               </div>
 
               {/* Account Sub-Links (if authenticated) */}
@@ -368,7 +402,7 @@ export default function CustomerNavbar() {
 
               <div className="pt-2 text-center">
                 <p className="text-[11px] text-charcoal-500">
-                  Victoria Island, Lagos • {BRAND.phone}
+                  {BRAND.address} • {BRAND.phone}
                 </p>
               </div>
             </div>

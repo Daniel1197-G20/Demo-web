@@ -31,7 +31,7 @@ export default function OrderDetails() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/orders"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-tory-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -80,7 +80,7 @@ export default function OrderDetails() {
             </div>
             <div className="flex justify-between text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border">
               <span>Estimated Total</span>
-              <span className="text-tory-600 font-display">{formatCurrency(30000)}</span>
+              <span className="text-brand-600 font-display">{formatCurrency(30000)}</span>
             </div>
           </div>
 

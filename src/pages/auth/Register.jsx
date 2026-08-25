@@ -33,7 +33,7 @@ export default function Register() {
   };
 
   return (
-    <Card className="p-8 shadow-tory-md border-cream-border">
+    <Card className="p-8 shadow-brand-md border-cream-border">
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
           Create an Account
@@ -87,7 +87,7 @@ export default function Register() {
 
       <div className="text-center mt-6 text-xs text-charcoal-700">
         Already have an account?{' '}
-        <Link to="/auth/login" className="font-bold text-tory-600 hover:underline">
+        <Link to="/auth/login" className="font-bold text-brand-600 hover:underline">
           Sign In &rarr;
         </Link>
       </div>

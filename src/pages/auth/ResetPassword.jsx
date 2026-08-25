@@ -23,7 +23,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <Card className="p-8 shadow-tory-md border-cream-border">
+    <Card className="p-8 shadow-brand-md border-cream-border">
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
           Set New Password

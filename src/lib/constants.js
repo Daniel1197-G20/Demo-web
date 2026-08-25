@@ -55,6 +55,7 @@ export const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'Shop Treats', href: '/shop' },
   { name: 'Categories', href: '/categories' },
+  { name: 'Events & Experiences', href: '/events' },
   { name: 'Event Catering', href: '/catering' },
   { name: 'Careers & Contracts', href: '/contracts' },
   { name: 'Contact', href: '/contact' },
