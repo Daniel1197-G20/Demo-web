@@ -29,17 +29,17 @@ export default function CustomerFooter() {
                 e.preventDefault();
                 alert('Thank you for subscribing to Tory’s Treats Club!');
               }}
-              className="flex w-full max-w-md gap-2"
+              className="flex flex-col sm:flex-row w-full max-w-md gap-2.5"
             >
               <Input
                 placeholder="Enter your email address"
                 type="email"
                 required
                 className="flex-1"
-                inputClassName="bg-white"
+                inputClassName="bg-white h-11"
               />
-              <Button type="submit" variant="primary" icon={Send}>
-                Join
+              <Button type="submit" variant="primary" icon={Send} className="w-full sm:w-auto shrink-0">
+                Join Club
               </Button>
             </form>
           </div>

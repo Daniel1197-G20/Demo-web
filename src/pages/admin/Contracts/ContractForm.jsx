@@ -169,15 +169,15 @@ export default function ContractForm() {
           </div>
         </Card>
 
-        <div className="flex items-center gap-3">
-          <Button type="submit" variant="primary" size="lg" isLoading={isLoading} icon={Save}>
-            {isEditing ? 'Save Changes' : 'Publish Opportunity'}
-          </Button>
-          <Link to="/admin/contracts">
-            <Button variant="ghost" size="lg">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
+          <Link to="/admin/contracts" className="w-full sm:w-auto">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto justify-center">
               Cancel
             </Button>
           </Link>
+          <Button type="submit" variant="primary" size="lg" isLoading={isLoading} icon={Save} className="w-full sm:w-auto justify-center">
+            {isEditing ? 'Save Changes' : 'Publish Opportunity'}
+          </Button>
         </div>
       </form>
     </div>

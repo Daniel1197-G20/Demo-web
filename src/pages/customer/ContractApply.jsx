@@ -106,16 +106,19 @@ export default function ContractApply() {
             <label className="text-xs font-semibold text-charcoal-700 block">
               Curriculum Vitae / Resume (PDF or DOCX) <span className="text-brand-700">*</span>
             </label>
-            <div className="border-2 border-dashed border-brand-200 hover:border-brand-700 rounded-2xl p-6 text-center bg-brand-50/30 transition-colors cursor-pointer flex flex-col items-center justify-center">
-              <Upload className="w-8 h-8 text-brand-700 mb-2" />
-              <span className="text-sm font-semibold text-charcoal-900">
-                {formData.fileName || 'Click to select or drag and drop your CV file'}
+            <label
+              htmlFor="cv-upload"
+              className="border-2 border-dashed border-brand-200 hover:border-brand-700 rounded-2xl p-5 sm:p-6 text-center bg-brand-50/30 transition-colors cursor-pointer flex flex-col items-center justify-center focus-within:ring-2 focus-within:ring-brand-700"
+            >
+              <Upload className="w-7 h-7 sm:w-8 sm:h-8 text-brand-700 mb-2" />
+              <span className="text-xs sm:text-sm font-semibold text-charcoal-900 break-all px-2">
+                {formData.fileName || 'Tap to select or drag and drop your CV file'}
               </span>
-              <span className="text-xs text-charcoal-500 mt-1">PDF, DOCX up to 10MB</span>
+              <span className="text-[11px] text-charcoal-500 mt-1">PDF, DOCX up to 10MB</span>
               <input
                 type="file"
                 accept=".pdf,.docx,.doc"
-                className="hidden"
+                className="sr-only"
                 id="cv-upload"
                 onChange={(e) => {
                   if (e.target.files?.[0]) {
@@ -123,12 +126,10 @@ export default function ContractApply() {
                   }
                 }}
               />
-              <label htmlFor="cv-upload" className="mt-3">
-                <Button variant="outline" size="sm" type="button" asChild>
-                  <span>Select Document</span>
-                </Button>
-              </label>
-            </div>
+              <span className="mt-3 inline-flex items-center justify-center px-4 py-2 rounded-full border border-brand-700 text-brand-700 text-xs font-bold bg-white shadow-sm hover:bg-brand-50">
+                {formData.fileName ? 'Change Document' : 'Select Document'}
+              </span>
+            </label>
           </div>
 
           <Textarea
@@ -146,7 +147,7 @@ export default function ContractApply() {
           size="lg"
           isLoading={isSubmitting}
           icon={Briefcase}
-          className="w-full justify-center"
+          className="w-full justify-center text-sm sm:text-base font-semibold min-h-[48px]"
         >
           Submit Contract Application
         </Button>

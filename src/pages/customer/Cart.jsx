@@ -37,55 +37,77 @@ export default function Cart() {
         {/* Items List */}
         <div className="lg:col-span-8 space-y-4">
           {items.map((item) => (
-            <Card key={item.id} className="p-4 sm:p-5 flex items-center gap-4 sm:gap-6">
-              <img
-                src={item.images?.[0] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300'}
-                alt={item.name}
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover bg-cream-surface shrink-0"
-              />
+            <Card key={item.id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5 sm:gap-4 flex-1 min-w-0">
+                <img
+                  src={item.images?.[0] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300'}
+                  alt={item.name}
+                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-xl object-cover bg-cream-surface shrink-0 aspect-square"
+                />
 
-              <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-charcoal-900 text-sm sm:text-base truncate font-display">
-                  {item.name}
-                </h4>
-                <p className="text-xs text-charcoal-500 mt-0.5">{item.category}</p>
-                <div className="text-sm font-bold text-brand-700 mt-1">
-                  {formatCurrency(item.price)} each
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2">
+                    <h4 className="font-bold text-charcoal-900 text-sm sm:text-base font-display line-clamp-1">
+                      {item.name}
+                    </h4>
+                    {/* Mobile Remove button */}
+                    <button
+                      type="button"
+                      onClick={() => removeItem(item.id)}
+                      className="sm:hidden p-1 text-charcoal-400 hover:text-error-500 transition-colors shrink-0"
+                      aria-label="Remove item"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="text-xs text-charcoal-500 mt-0.5">{item.category}</p>
+                  <div className="text-xs sm:text-sm font-bold text-brand-700 mt-1">
+                    {formatCurrency(item.price)} each
+                  </div>
                 </div>
               </div>
 
-              {/* Quantity Modifier */}
-              <div className="flex items-center border border-cream-border bg-white rounded-full p-1 shadow-sm shrink-0">
+              {/* Quantity Modifier & Subtotal Row on Mobile / Inline on Desktop */}
+              <div className="flex items-center justify-between sm:justify-end gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-cream-border/60 shrink-0">
+                <div className="flex items-center border border-cream-border bg-white rounded-full p-1 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                    aria-label="Reduce quantity"
+                  >
+                    <Minus className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="w-8 text-center text-xs font-bold text-charcoal-900">
+                    {item.quantity}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                    aria-label="Increase quantity"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <div className="text-right sm:min-w-[90px]">
+                  <span className="text-[10px] text-charcoal-400 block sm:hidden">Item Total</span>
+                  <span className="text-sm sm:text-base font-bold text-charcoal-900 font-display">
+                    {formatCurrency(item.price * item.quantity)}
+                  </span>
+                </div>
+
+                {/* Desktop Remove Button */}
                 <button
                   type="button"
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700"
-                  aria-label="Reduce quantity"
+                  onClick={() => removeItem(item.id)}
+                  className="hidden sm:block p-2 text-charcoal-400 hover:text-error-500 transition-colors"
+                  aria-label="Remove item"
                 >
-                  <Minus className="w-3 h-3" />
-                </button>
-                <span className="w-8 text-center text-xs font-bold text-charcoal-900">
-                  {item.quantity}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                  className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700"
-                  aria-label="Increase quantity"
-                >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-
-              {/* Delete Button */}
-              <button
-                type="button"
-                onClick={() => removeItem(item.id)}
-                className="p-2 text-charcoal-500 hover:text-error-500 transition-colors"
-                aria-label="Remove item"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
             </Card>
           ))}
         </div>

@@ -31,12 +31,31 @@ const ICON_MAP = {
 };
 
 export default function AdminSidebar({ isOpen, onClose }) {
+  // Close on escape key and lock body scroll
+  React.useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-charcoal-900/50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-charcoal-900/50 backdrop-blur-sm lg:hidden transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />

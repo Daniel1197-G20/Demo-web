@@ -27,46 +27,91 @@ export default function OrderList() {
         </div>
       </div>
 
-      <Card className="p-6 overflow-x-auto">
-        <table className="w-full text-left text-xs sm:text-sm">
-          <thead>
-            <tr className="border-b border-cream-border text-charcoal-500 uppercase tracking-wider text-xs">
-              <th className="pb-3 font-semibold">Order Ref</th>
-              <th className="pb-3 font-semibold">Date</th>
-              <th className="pb-3 font-semibold">Customer</th>
-              <th className="pb-3 font-semibold">Method</th>
-              <th className="pb-3 font-semibold">Items</th>
-              <th className="pb-3 font-semibold">Workflow Status</th>
-              <th className="pb-3 font-semibold text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-cream-border/60 text-charcoal-700">
-            {ORDERS.map((ord) => (
-              <tr key={ord.id} className="hover:bg-cream-surface/40">
-                <td className="py-3.5 font-bold text-charcoal-900">{ord.orderNumber}</td>
-                <td className="py-3.5 text-charcoal-500 text-xs">{formatDate(ord.date)}</td>
-                <td className="py-3.5">
-                  <span className="font-semibold text-charcoal-900 block">{ord.customer}</span>
-                  <span className="text-[11px] text-charcoal-500">{ord.phone}</span>
-                </td>
-                <td className="py-3.5 font-medium">{ord.type}</td>
-                <td className="py-3.5">{ord.items} treats</td>
-                <td className="py-3.5">
-                  <Badge variant={ord.variant} size="sm" dot>
-                    {ord.label}
-                  </Badge>
-                </td>
-                <td className="py-3.5 text-right">
-                  <Link to={`/admin/orders/${ord.orderNumber}`}>
-                    <Button variant="ghost" size="sm" icon={Eye} className="h-8">
-                      Manage Request
-                    </Button>
-                  </Link>
-                </td>
+      <Card className="p-4 sm:p-6">
+        {/* Mobile Cards List (< md) */}
+        <div className="md:hidden space-y-3.5">
+          {ORDERS.map((ord) => (
+            <div
+              key={ord.id}
+              className="p-4 rounded-xl bg-cream-surface/50 border border-cream-border space-y-2.5 text-xs"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-charcoal-900 font-display text-sm">
+                  {ord.orderNumber}
+                </span>
+                <Badge variant={ord.variant} size="sm" dot>
+                  {ord.label}
+                </Badge>
+              </div>
+
+              <div className="space-y-1 text-charcoal-700">
+                <div className="flex justify-between">
+                  <span className="text-charcoal-500">Customer:</span>
+                  <span className="font-semibold text-charcoal-900">{ord.customer} ({ord.phone})</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-charcoal-500">Placed:</span>
+                  <span>{formatDate(ord.date)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-charcoal-500">Fulfillment:</span>
+                  <span className="font-medium text-brand-700">{ord.type} • {ord.items} treats</span>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-cream-border/60">
+                <Link to={`/admin/orders/${ord.orderNumber}`} className="block">
+                  <Button variant="outline" size="sm" icon={Eye} className="w-full justify-center">
+                    Manage Request
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Table (>= md) */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="w-full text-left text-xs sm:text-sm">
+            <thead>
+              <tr className="border-b border-cream-border text-charcoal-500 uppercase tracking-wider text-xs">
+                <th className="pb-3 font-semibold">Order Ref</th>
+                <th className="pb-3 font-semibold">Date</th>
+                <th className="pb-3 font-semibold">Customer</th>
+                <th className="pb-3 font-semibold">Method</th>
+                <th className="pb-3 font-semibold">Items</th>
+                <th className="pb-3 font-semibold">Workflow Status</th>
+                <th className="pb-3 font-semibold text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-cream-border/60 text-charcoal-700">
+              {ORDERS.map((ord) => (
+                <tr key={ord.id} className="hover:bg-cream-surface/40">
+                  <td className="py-3.5 font-bold text-charcoal-900 font-display">{ord.orderNumber}</td>
+                  <td className="py-3.5 text-charcoal-500 text-xs">{formatDate(ord.date)}</td>
+                  <td className="py-3.5">
+                    <span className="font-semibold text-charcoal-900 block">{ord.customer}</span>
+                    <span className="text-[11px] text-charcoal-500">{ord.phone}</span>
+                  </td>
+                  <td className="py-3.5 font-medium">{ord.type}</td>
+                  <td className="py-3.5">{ord.items} treats</td>
+                  <td className="py-3.5">
+                    <Badge variant={ord.variant} size="sm" dot>
+                      {ord.label}
+                    </Badge>
+                  </td>
+                  <td className="py-3.5 text-right">
+                    <Link to={`/admin/orders/${ord.orderNumber}`}>
+                      <Button variant="ghost" size="sm" icon={Eye} className="h-8">
+                        Manage Request
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </Card>
     </div>
   );

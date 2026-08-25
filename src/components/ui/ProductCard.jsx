@@ -75,22 +75,22 @@ export default function ProductCard({
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-3">
         <div>
           <Link to={`/shop/${slug}`}>
-            <h4 className="font-bold text-charcoal-900 text-base line-clamp-1 group-hover:text-brand-700 transition-colors font-display">
+            <h4 className="font-bold text-charcoal-900 text-sm sm:text-base line-clamp-2 sm:line-clamp-1 group-hover:text-brand-700 transition-colors font-display leading-snug">
               {name}
             </h4>
           </Link>
           {min_order_quantity > 1 && (
-            <p className="text-[11px] text-charcoal-500 mt-0.5">
+            <p className="text-[11px] text-charcoal-500 mt-1">
               Min. order: {min_order_quantity} pcs
             </p>
           )}
         </div>
 
         {/* Price & Action Row */}
-        <div className="flex items-center justify-between pt-2 border-t border-cream-border/60 mt-auto">
+        <div className="flex items-center justify-between pt-2.5 border-t border-cream-border/60 mt-auto">
           <div>
-            <span className="text-xs text-charcoal-500 block leading-tight">Price</span>
-            <span className="text-base sm:text-lg font-bold text-brand-700 font-display">
+            <span className="text-[11px] text-charcoal-500 block leading-tight">Price</span>
+            <span className="text-sm sm:text-base md:text-lg font-bold text-brand-700 font-display">
               {formatCurrency(price)}
             </span>
           </div>
@@ -101,7 +101,7 @@ export default function ProductCard({
                 size="sm"
                 variant={isInCart ? 'secondary' : 'primary'}
                 onClick={() => onAddToCart && onAddToCart(product)}
-                className="gap-1 px-3.5"
+                className="gap-1 px-3 sm:px-3.5 h-9 sm:h-8 text-xs font-semibold"
                 aria-label={`Add ${name} to cart`}
               >
                 {isInCart ? (
@@ -117,7 +117,7 @@ export default function ProductCard({
                 )}
               </Button>
             ) : (
-              <Button size="sm" variant="ghost" disabled className="text-xs">
+              <Button size="sm" variant="ghost" disabled className="text-xs h-9 sm:h-8">
                 Unavailable
               </Button>
             )}

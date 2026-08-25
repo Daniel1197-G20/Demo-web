@@ -42,7 +42,7 @@ export default function AnalyticsOverview() {
           <div className="space-y-3 text-xs sm:text-sm">
             <div className="flex justify-between items-center">
               <span>Lagos Doorstep Delivery</span>
-              <span className="font-bold text-tory-600">74% of requests</span>
+              <span className="font-bold text-brand-700">74% of requests</span>
             </div>
             <div className="flex justify-between items-center">
               <span>Victoria Island Kitchen Pickup</span>

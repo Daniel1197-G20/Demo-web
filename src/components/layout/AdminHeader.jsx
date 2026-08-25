@@ -8,33 +8,33 @@ export default function AdminHeader({ onOpenSidebar }) {
   const { user, profile, signOut, toggleRole } = useAuth();
 
   return (
-    <header className="sticky top-0 z-30 h-18 bg-white border-b border-cream-border px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-      <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-30 h-16 sm:h-18 bg-white border-b border-cream-border px-3 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="flex items-center gap-2 sm:gap-3">
         <button
           type="button"
           onClick={onOpenSidebar}
-          className="lg:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface"
+          className="lg:hidden p-2 rounded-xl text-charcoal-700 hover:bg-cream-surface focus-ring"
           aria-label="Open navigation sidebar"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="hidden sm:flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Badge variant="gold" size="sm">
-            Admin Mode
+            Admin Portal
           </Badge>
-          <span className="text-xs text-charcoal-500">
+          <span className="text-xs text-charcoal-500 hidden sm:inline">
             Victoria Island Branch
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* Toggle role tester */}
         <button
           type="button"
           onClick={toggleRole}
-          className="text-xs font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-brand-300"
+          className="hidden sm:inline-flex text-xs font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-brand-300 transition-colors"
           title="Toggle role"
         >
           Role: {profile?.role || 'ADMIN'}

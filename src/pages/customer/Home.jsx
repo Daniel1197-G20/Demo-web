@@ -113,24 +113,26 @@ export default function Home() {
   ];
 
   return (
-    <div className="space-y-16 sm:space-y-24">
+    <div className="space-y-12 sm:space-y-20 lg:space-y-24">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50/70 via-cream-base to-cream-base pt-6 pb-12 sm:pt-12 sm:pb-20">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50/70 via-cream-base to-cream-base pt-4 pb-10 sm:pt-10 sm:pb-16 lg:pb-20">
         <PageContainer>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
             {/* Left Copy */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-xs font-bold shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-brand-700" />
-                <span>Lagos’ Premier Luxury Bakery & Catering</span>
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+              {/* 1. Badge */}
+              <div className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-[11px] sm:text-xs font-bold shadow-sm max-w-full">
+                <Sparkles className="w-3.5 h-3.5 text-brand-700 shrink-0" />
+                <span className="truncate">Lagos’ Premier Luxury Bakery & Catering</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 font-display leading-[1.1] tracking-tight">
+              {/* 2. Headline */}
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-charcoal-900 font-display leading-[1.15] tracking-tight break-words">
                 Sweet treats crafted to make every moment{' '}
-                <span className="text-brand-700 relative">
+                <span className="text-brand-700 relative inline-block">
                   unforgettable.
                   <svg
-                    className="absolute -bottom-2 left-0 w-full h-3 text-brand-300 -z-10"
+                    className="absolute -bottom-1.5 left-0 w-full h-2.5 text-brand-300 -z-10"
                     viewBox="0 0 100 20"
                     preserveAspectRatio="none"
                   >
@@ -139,12 +141,13 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="text-base sm:text-lg text-charcoal-700 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              {/* 3. Description */}
+              <p className="text-xs sm:text-base md:text-lg text-charcoal-700 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 From melt-in-your-mouth celebration cakes to bespoke dessert tables for high-profile weddings and corporate galas, Tory’s Treats brings artisanal bakery perfection right to your table.
               </p>
 
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+              {/* 4 & 5. CTAs */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-3.5 pt-1 w-full sm:w-auto">
                 <Link to="/shop" className="w-full sm:w-auto">
                   <Button variant="primary" size="lg" icon={ShoppingBag} className="w-full sm:w-auto">
                     Explore Treats Menu
@@ -157,54 +160,57 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Social Proof Stats */}
-              <div className="pt-6 grid grid-cols-3 gap-4 border-t border-cream-border/80 max-w-md mx-auto lg:mx-0">
+              {/* 6. Social Proof Statistics */}
+              <div className="pt-5 sm:pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t border-cream-border/80 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
                 <div>
-                  <span className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-display block">
+                  <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-charcoal-900 font-display block">
                     10,000+
                   </span>
-                  <span className="text-xs text-charcoal-500 font-medium">Treats Delivered</span>
+                  <span className="text-[10px] sm:text-xs text-charcoal-500 font-medium">Treats Delivered</span>
                 </div>
                 <div>
-                  <span className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 font-display block">
+                  <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-charcoal-900 font-display block">
                     450+
                   </span>
-                  <span className="text-xs text-charcoal-500 font-medium">Events Catered</span>
+                  <span className="text-[10px] sm:text-xs text-charcoal-500 font-medium">Events Catered</span>
                 </div>
                 <div>
-                  <span className="text-2xl sm:text-3xl font-extrabold text-brand-700 font-display block">
+                  <span className="text-lg sm:text-2xl md:text-3xl font-extrabold text-brand-700 font-display block">
                     4.9 ★
                   </span>
-                  <span className="text-xs text-charcoal-500 font-medium">Customer Rating</span>
+                  <span className="text-[10px] sm:text-xs text-charcoal-500 font-medium">Customer Rating</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Hero Visual Cards */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md lg:max-w-none">
+            {/* 7. Right Hero Visual Cards */}
+            <div className="lg:col-span-5 relative w-full">
+              <div className="relative mx-auto max-w-sm sm:max-w-md lg:max-w-none">
                 {/* Main Hero Image */}
-                <div className="relative rounded-3xl overflow-hidden shadow-brand-lg border-4 border-white aspect-[4/5] bg-cream-surface">
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-brand-lg border-2 sm:border-4 border-white aspect-[4/3] sm:aspect-[4/5] bg-cream-surface">
                   <img
                     src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=900&auto=format&fit=crop&q=80"
                     alt="Luxury Strawberry Bakery Cake"
                     className="w-full h-full object-cover"
+                    loading="eager"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <span className="px-3 py-1 rounded-full bg-brand-700 text-xs font-bold uppercase tracking-wider mb-2 inline-block">
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-charcoal-900/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white">
+                    <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-brand-700 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1.5 sm:mb-2 inline-block">
                       Chef Special
                     </span>
-                    <h3 className="text-xl font-bold font-display leading-tight">
+                    <h3 className="text-lg sm:text-xl font-bold font-display leading-tight">
                       Strawberry Velvet Royale
                     </h3>
-                    <p className="text-xs text-white/80 mt-1">Baked fresh with Belgian chocolate and real organic berries.</p>
+                    <p className="text-[11px] sm:text-xs text-white/80 mt-1 line-clamp-2">
+                      Baked fresh with Belgian chocolate and real organic berries.
+                    </p>
                   </div>
                 </div>
 
-                {/* Floating Micro Badge 1 */}
-                <div className="absolute -top-4 -left-4 bg-white p-3.5 rounded-2xl shadow-brand-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
-                  <div className="w-10 h-10 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center font-bold">
+                {/* Floating Micro Badge 1 (visible on sm+) */}
+                <div className="absolute -top-3 -left-3 bg-white p-3 rounded-2xl shadow-brand-md border border-cream-border items-center gap-2.5 animate-float hidden sm:flex">
+                  <div className="w-9 h-9 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center font-bold text-sm">
                     ★
                   </div>
                   <div>
@@ -213,10 +219,10 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Floating Micro Badge 2 */}
-                <div className="absolute -bottom-4 -right-4 bg-white p-3.5 rounded-2xl shadow-brand-md border border-cream-border flex items-center gap-3 animate-float hidden sm:flex">
-                  <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
-                    <Truck className="w-5 h-5" />
+                {/* Floating Micro Badge 2 (visible on sm+) */}
+                <div className="absolute -bottom-3 -right-3 bg-white p-3 rounded-2xl shadow-brand-md border border-cream-border items-center gap-2.5 animate-float hidden sm:flex">
+                  <div className="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
+                    <Truck className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-xs font-bold text-charcoal-900 block">Lagos Delivery</span>
@@ -345,8 +351,8 @@ export default function Home() {
                 </div>
 
                 <div className="pt-2">
-                  <Link to="/catering">
-                    <Button variant="primary" size="lg" icon={Calendar}>
+                  <Link to="/catering" className="block sm:inline-block">
+                    <Button variant="primary" size="lg" icon={Calendar} className="w-full sm:w-auto">
                       Request a Custom Catering Quote
                     </Button>
                   </Link>

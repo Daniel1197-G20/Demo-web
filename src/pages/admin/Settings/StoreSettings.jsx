@@ -74,7 +74,7 @@ export default function StoreSettings() {
             </div>
           </div>
 
-          <Button type="submit" variant="primary" icon={Save} className="mt-2">
+          <Button type="submit" variant="primary" icon={Save} className="mt-2 w-full sm:w-auto justify-center">
             Save Store Settings
           </Button>
         </Card>

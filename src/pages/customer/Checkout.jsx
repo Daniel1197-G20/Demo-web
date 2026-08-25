@@ -54,94 +54,59 @@ export default function Checkout() {
         subtitle="Submit your treat request. Our team will verify kitchen availability and contact you directly to confirm arrangements."
       />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* 1. Fulfillment Method Selection */}
-        <Card className="p-6 sm:p-8 space-y-4">
-          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+        {/* 1. Fulfillment Method */}
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
             1. Fulfillment Method
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             <button
               type="button"
               onClick={() => setFulfillmentType('DELIVERY')}
-              className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all ${
+              className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all min-h-[72px] focus-ring ${
                 fulfillmentType === 'DELIVERY'
-                  ? 'border-brand-700 bg-brand-50/50 shadow-sm'
+                  ? 'border-brand-700 bg-brand-50/60 shadow-sm'
                   : 'border-cream-border hover:border-charcoal-300 bg-white'
               }`}
             >
-              <div className={`p-2 rounded-lg ${fulfillmentType === 'DELIVERY' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
+              <div className={`p-2.5 rounded-lg shrink-0 ${fulfillmentType === 'DELIVERY' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
                 <Truck className="w-5 h-5" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <span className="font-bold text-sm text-charcoal-900 block">Lagos Doorstep Delivery</span>
-                <span className="text-xs text-charcoal-500">Chilled courier to your venue or home (+₦2,000)</span>
+                <span className="text-xs text-charcoal-500 block mt-0.5">Chilled courier to your door (+₦2,000)</span>
               </div>
             </button>
 
             <button
               type="button"
               onClick={() => setFulfillmentType('PICKUP')}
-              className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all ${
+              className={`p-4 rounded-xl border-2 text-left flex items-start gap-3 transition-all min-h-[72px] focus-ring ${
                 fulfillmentType === 'PICKUP'
-                  ? 'border-brand-700 bg-brand-50/50 shadow-sm'
+                  ? 'border-brand-700 bg-brand-50/60 shadow-sm'
                   : 'border-cream-border hover:border-charcoal-300 bg-white'
               }`}
             >
-              <div className={`p-2 rounded-lg ${fulfillmentType === 'PICKUP' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
+              <div className={`p-2.5 rounded-lg shrink-0 ${fulfillmentType === 'PICKUP' ? 'bg-brand-700 text-white' : 'bg-cream-surface text-charcoal-700'}`}>
                 <Store className="w-5 h-5" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <span className="font-bold text-sm text-charcoal-900 block">Kitchen Pickup (Free)</span>
-                <span className="text-xs text-charcoal-500">Victoria Island Bakery Kitchen</span>
+                <span className="text-xs text-charcoal-500 block mt-0.5">Victoria Island Bakery Kitchen</span>
               </div>
             </button>
           </div>
         </Card>
 
-        {/* 2. Customer Contact */}
-        <Card className="p-6 sm:p-8 space-y-4">
-          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
-            2. Recipient Information
+        {/* 2. Preferred Schedule */}
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
+            2. Preferred Schedule
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              label="Full Name"
-              required
-              placeholder="e.g. Chioma Balogun"
-              value={formData.fullName}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-            />
-            <Input
-              label="Phone Number / WhatsApp"
-              type="tel"
-              required
-              placeholder="e.g. 08012345678"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            />
-            <div className="sm:col-span-2">
-              <Input
-                label="Email Address"
-                type="email"
-                required
-                placeholder="chioma@example.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
-            </div>
-          </div>
-        </Card>
-
-        {/* 3. Delivery / Pickup Address & Timing */}
-        <Card className="p-6 sm:p-8 space-y-4">
-          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
-            3. Timing & Location
-          </h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             <Input
               label="Preferred Date"
               type="date"
@@ -160,6 +125,43 @@ export default function Checkout() {
                 { value: 'Evening (5:00 PM - 7:00 PM)', label: 'Evening (5:00 PM - 7:00 PM)' },
               ]}
             />
+          </div>
+        </Card>
+
+        {/* 3. Recipient Information */}
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
+            3. Recipient Information
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+            <Input
+              label="Full Name"
+              required
+              placeholder="e.g. Chioma Balogun"
+              value={formData.fullName}
+              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            />
+
+            <Input
+              label="Phone Number / WhatsApp"
+              type="tel"
+              required
+              placeholder="e.g. 08012345678"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            />
+
+            <div className="sm:col-span-2">
+              <Input
+                label="Email Address"
+                type="email"
+                required
+                placeholder="chioma@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              />
+            </div>
 
             {fulfillmentType === 'DELIVERY' && (
               <div className="sm:col-span-2">
@@ -172,21 +174,26 @@ export default function Checkout() {
                 />
               </div>
             )}
-
-            <div className="sm:col-span-2">
-              <Textarea
-                label="Special Instructions / Cake Inscriptions"
-                placeholder="e.g. Inscription on cake: 'Happy 30th Birthday Funke!', call upon arrival at gate..."
-                rows={2}
-                value={formData.specialInstructions}
-                onChange={(e) => setFormData({ ...formData, specialInstructions: e.target.value })}
-              />
-            </div>
           </div>
         </Card>
 
-        {/* 4. Order Summary & Offline Submission Notice */}
-        <Card className="p-6 sm:p-8 space-y-4 bg-cream-surface/60">
+        {/* 4. Special Instructions */}
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
+            4. Special Instructions
+          </h3>
+
+          <Textarea
+            label="Cake Inscriptions & Fulfillment Notes"
+            placeholder="e.g. Inscription on cake: 'Happy 30th Birthday Funke!', call gate upon arrival..."
+            rows={3}
+            value={formData.specialInstructions}
+            onChange={(e) => setFormData({ ...formData, specialInstructions: e.target.value })}
+          />
+        </Card>
+
+        {/* 5. Order Summary & Offline Submission Notice */}
+        <Card className="p-5 sm:p-7 space-y-4 bg-cream-surface/60">
           <div className="space-y-2 text-xs sm:text-sm text-charcoal-700">
             <div className="flex justify-between">
               <span>Treats Subtotal</span>
@@ -198,9 +205,9 @@ export default function Checkout() {
                 {fulfillmentType === 'DELIVERY' ? formatCurrency(effectiveDeliveryFee) : 'Free'}
               </span>
             </div>
-            <div className="flex justify-between items-center text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border">
+            <div className="flex justify-between items-center text-sm sm:text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border">
               <span>Estimated Total</span>
-              <span className="text-xl text-brand-700 font-display">{formatCurrency(effectiveTotal || 30000)}</span>
+              <span className="text-lg sm:text-xl text-brand-700 font-display">{formatCurrency(effectiveTotal || 30000)}</span>
             </div>
           </div>
 
@@ -217,7 +224,7 @@ export default function Checkout() {
             size="lg"
             isLoading={isProcessing}
             icon={Send}
-            className="w-full justify-center"
+            className="w-full justify-center text-sm sm:text-base font-semibold min-h-[48px]"
           >
             Submit Order Request
           </Button>

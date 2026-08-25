@@ -57,7 +57,7 @@ export default function AccountProfile() {
           </div>
         </div>
 
-        <Button type="submit" variant="primary" className="mt-2">
+        <Button type="submit" variant="primary" className="mt-2 w-full sm:w-auto justify-center">
           Save Profile Changes
         </Button>
       </form>

@@ -48,13 +48,13 @@ export default function Catering() {
         subtitle="Tell us about your upcoming celebration. We will formulate a tailored dessert quote and menu proposal."
       />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
         {/* Contact Info */}
-        <Card className="p-6 sm:p-8 space-y-4">
-          <h3 className="text-lg font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
             1. Contact Details
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             <Input
               label="Full Name"
               required
@@ -84,12 +84,12 @@ export default function Catering() {
         </Card>
 
         {/* Event Info */}
-        <Card className="p-6 sm:p-8 space-y-4">
-          <h3 className="text-lg font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
+        <Card className="p-5 sm:p-7 space-y-4">
+          <h3 className="text-base font-bold font-display text-charcoal-900 border-b border-cream-border pb-2.5">
             2. Event Specifications
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             <Select
               label="Event Type"
               required
@@ -155,7 +155,7 @@ export default function Catering() {
           size="lg"
           isLoading={isSubmitting}
           icon={Calendar}
-          className="w-full justify-center"
+          className="w-full justify-center text-sm sm:text-base font-semibold min-h-[48px]"
         >
           Submit Catering Inquiry
         </Button>

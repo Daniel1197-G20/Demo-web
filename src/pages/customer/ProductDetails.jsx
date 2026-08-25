@@ -95,27 +95,27 @@ export default function ProductDetails() {
           </Card>
 
           {/* Quantity and Add to Cart */}
-          <div className="flex items-center gap-4 pt-4 border-t border-cream-border">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-4 border-t border-cream-border">
             {/* Quantity Selector */}
-            <div className="flex items-center border border-cream-border bg-white rounded-full p-1 shadow-sm">
+            <div className="flex items-center justify-between sm:justify-start border border-cream-border bg-white rounded-full p-1 shadow-sm shrink-0">
               <button
                 type="button"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700"
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                 aria-label="Decrease quantity"
               >
-                <Minus className="w-3.5 h-3.5" />
+                <Minus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
               </button>
-              <span className="w-10 text-center text-sm font-bold text-charcoal-900">
+              <span className="w-12 sm:w-10 text-center text-sm font-bold text-charcoal-900">
                 {quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity(quantity + 1)}
-                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700"
+                className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                 aria-label="Increase quantity"
               >
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
               </button>
             </div>
 
@@ -124,7 +124,7 @@ export default function ProductDetails() {
               size="lg"
               icon={ShoppingBag}
               onClick={handleAddToCart}
-              className="flex-1"
+              className="flex-1 w-full justify-center text-sm sm:text-base font-semibold"
             >
               Add {quantity > 1 ? `${quantity} Treats` : 'to Basket'} • {formatCurrency(product.price * quantity)}
             </Button>

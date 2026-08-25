@@ -41,7 +41,7 @@ export default function Modal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-charcoal-900/60 backdrop-blur-sm transition-opacity animate-fadeIn"
@@ -49,27 +49,27 @@ export default function Modal({
         aria-hidden="true"
       />
 
-      {/* Modal Dialog */}
+      {/* Modal Dialog (Bottom sheet on mobile, rounded modal on sm+) */}
       <div
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative w-full bg-white rounded-2xl shadow-brand-lg border border-cream-border z-10 overflow-hidden flex flex-col max-h-[90vh] my-auto animate-scaleUp',
+          'relative w-full bg-white rounded-t-3xl sm:rounded-2xl shadow-brand-lg border border-cream-border z-10 overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh] my-0 sm:my-auto animate-scaleUp',
           sizes[size],
           className
         )}
       >
         {/* Header */}
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-5 sm:p-6 border-b border-cream-border/80 bg-cream-surface/40">
-            <div>
+          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-cream-border/80 bg-cream-surface/40">
+            <div className="pr-4">
               {title && (
-                <h3 className="text-xl font-bold text-charcoal-900 font-display">
+                <h3 className="text-lg sm:text-xl font-bold text-charcoal-900 font-display">
                   {title}
                 </h3>
               )}
               {description && (
-                <p className="text-sm text-charcoal-500 mt-1">{description}</p>
+                <p className="text-xs sm:text-sm text-charcoal-500 mt-1">{description}</p>
               )}
             </div>
 
@@ -77,7 +77,7 @@ export default function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-charcoal-500 hover:text-charcoal-900 hover:bg-cream-surface transition-colors -mr-1"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-charcoal-500 hover:text-charcoal-900 hover:bg-cream-surface transition-colors shrink-0 -mr-1"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -87,13 +87,13 @@ export default function Modal({
         )}
 
         {/* Body Content */}
-        <div className="p-5 sm:p-6 overflow-y-auto custom-scrollbar flex-1">
+        <div className="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1">
           {children}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="p-5 sm:p-6 border-t border-cream-border/80 bg-cream-surface/30 flex items-center justify-end gap-3">
+          <div className="p-4 sm:p-6 border-t border-cream-border/80 bg-cream-surface/30 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
             {footer}
           </div>
         )}

@@ -108,17 +108,48 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Recent Orders Table */}
         <div className="lg:col-span-8">
-          <Card className="p-6">
+          <Card className="p-5 sm:p-6">
             <div className="flex items-center justify-between border-b border-cream-border pb-4 mb-4">
               <h3 className="text-base font-bold font-display text-charcoal-900">
                 Recent Order Requests
               </h3>
-              <Link to="/admin/orders" className="text-xs font-bold text-tory-500 hover:underline">
+              <Link to="/admin/orders" className="text-xs font-bold text-brand-700 hover:underline">
                 View All Queue &rarr;
               </Link>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Mobile Card List (md:hidden) */}
+            <div className="md:hidden space-y-3">
+              {RECENT_ORDERS.map((ord) => (
+                <div
+                  key={ord.id}
+                  className="p-3.5 rounded-xl bg-cream-surface/60 border border-cream-border space-y-2 text-xs"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-charcoal-900 font-display">
+                      {ord.orderNumber}
+                    </span>
+                    <Badge variant={ord.variant} size="sm" dot>
+                      {ord.label}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center justify-between text-charcoal-700">
+                    <span className="font-medium">{ord.customer}</span>
+                    <span className="text-charcoal-500">{ord.type} • {ord.items} treats</span>
+                  </div>
+                  <div className="pt-1">
+                    <Link to={`/admin/orders/${ord.orderNumber}`} className="block">
+                      <Button variant="outline" size="sm" className="w-full justify-center h-8 text-xs">
+                        Manage Request
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table (hidden md:block) */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="border-b border-cream-border text-charcoal-500 uppercase tracking-wider">

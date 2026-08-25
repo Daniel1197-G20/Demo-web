@@ -7,7 +7,7 @@ export default function AuthLayout() {
   return (
     <div className="min-h-screen bg-cream-base flex flex-col lg:flex-row">
       {/* Left Brand Showcase Section */}
-      <div className="lg:w-1/2 bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative overflow-hidden">
+      <div className="lg:w-1/2 bg-gradient-to-br from-brand-800 via-brand-700 to-brand-900 p-6 sm:p-10 lg:p-16 flex flex-col justify-between text-white relative overflow-hidden">
         {/* Ambient background blur circles */}
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-brand-900/30 rounded-full blur-3xl pointer-events-none" />
@@ -15,37 +15,37 @@ export default function AuthLayout() {
         {/* Top Logo */}
         <div className="relative z-10">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-white text-brand-700 flex items-center justify-center shadow-lg">
-              <Heart className="w-6 h-6 fill-current" />
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white text-brand-700 flex items-center justify-center shadow-lg">
+              <Heart className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
             </div>
             <div>
-              <span className="font-display font-extrabold text-2xl tracking-tight text-white block">
+              <span className="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-white block">
                 Tory's <span className="text-rose-200">Treats</span>
               </span>
-              <span className="text-xs text-brand-100 uppercase tracking-widest font-semibold">
+              <span className="text-[10px] sm:text-xs text-brand-100 uppercase tracking-widest font-semibold">
                 Artisanal Bakery & Catering
               </span>
             </div>
           </Link>
         </div>
 
-        {/* Center Hero Quote & Visual Presentation */}
-        <div className="my-12 relative z-10 max-w-lg">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-6">
+        {/* Center Hero Quote & Visual Presentation (Compact on mobile, full on sm+) */}
+        <div className="my-6 lg:my-12 relative z-10 max-w-lg">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-semibold mb-4 lg:mb-6">
             <Sparkles className="w-4 h-4 text-gold-400" />
             <span>Handcrafted in Lagos with Pure Passion</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display leading-tight mb-6">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold font-display leading-tight mb-3 lg:mb-6">
             Freshly baked happiness for every celebration.
           </h1>
 
-          <p className="text-brand-100 text-sm sm:text-base leading-relaxed">
+          <p className="text-brand-100 text-xs sm:text-base leading-relaxed hidden sm:block">
             Join thousands of treat lovers who order artisan cakes, custom event desserts, and gourmet platters prepared with premium ingredients.
           </p>
 
-          {/* Testimonial Snippet */}
-          <div className="mt-8 p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+          {/* Testimonial Snippet (Hidden on mobile, visible on sm+) */}
+          <div className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hidden sm:block">
             <div className="flex gap-1 text-gold-400 mb-2">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-current" />
@@ -61,7 +61,7 @@ export default function AuthLayout() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="relative z-10 text-xs text-brand-200">
+        <div className="relative z-10 text-xs text-brand-200 hidden lg:block">
           © {new Date().getFullYear()} {BRAND.name}. All rights reserved.
         </div>
       </div>

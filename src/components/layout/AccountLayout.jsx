@@ -25,9 +25,62 @@ export default function AccountLayout() {
 
   return (
     <PageContainer>
+      {/* Mobile Top Profile & Horizontal Scroll Navigation */}
+      <div className="md:hidden space-y-4 mb-6">
+        {/* Mobile Profile Bar */}
+        <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-cream-border shadow-brand-sm">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-full bg-brand-700 text-white font-bold text-base flex items-center justify-center shrink-0 shadow-sm">
+              {profile?.full_name?.charAt(0) || 'U'}
+            </div>
+            <div className="min-w-0">
+              <h3 className="text-sm font-bold text-charcoal-900 truncate font-display">
+                {profile?.full_name || 'Customer'}
+              </h3>
+              <p className="text-[11px] text-charcoal-500 truncate">{profile?.email}</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={signOut}
+            className="p-2 rounded-xl text-error-500 hover:bg-error-50 transition-colors shrink-0"
+            aria-label="Sign Out"
+            title="Sign Out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Mobile Horizontal Scrollable Tab Navigation */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar -mx-4 px-4">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.href}
+                to={item.href}
+                end={item.end}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3.5 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
+                    isActive
+                      ? 'bg-brand-700 text-white shadow-brand-sm font-bold'
+                      : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
+                  }`
+                }
+              >
+                <Icon className="w-3.5 h-3.5 shrink-0" />
+                <span>{item.label}</span>
+              </NavLink>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop & Main Content Structure */}
       <div className="flex flex-col md:flex-row gap-8 items-start">
-        {/* Account Sidebar */}
-        <div className="w-full md:w-64 shrink-0 space-y-4">
+        {/* Desktop Account Sidebar (Hidden on mobile) */}
+        <div className="hidden md:block w-64 shrink-0 space-y-4 sticky top-28">
           <Card className="p-5">
             <div className="flex items-center gap-3.5 pb-4 border-b border-cream-border">
               <div className="w-12 h-12 rounded-full bg-brand-700 text-white font-bold text-lg flex items-center justify-center shadow-sm">

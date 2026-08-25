@@ -145,15 +145,24 @@ export default function ProductForm() {
           </div>
         </Card>
 
-        <div className="flex items-center gap-3">
-          <Button type="submit" variant="primary" size="lg" isLoading={isLoading} icon={Save}>
-            {isEditing ? 'Save Changes' : 'Publish Treat Product'}
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate('/admin/products')}
+            className="w-full sm:w-auto justify-center"
+          >
+            Cancel
           </Button>
-          <Link to="/admin/products">
-            <Button variant="ghost" size="lg">
-              Cancel
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            variant="primary"
+            icon={Save}
+            isLoading={isLoading}
+            className="w-full sm:w-auto justify-center"
+          >
+            {isEditing ? 'Save Changes' : 'Create Treat Item'}
+          </Button>
         </div>
       </form>
     </div>

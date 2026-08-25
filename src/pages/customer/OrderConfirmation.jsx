@@ -33,36 +33,36 @@ export default function OrderConfirmation() {
           </p>
         </div>
 
-        <Card className="p-6 text-left space-y-3 bg-cream-surface/60 max-w-md mx-auto">
-          <div className="flex justify-between text-xs sm:text-sm">
+        <Card className="p-5 sm:p-6 text-left space-y-3 bg-cream-surface/60 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-xs sm:text-sm border-b sm:border-b-0 border-cream-border/60 pb-2 sm:pb-0">
             <span className="text-charcoal-500">Order Reference</span>
-            <span className="font-bold text-charcoal-900">{orderNumber}</span>
+            <span className="font-bold text-charcoal-900 font-mono text-sm break-all">{orderNumber}</span>
           </div>
-          <div className="flex justify-between text-xs sm:text-sm">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-xs sm:text-sm border-b sm:border-b-0 border-cream-border/60 pb-2 sm:pb-0">
             <span className="text-charcoal-500">Next Step</span>
             <span className="font-bold text-brand-700">Bakery Verification & Direct Contact</span>
           </div>
-          <div className="flex justify-between text-xs sm:text-sm">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-xs sm:text-sm">
             <span className="text-charcoal-500">Fulfillment</span>
             <span className="font-bold text-charcoal-900">Doorstep Delivery / Pickup</span>
           </div>
         </Card>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
-            <Button variant="secondary" icon={MessageCircle} className="w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-4 max-w-md mx-auto">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto flex-1">
+            <Button variant="secondary" icon={MessageCircle} className="w-full justify-center">
               Confirm on WhatsApp
             </Button>
           </a>
 
           <Link to="/account/orders" className="w-full sm:w-auto">
-            <Button variant="outline" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full justify-center">
               View My Orders
             </Button>
           </Link>
 
           <Link to="/shop" className="w-full sm:w-auto">
-            <Button variant="primary" icon={ShoppingBag} className="w-full sm:w-auto">
+            <Button variant="primary" icon={ShoppingBag} className="w-full justify-center">
               Continue Browsing
             </Button>
           </Link>

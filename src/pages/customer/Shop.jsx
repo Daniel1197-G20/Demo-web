@@ -94,15 +94,15 @@ export default function Shop() {
       />
 
       {/* Filter & Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6 sm:mb-8">
         {/* Category Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto custom-scrollbar">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto custom-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+              className={`px-3.5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
                 selectedCategory === cat
                   ? 'bg-brand-700 text-white shadow-brand-sm'
                   : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
@@ -114,7 +114,7 @@ export default function Shop() {
         </div>
 
         {/* Search Box */}
-        <div className="w-full sm:w-72">
+        <div className="w-full sm:w-72 shrink-0">
           <Input
             placeholder="Search treats..."
             value={search}
@@ -126,20 +126,41 @@ export default function Shop() {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((prod) => (
-          <ProductCard
-            key={prod.id}
-            product={prod}
-            onAddToCart={(p) => {
-              addItem(p, 1);
-              toast.success(`Added ${p.name} to your basket!`);
+      {filtered.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filtered.map((prod) => (
+            <ProductCard
+              key={prod.id}
+              product={prod}
+              onAddToCart={(p) => {
+                addItem(p, 1);
+                toast.success(`Added ${p.name} to your basket!`);
+              }}
+              isInCart={items.some((i) => i.id === prod.id)}
+              cartQuantity={items.find((i) => i.id === prod.id)?.quantity || 0}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-12 bg-white rounded-2xl border border-cream-border p-8">
+          <p className="text-base font-bold text-charcoal-900 font-display">
+            No treats match "{search || selectedCategory}"
+          </p>
+          <p className="text-xs sm:text-sm text-charcoal-500 mt-1 mb-4">
+            Try adjusting your search query or selecting another category.
+          </p>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              setSearch('');
+              setSelectedCategory('All');
             }}
-            isInCart={items.some((i) => i.id === prod.id)}
-            cartQuantity={items.find((i) => i.id === prod.id)?.quantity || 0}
-          />
-        ))}
-      </div>
+          >
+            Clear Filters
+          </Button>
+        </div>
+      )}
     </PageContainer>
   );
 }
