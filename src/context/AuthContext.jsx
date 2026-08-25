@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
         email,
         full_name: isAdmin ? 'Tory Admin' : 'Adaobi Okafor',
         role: isAdmin ? USER_ROLES.ADMIN : USER_ROLES.CUSTOMER,
-        phone: '+234 802 345 6789',
+        phone: '+234 903 835 8985',
         city: 'Lagos',
       };
 

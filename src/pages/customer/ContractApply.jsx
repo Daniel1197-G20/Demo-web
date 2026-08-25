@@ -72,7 +72,7 @@ export default function ContractApply() {
               label="Phone Number"
               type="tel"
               required
-              placeholder="08034567890"
+              placeholder="09038358985"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />

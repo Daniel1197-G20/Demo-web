@@ -12,10 +12,12 @@ import {
   LogOut,
   ChevronDown,
   Phone,
+  MessageCircle,
 } from 'lucide-react';
 import { BRAND, NAV_LINKS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
+import { createWhatsAppUrl } from '../../lib/formatters';
 import Button from '../ui/Button';
 import Dropdown from '../ui/Dropdown';
 
@@ -52,12 +54,21 @@ export default function CustomerNavbar() {
     };
   }, [mobileMenuOpen]);
 
+  const whatsappUrl = createWhatsAppUrl(
+    BRAND.whatsappNumber,
+    "Hello Tory's Treats! I would like to inquire about your freshly baked treats & experiences."
+  );
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0">
+          <Link
+            to="/"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0"
+          >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
             </div>
@@ -94,12 +105,24 @@ export default function CustomerNavbar() {
           <div className="flex items-center gap-1.5 sm:gap-3">
             {/* Quick Call Icon (Mobile only) */}
             <a
-              href={`tel:${BRAND.phone.replace(/[^0-9+]/g, '')}`}
+              href={`tel:${BRAND.rawPhone}`}
               className="flex h-9 w-9 items-center justify-center rounded-full border border-cream-border bg-white text-charcoal-800 transition-colors hover:border-brand-400 hover:text-brand-700 lg:hidden shadow-xs"
-              aria-label="Call bakery directly"
+              aria-label={`Call ${BRAND.phone}`}
               title={`Call ${BRAND.phone}`}
             >
               <Phone className="w-4 h-4 text-brand-700" />
+            </a>
+
+            {/* Quick WhatsApp Icon (Mobile only) */}
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 transition-colors hover:bg-emerald-100 lg:hidden shadow-xs"
+              aria-label="Chat on WhatsApp"
+              title="Chat on WhatsApp"
+            >
+              <MessageCircle className="w-4 h-4 text-emerald-600 fill-current" />
             </a>
 
             {/* Quick Test Switcher (Reviewer Convenience) */}
@@ -175,6 +198,7 @@ export default function CustomerNavbar() {
             {/* Mobile Profile Icon */}
             <Link
               to={isAuthenticated ? '/account' : '/auth/login'}
+              onClick={() => setMobileMenuOpen(false)}
               className="sm:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
               aria-label={isAuthenticated ? 'My Account' : 'Sign In'}
             >
@@ -191,11 +215,12 @@ export default function CustomerNavbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700 transition-colors focus-ring"
+              className="lg:hidden p-2 rounded-xl text-charcoal-800 hover:bg-cream-surface hover:text-brand-700 transition-colors focus-ring"
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation-drawer"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-brand-700" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -203,7 +228,7 @@ export default function CustomerNavbar() {
 
       {/* Mobile Slide-in Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div id="mobile-navigation-drawer" className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop Overlay */}
           <div
             className="fixed inset-0 bg-charcoal-900/60 backdrop-blur-sm transition-opacity"
@@ -212,22 +237,26 @@ export default function CustomerNavbar() {
           />
 
           {/* Drawer Panel */}
-          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto">
+          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200">
             {/* Drawer Header */}
             <div>
-              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/40">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/50">
+                <Link
+                  to="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2"
+                >
                   <div className="w-8 h-8 rounded-xl bg-brand-700 flex items-center justify-center text-white">
                     <Heart className="w-4 h-4 fill-current" />
                   </div>
                   <span className="font-display font-extrabold text-lg text-charcoal-900">
                     Tory's <span className="text-brand-700">Treats</span>
                   </span>
-                </div>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-xl text-charcoal-500 hover:text-charcoal-900 hover:bg-cream-surface transition-colors"
+                  className="p-2 rounded-xl text-charcoal-600 hover:text-charcoal-900 hover:bg-cream-surface transition-colors"
                   aria-label="Close navigation menu"
                 >
                   <X className="w-5 h-5" />
@@ -305,14 +334,28 @@ export default function CustomerNavbar() {
                   )}
                 </NavLink>
 
+                {/* WhatsApp Concierge Action in Drawer */}
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 flex items-center justify-between rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 px-4 py-3 text-xs font-bold text-charcoal-900 hover:bg-[#25D366]/20 transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
+                    <span>WhatsApp Concierge</span>
+                  </div>
+                  <span className="text-[#128C7E] font-extrabold text-[11px]">Chat Now →</span>
+                </a>
+
                 {/* Quick Call in Drawer */}
                 <a
-                  href={`tel:${BRAND.phone.replace(/[^0-9+]/g, '')}`}
-                  className="mt-2 flex items-center justify-between rounded-xl border border-cream-border bg-cream-surface/70 px-4 py-3 text-xs font-semibold text-charcoal-900 active:bg-cream-soft"
+                  href={`tel:${BRAND.rawPhone}`}
+                  className="mt-2 flex items-center justify-between rounded-xl border border-cream-border bg-cream-surface/70 px-4 py-3 text-xs font-semibold text-charcoal-900 hover:bg-cream-soft transition-colors"
                 >
                   <div className="flex items-center gap-2.5">
                     <Phone className="w-4 h-4 text-brand-700" />
-                    <span>Call Boutique: {BRAND.phone}</span>
+                    <span>Call: {BRAND.phone}</span>
                   </div>
                   <span className="text-brand-700 font-bold">Call</span>
                 </a>

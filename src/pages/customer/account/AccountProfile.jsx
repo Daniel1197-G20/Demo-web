@@ -12,7 +12,7 @@ export default function AccountProfile() {
   const [formData, setFormData] = useState({
     fullName: profile?.full_name || 'Adaobi Okafor',
     email: profile?.email || 'adaobi@example.com',
-    phone: profile?.phone || '+234 802 345 6789',
+    phone: profile?.phone || '+234 903 835 8985',
     address: '14 Admiralty Way, Lekki Phase 1',
     city: 'Lagos',
   });

@@ -1,8 +1,11 @@
 export const BRAND = {
   name: "Tory's Treats",
   tagline: "Artisanal Bakes & Luxury Catering",
-  phone: "+234 800 123 4567",
-  whatsappNumber: "2348001234567",
+  phone: "+234 903 835 8985",
+  rawPhone: "+2349038358985",
+  whatsappNumber: "2349038358985",
+  whatsappUrl: "https://wa.me/2349038358985",
+  telUrl: "tel:+2349038358985",
   email: "hello@torystreats.com",
   address: "Victoria Island, Lagos, Nigeria",
   openingHours: "Mon - Sat: 8:00 AM - 7:00 PM | Sun: 10:00 AM - 5:00 PM",

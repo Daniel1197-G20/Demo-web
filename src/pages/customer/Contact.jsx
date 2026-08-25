@@ -44,7 +44,9 @@ export default function Contact() {
                 <Phone className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Phone Line</span>
-                  <span>{BRAND.phone}</span>
+                  <a href={`tel:${BRAND.rawPhone}`} className="hover:text-brand-700 transition-colors">
+                    {BRAND.phone}
+                  </a>
                 </div>
               </div>
 
@@ -52,14 +54,16 @@ export default function Contact() {
                 <Mail className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-charcoal-900 block">Email Inquiries</span>
-                  <span>{BRAND.email}</span>
+                  <a href={`mailto:${BRAND.email}`} className="hover:text-brand-700 transition-colors">
+                    {BRAND.email}
+                  </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-charcoal-900 block">Baking & Delivery Hours</span>
+                  <span className="font-bold text-charcoal-900 block">Baking &amp; Delivery Hours</span>
                   <span>{BRAND.openingHours}</span>
                 </div>
               </div>
@@ -99,7 +103,7 @@ export default function Contact() {
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input label="Your Name" required placeholder="Amina Bello" />
-                <Input label="Phone Number" required placeholder="08023456789" />
+                <Input label="Phone Number" required placeholder="09038358985" />
               </div>
               <Input label="Email Address" type="email" required placeholder="amina@example.com" />
               <Textarea label="Your Message or Special Request" required placeholder="Tell us how we can assist you..." rows={4} />

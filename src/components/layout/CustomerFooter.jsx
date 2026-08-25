@@ -71,11 +71,15 @@ export default function CustomerFooter() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-brand-700 shrink-0" />
-                <span>{BRAND.phone}</span>
+                <a href={`tel:${BRAND.rawPhone}`} className="hover:text-brand-700 transition-colors">
+                  {BRAND.phone}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-brand-700 shrink-0" />
-                <span>{BRAND.email}</span>
+                <a href={`mailto:${BRAND.email}`} className="hover:text-brand-700 transition-colors">
+                  {BRAND.email}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-brand-700 shrink-0" />

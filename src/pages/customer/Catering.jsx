@@ -66,7 +66,7 @@ export default function Catering() {
               label="Phone / WhatsApp"
               type="tel"
               required
-              placeholder="08023456789"
+              placeholder="09038358985"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />

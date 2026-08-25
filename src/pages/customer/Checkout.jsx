@@ -147,7 +147,7 @@ export default function Checkout() {
               label="Phone Number / WhatsApp"
               type="tel"
               required
-              placeholder="e.g. 08012345678"
+              placeholder="e.g. 09038358985"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             />

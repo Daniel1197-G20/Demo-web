@@ -31,13 +31,16 @@ export function formatDate(date) {
 }
 
 /**
- * Generate a WhatsApp chat URL with prefilled text
- * @param {string} phone - e.g. "2348001234567"
- * @param {string} text - message
+ * Generate a WhatsApp chat URL with optional prefilled text
+ * @param {string} phone - e.g. "2349038358985"
+ * @param {string} [text] - optional message
  * @returns {string}
  */
-export function createWhatsAppUrl(phone, text) {
-  const cleanPhone = phone.replace(/[^0-9]/g, '');
-  const encodedText = encodeURIComponent(text);
+export function createWhatsAppUrl(phone = '2349038358985', text = '') {
+  const cleanPhone = (phone || '2349038358985').replace(/[^0-9]/g, '');
+  if (!text || !text.trim()) {
+    return `https://wa.me/${cleanPhone}`;
+  }
+  const encodedText = encodeURIComponent(text.trim());
   return `https://wa.me/${cleanPhone}?text=${encodedText}`;
 }
