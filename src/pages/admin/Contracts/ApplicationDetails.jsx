@@ -24,7 +24,7 @@ export default function ApplicationDetails() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/contracts/applications"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-700"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -44,14 +44,14 @@ export default function ApplicationDetails() {
             Applicant Information
           </h3>
 
-          <div className="grid grid-cols-2 gap-4 text-xs sm:text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
             <div>
               <span className="text-charcoal-500 block text-xs">Full Name</span>
               <span className="font-bold text-charcoal-900">Tobi Adeleke</span>
             </div>
             <div>
               <span className="text-charcoal-500 block text-xs">Applied Role</span>
-              <span className="font-bold text-brand-600">Weekend Event Pastry Chef</span>
+              <span className="font-bold text-brand-700">Weekend Event Pastry Chef</span>
             </div>
             <div>
               <span className="text-charcoal-500 block text-xs">Email</span>
@@ -64,13 +64,13 @@ export default function ApplicationDetails() {
           </div>
 
           {/* CV Document Download Block */}
-          <div className="p-4 rounded-xl bg-cream-surface border border-cream-border flex items-center justify-between gap-4 mt-2">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-brand-100 text-brand-600 flex items-center justify-center">
+          <div className="p-4 rounded-xl bg-cream-surface border border-cream-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mt-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center shrink-0">
                 <FileText className="w-5 h-5" />
               </div>
-              <div>
-                <span className="font-bold text-xs sm:text-sm text-charcoal-900 block">
+              <div className="min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-charcoal-900 block truncate">
                   Tobi_Adeleke_Pastry_Chef_Resume.pdf
                 </span>
                 <span className="text-[11px] text-charcoal-500">2.4 MB • PDF Document</span>

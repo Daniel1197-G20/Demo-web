@@ -14,6 +14,8 @@ import {
   Gift,
   HeartHandshake,
   Coffee,
+  Quote,
+  MessageCircle,
 } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
@@ -21,7 +23,8 @@ import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import Input from '../../components/ui/Input';
 import EventCard from '../../components/ui/EventCard';
-import { formatCurrency } from '../../lib/formatters';
+import { formatCurrency, createWhatsAppUrl } from '../../lib/formatters';
+import { BRAND } from '../../lib/constants';
 
 export default function Events() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -34,6 +37,25 @@ export default function Events() {
     'Pop-Ups & Socials',
     'Private Celebrations',
   ];
+
+  // Category Filter Pill Style Mapper
+  const getFilterStyle = (cat, isActive) => {
+    if (!isActive) {
+      return 'bg-white border-cream-border text-charcoal-700 hover:bg-cream-surface hover:border-brand-200';
+    }
+    switch (cat) {
+      case 'Masterclasses & Workshops':
+        return 'bg-brand-700 text-white shadow-brand-sm border-brand-700';
+      case 'Tastings & Pairings':
+        return 'bg-amber-700 text-white shadow-sm border-amber-700';
+      case 'Pop-Ups & Socials':
+        return 'bg-emerald-700 text-white shadow-sm border-emerald-700';
+      case 'Private Celebrations':
+        return 'bg-rose-700 text-white shadow-sm border-rose-700';
+      default:
+        return 'bg-brand-700 text-white shadow-brand-sm border-brand-700';
+    }
+  };
 
   // Featured Main Event Spotlight
   const FEATURED_EVENT = {
@@ -54,10 +76,10 @@ export default function Events() {
     description:
       'Immerse yourself in classical French patisserie technique. Master delicate almond macaron shells with Italian meringue, velvety chocolate ganache fillings, and crisp choux au craquelin under hands-on chef guidance.',
     inclusions: [
-      'Hands-on baking of 24 macarons and choux pastries',
-      'Complimentary Prosecco & cold-brew coffee bar',
-      'Custom recipe folio & ingredient pairing guide',
-      'Luxury presentation box with your bakes to take home',
+      'Hands-on preparation of 24 macarons and 8 choux au craquelin',
+      'Complimentary sommelier-selected Prosecco & cold-brew coffee bar',
+      'Custom laminated recipe folio & flavor pairing guide',
+      'Luxury branded presentation box with your bakes to take home',
     ],
   };
 
@@ -133,28 +155,40 @@ export default function Events() {
     },
   ];
 
-  // Past Events (Social Proof Archive)
+  // Past Events (Memory Wall / Social Proof Archive)
   const PAST_EVENTS = [
     {
       title: 'Summer Sunset Macaron Tasting Gala',
       date: 'July 2026',
+      location: 'Ikoyi Rooftop Lounge',
       attendees: '40 Guests',
+      quote: '“The passionfruit and dark chocolate pairings were simply out of this world.”',
+      author: 'Kemi O.',
       image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80',
-      desc: 'An unforgettable evening of 8 exclusive macaron pairings and acoustic jazz in Ikoyi.',
+      tag: 'Tasting Soirée',
+      tagColor: 'bg-amber-100 text-amber-900 border-amber-200',
     },
     {
       title: 'Private Bridal Cake Tasting Showcase',
       date: 'June 2026',
+      location: 'VI Tasting Suite',
       attendees: '25 Brides & Planners',
+      quote: '“The attention to detail and flavor combinations made planning our wedding cake unforgettable.”',
+      author: 'Ngozi & Tunde',
       image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&auto=format&fit=crop&q=80',
-      desc: 'VIP tasting suite showcasing custom tier cake pairings and dessert cup styling.',
+      tag: 'Bridal Showcase',
+      tagColor: 'bg-rose-100 text-rose-900 border-rose-200',
     },
     {
       title: '72-Hour Croissant Lamination Masterclass',
       date: 'May 2026',
+      location: 'Tory’s Kitchen Atelier',
       attendees: '12 Students (Sold Out)',
+      quote: '“The best baking workshop in Lagos. I finally mastered true honeycomb layers!”',
+      author: 'David A.',
       image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80',
-      desc: 'Deep-dive seminar into French butter lamination and temperature control.',
+      tag: 'Chef Workshop',
+      tagColor: 'bg-brand-100 text-brand-900 border-brand-200',
     },
   ];
 
@@ -170,32 +204,41 @@ export default function Events() {
     return matchesCat && matchesSearch;
   });
 
+  const whatsappInquiryUrl = createWhatsAppUrl(
+    BRAND.whatsappNumber,
+    "Hello Tory's Treats! I'd like to inquire about hosting a private group masterclass or event tasting."
+  );
+
   return (
     <div className="overflow-x-hidden">
       {/* ─────────────────────────────────────────────────────────────
-          1. EVENTS HERO (Grand Editorial Introduction)
+          1. EVENTS HERO (Grand Celebratory Atmosphere)
       ───────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50/70 via-cream-base to-cream-base pt-6 pb-14 sm:pt-12 sm:pb-20 md:pt-16 md:pb-24 border-b border-cream-border/60">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-100/80 via-cream-surface to-cream-base pt-8 pb-16 sm:pt-14 sm:pb-24 md:pt-18 md:pb-28 border-b border-cream-border/70">
+        {/* Ambient Warm Color Mesh Highlights */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand-200/40 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 rounded-full bg-amber-200/30 blur-3xl pointer-events-none" />
+
         <PageContainer>
-          <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-5">
-            {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-brand-100/90 border border-brand-200/80 px-3.5 py-1.5 text-xs font-bold text-brand-800 tracking-wide shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-brand-700 shrink-0" />
+          <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6 relative z-10">
+            {/* Eyebrow Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md border border-brand-200 px-4 py-1.5 text-xs font-bold text-brand-800 tracking-wide shadow-xs">
+              <Sparkles className="w-4 h-4 text-gold-500 shrink-0" />
               <span>Tory’s Treats Culinary Experiences</span>
             </div>
 
             {/* Script Accent Subtitle */}
-            <p className="font-serif italic text-lg sm:text-2xl text-brand-600">
-              Curated Masterclasses, Private Tastings &amp; Dessert Pop-Ups
+            <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-brand-700">
+              Curated Masterclasses, Sommelier Tastings &amp; Secret Pop-Ups
             </p>
 
             {/* Grand Display Title */}
-            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 leading-[1.1] tracking-tight">
+            <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold text-charcoal-900 leading-[1.12] tracking-tight">
               MOMENTS WORTH{' '}
               <span className="text-brand-700 relative inline-block">
                 CELEBRATING
                 <svg
-                  className="absolute -bottom-1 left-0 w-full h-2.5 text-brand-200 -z-10"
+                  className="absolute -bottom-1.5 left-0 w-full h-3 text-gold-400/70 -z-10"
                   viewBox="0 0 100 20"
                   preserveAspectRatio="none"
                 >
@@ -205,50 +248,62 @@ export default function Events() {
             </h1>
 
             {/* Subtitle Copy */}
-            <p className="text-sm sm:text-base md:text-lg text-charcoal-700 leading-relaxed max-w-2xl mx-auto">
-              Step inside our Victoria Island baking atelier. Experience hands-on pastry masterclasses, private weekend dessert tastings, and intimate culinary gatherings designed for lovers of exceptional craft.
+            <p className="text-sm sm:text-base md:text-lg text-charcoal-700 leading-relaxed max-w-2xl mx-auto font-normal">
+              Step inside our Victoria Island baking atelier. Experience hands-on pastry masterclasses, private weekend dessert tastings, and intimate culinary gatherings crafted for lovers of exceptional patisserie.
             </p>
 
-            {/* Dual CTAs & Key Note */}
+            {/* Dual CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
               <a
                 href="#upcoming-events"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-brand-700 hover:bg-brand-800 active:bg-brand-900 px-7 py-3.5 text-sm font-semibold text-white shadow-brand-sm hover:shadow-brand-md transition-all active:scale-98 text-center"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-brand-700 hover:bg-brand-800 active:bg-brand-900 px-7 py-3.5 text-sm font-bold text-white shadow-brand-sm hover:shadow-brand-md transition-all active:scale-98 text-center"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Explore Upcoming Events ↓</span>
               </a>
               <Link
                 to="/catering"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full border border-cream-border hover:border-brand-400 bg-white hover:bg-cream-surface px-7 py-3.5 text-sm font-semibold text-charcoal-900 hover:text-brand-700 transition-all active:scale-98 text-center shadow-xs"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full border border-cream-border hover:border-brand-400 bg-white hover:bg-cream-surface px-7 py-3.5 text-sm font-bold text-charcoal-900 hover:text-brand-700 transition-all active:scale-98 text-center shadow-xs"
               >
                 <HeartHandshake className="w-4 h-4 text-brand-700" />
                 <span>Host Private Group Session</span>
               </Link>
             </div>
 
-            <p className="text-xs text-charcoal-500 pt-1">
-              ✨ Small group sizes (10–16 seats max) • All gourmet ingredients &amp; pairings included
-            </p>
+            {/* Quick Live Schedule Pill */}
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 text-xs text-charcoal-600 pt-2 font-medium">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100/90 text-amber-900 font-bold text-[11px]">
+                ★ 4 Sessions Open
+              </span>
+              <span>•</span>
+              <span>Intimate groups (10–16 seats max)</span>
+              <span>•</span>
+              <span>All premium ingredients &amp; gift box included</span>
+            </div>
           </div>
         </PageContainer>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          2. FEATURED EVENT SPOTLIGHT (Split Editorial Layout)
+          2. FEATURED EVENT SPOTLIGHT (The Visual Anchor)
       ───────────────────────────────────────────────────────────── */}
       <section className="py-14 sm:py-20 bg-cream-base">
         <PageContainer>
-          <div className="mb-6 sm:mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
-              Chef’s Spotlight Experience
+          <div className="mb-6 sm:mb-8 flex items-baseline justify-between">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-700">
+                Chef’s Spotlight Experience
+              </span>
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 mt-1">
+                Featured Upcoming Masterclass
+              </h2>
+            </div>
+            <span className="hidden sm:inline-block text-xs font-bold text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
+              Limited Seats Available
             </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 mt-1">
-              Featured Upcoming Masterclass
-            </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 rounded-3xl border border-cream-border bg-white p-5 sm:p-8 lg:p-10 shadow-brand-md items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 rounded-3xl border-2 border-brand-200/80 bg-gradient-to-br from-white via-brand-50/25 to-cream-surface p-5 sm:p-8 lg:p-10 shadow-brand-md items-center">
             {/* Left Image (6 cols) */}
             <div className="lg:col-span-6 relative">
               <div className="relative aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden bg-cream-surface group shadow-sm">
@@ -258,14 +313,14 @@ export default function Events() {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-charcoal-900/10 to-transparent" />
 
                 {/* Top Badges */}
                 <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-2 z-10">
-                  <span className="px-3 py-1 rounded-full bg-gold-500 text-charcoal-900 text-xs font-bold shadow-xs">
+                  <span className="px-3 py-1 rounded-full bg-gold-500 text-charcoal-900 text-xs font-extrabold shadow-sm">
                     ★ Next Session
                   </span>
-                  <span className="px-3 py-1 rounded-full bg-white/95 text-brand-700 text-xs font-bold uppercase tracking-wider shadow-xs">
+                  <span className="px-3 py-1 rounded-full bg-brand-700 text-white text-xs font-bold uppercase tracking-wider shadow-xs">
                     {FEATURED_EVENT.category}
                   </span>
                 </div>
@@ -276,7 +331,7 @@ export default function Events() {
                     <Calendar className="w-4 h-4 text-gold-400" />
                     <span className="text-xs font-bold">{FEATURED_EVENT.displayDate} ({FEATURED_EVENT.dayOfWeek})</span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-warning-500 text-white text-[11px] font-bold animate-pulse">
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[11px] font-extrabold animate-pulse shadow-sm">
                     Only {FEATURED_EVENT.spotsLeft} Spots Remaining
                   </span>
                 </div>
@@ -286,8 +341,8 @@ export default function Events() {
             {/* Right Content (6 cols) */}
             <div className="lg:col-span-6 space-y-4 sm:space-y-5">
               <div>
-                <div className="flex items-center gap-2 text-xs text-charcoal-500 mb-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-brand-700" />
+                <div className="flex items-center gap-2 text-xs text-charcoal-600 mb-1.5 font-medium">
+                  <MapPin className="w-3.5 h-3.5 text-brand-700 shrink-0" />
                   <span>{FEATURED_EVENT.location}</span>
                 </div>
 
@@ -309,10 +364,10 @@ export default function Events() {
                 {FEATURED_EVENT.description}
               </p>
 
-              {/* Inclusions Checklist */}
-              <div className="space-y-2 pt-1 border-t border-cream-border/80 text-xs sm:text-sm text-charcoal-700">
+              {/* Inclusions Checklist with Soft Brand Icons */}
+              <div className="space-y-2 pt-2 border-t border-cream-border text-xs sm:text-sm text-charcoal-800 font-medium">
                 {FEATURED_EVENT.inclusions.map((inc, i) => (
-                  <div key={i} className="flex items-start gap-2">
+                  <div key={i} className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-brand-700 shrink-0 mt-0.5" />
                     <span>{inc}</span>
                   </div>
@@ -323,9 +378,9 @@ export default function Events() {
               <div className="pt-4 border-t border-cream-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-xs text-charcoal-500 uppercase tracking-wider font-semibold block">
-                    Session Fee
+                    Session Experience Fee
                   </span>
-                  <span className="font-display text-2xl sm:text-3xl font-extrabold text-brand-700">
+                  <span className="font-display text-2xl sm:text-3xl font-black text-brand-700">
                     {formatCurrency(FEATURED_EVENT.price)}{' '}
                     <span className="text-xs font-normal text-charcoal-500">/ seat</span>
                   </span>
@@ -337,7 +392,7 @@ export default function Events() {
                     size="lg"
                     icon={ArrowRight}
                     iconPosition="right"
-                    className="w-full sm:w-auto justify-center text-sm font-semibold min-h-[48px]"
+                    className="w-full sm:w-auto justify-center text-sm font-bold min-h-[48px] bg-brand-700 hover:bg-brand-800 shadow-brand-sm hover:shadow-brand-md"
                   >
                     Reserve Your Seat
                   </Button>
@@ -349,27 +404,27 @@ export default function Events() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. UPCOMING EVENTS CATALOG & FILTERING
+          3. UPCOMING EVENTS CATALOG & HARMONIC FILTERING
       ───────────────────────────────────────────────────────────── */}
-      <section id="upcoming-events" className="py-14 sm:py-20 bg-cream-surface border-y border-cream-border">
+      <section id="upcoming-events" className="py-14 sm:py-20 bg-cream-surface/90 border-y border-cream-border">
         <PageContainer>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-brand-700">
-                Calendar &amp; Schedule
+              <p className="text-xs uppercase tracking-widest font-extrabold text-brand-700">
+                Seasonal Schedule &amp; Calendar
               </p>
               <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 mt-1">
                 Upcoming Experiences in Lagos
               </h2>
               <p className="text-xs sm:text-sm text-charcoal-600 mt-1">
-                Reserve your tickets early. All masterclasses have strictly capped capacities.
+                Tickets are strictly capped per session to guarantee personalized chef guidance.
               </p>
             </div>
 
             {/* Quick Search */}
             <div className="w-full md:w-72 shrink-0">
               <Input
-                placeholder="Search events or venue..."
+                placeholder="Search events, venue, or style..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 leadingIcon={Search}
@@ -378,22 +433,24 @@ export default function Events() {
             </div>
           </div>
 
-          {/* Category Filter Tabs */}
+          {/* Category Filter Tabs with Distinct Accent States */}
           <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 custom-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
-                  selectedCategory.toLowerCase() === cat.toLowerCase()
-                    ? 'bg-brand-700 text-white shadow-brand-sm'
-                    : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {CATEGORIES.map((cat) => {
+              const isActive = selectedCategory.toLowerCase() === cat.toLowerCase();
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 border focus-ring ${getFilterStyle(
+                    cat,
+                    isActive
+                  )}`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
 
           {/* Events Grid or Empty State */}
@@ -430,26 +487,32 @@ export default function Events() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          4. WHAT TO EXPECT SECTION
+          4. WHAT TO EXPECT (Visual Step Sequence)
       ───────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 bg-cream-base">
         <PageContainer>
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
-              The Tory’s Experience
+            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-700">
+              The Tory’s Standard
             </span>
             <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-charcoal-900 mt-1.5">
               What to Expect at Our Sessions
             </h2>
             <p className="text-xs sm:text-base text-charcoal-600 mt-2">
-              Every detail is thoughtfully curated to provide an immersive, luxurious, and memorable culinary gathering.
+              Every detail is artfully curated to provide an immersive, luxurious, and memorable culinary gathering.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="rounded-2xl border border-cream-border bg-white p-6 flex flex-col justify-between shadow-xs hover:border-brand-200 transition-colors">
+            {/* Step 01 */}
+            <div className="rounded-2xl border border-brand-200/90 bg-gradient-to-b from-brand-50/40 to-white p-6 flex flex-col justify-between shadow-xs hover:shadow-brand-sm transition-all">
               <div>
-                <span className="font-display font-black text-2xl text-brand-300 block mb-2">01</span>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-display font-black text-2xl text-brand-700">01</span>
+                  <div className="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                </div>
                 <h3 className="font-display font-bold text-charcoal-900 text-lg mb-1.5">
                   Hands-On Instruction
                 </h3>
@@ -459,9 +522,15 @@ export default function Events() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-cream-border bg-white p-6 flex flex-col justify-between shadow-xs hover:border-brand-200 transition-colors">
+            {/* Step 02 */}
+            <div className="rounded-2xl border border-amber-200/90 bg-gradient-to-b from-amber-50/40 to-white p-6 flex flex-col justify-between shadow-xs hover:shadow-brand-sm transition-all">
               <div>
-                <span className="font-display font-black text-2xl text-brand-300 block mb-2">02</span>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-display font-black text-2xl text-amber-700">02</span>
+                  <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
+                    <Award className="w-4 h-4" />
+                  </div>
+                </div>
                 <h3 className="font-display font-bold text-charcoal-900 text-lg mb-1.5">
                   Pure Ingredients
                 </h3>
@@ -471,9 +540,15 @@ export default function Events() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-cream-border bg-white p-6 flex flex-col justify-between shadow-xs hover:border-brand-200 transition-colors">
+            {/* Step 03 */}
+            <div className="rounded-2xl border border-emerald-200/90 bg-gradient-to-b from-emerald-50/40 to-white p-6 flex flex-col justify-between shadow-xs hover:shadow-brand-sm transition-all">
               <div>
-                <span className="font-display font-black text-2xl text-brand-300 block mb-2">03</span>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-display font-black text-2xl text-emerald-700">03</span>
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                    <Wine className="w-4 h-4" />
+                  </div>
+                </div>
                 <h3 className="font-display font-bold text-charcoal-900 text-lg mb-1.5">
                   Curated Pairings
                 </h3>
@@ -483,9 +558,15 @@ export default function Events() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-cream-border bg-white p-6 flex flex-col justify-between shadow-xs hover:border-brand-200 transition-colors">
+            {/* Step 04 */}
+            <div className="rounded-2xl border border-rose-200/90 bg-gradient-to-b from-rose-50/40 to-white p-6 flex flex-col justify-between shadow-xs hover:shadow-brand-sm transition-all">
               <div>
-                <span className="font-display font-black text-2xl text-brand-300 block mb-2">04</span>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-display font-black text-2xl text-rose-700">04</span>
+                  <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 flex items-center justify-center">
+                    <Gift className="w-4 h-4" />
+                  </div>
+                </div>
                 <h3 className="font-display font-bold text-charcoal-900 text-lg mb-1.5">
                   Gourmet Takeaway Box
                 </h3>
@@ -499,13 +580,13 @@ export default function Events() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          5. ATMOSPHERE & MOMENTS GALLERY
+          5. ATMOSPHERE & MOMENTS (Visual Photo Gallery)
       ───────────────────────────────────────────────────────────── */}
       <section className="py-14 sm:py-20 bg-cream-surface border-y border-cream-border">
         <PageContainer>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
             <div>
-              <p className="text-xs uppercase tracking-widest font-bold text-brand-700">
+              <p className="text-xs uppercase tracking-widest font-extrabold text-brand-700">
                 Atelier Gallery
               </p>
               <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 mt-1">
@@ -513,61 +594,76 @@ export default function Events() {
               </h2>
             </div>
             <span className="text-xs font-semibold text-charcoal-500">
-              Captured live at Tory’s Treats, Lagos
+              Captured live at Tory’s Treats Atelier, Lagos
             </span>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base">
+            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base relative">
               <img
                 src="https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=600&auto=format&fit=crop&q=80"
                 alt="Cupcake Gold Leaf Decorating"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-white text-xs font-bold">
+                Gold Leaf Decorating
+              </div>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base">
+
+            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base relative">
               <img
                 src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&auto=format&fit=crop&q=80"
                 alt="Champagne Tasting Evening"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-white text-xs font-bold">
+                Champagne Tasting
+              </div>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base">
+
+            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base relative">
               <img
                 src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&auto=format&fit=crop&q=80"
                 alt="Pastry Lamination Workshop"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-white text-xs font-bold">
+                Macaron Piping
+              </div>
             </div>
-            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base">
+
+            <div className="rounded-2xl overflow-hidden aspect-square group shadow-sm bg-cream-base relative">
               <img
                 src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80"
                 alt="Dessert Box Assembly"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 loading="lazy"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 text-white text-xs font-bold">
+                Presentation Hampers
+              </div>
             </div>
           </div>
         </PageContainer>
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          6. PAST EVENTS ARCHIVE (Social Proof)
+          6. PAST EVENTS — MEMORY WALL (Social Proof Archive)
       ───────────────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24 bg-cream-base">
         <PageContainer>
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-700">
-              Memories &amp; Archive
+            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-700">
+              Memories &amp; Testimonials
             </span>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900 mt-1">
               Moments We’ve Shared
             </h2>
             <p className="text-xs sm:text-sm text-charcoal-600 mt-1.5">
-              Take a look back at our sold-out masterclasses and private tastings across Lagos.
+              Take a look back at our sold-out masterclasses and private tasting evenings across Lagos.
             </p>
           </div>
 
@@ -575,26 +671,41 @@ export default function Events() {
             {PAST_EVENTS.map((pe, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl border border-cream-border bg-white overflow-hidden shadow-xs hover:shadow-brand-sm transition-all flex flex-col justify-between"
+                className="rounded-2xl border border-cream-border bg-white overflow-hidden shadow-xs hover:shadow-brand-md transition-all flex flex-col justify-between group"
               >
-                <div className="aspect-[16/10] w-full overflow-hidden bg-cream-surface">
+                <div className="aspect-[16/10] w-full overflow-hidden bg-cream-surface relative">
                   <img
                     src={pe.image}
                     alt={pe.title}
-                    className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
+                  <div className="absolute top-3 left-3">
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-xs ${pe.tagColor}`}>
+                      {pe.tag}
+                    </span>
+                  </div>
                 </div>
-                <div className="p-5 flex-1 flex flex-col justify-between">
+
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                   <div>
-                    <div className="flex items-center justify-between text-xs text-charcoal-500 mb-1.5">
-                      <span className="font-bold text-brand-700">{pe.date}</span>
+                    <div className="flex items-center justify-between text-xs text-charcoal-500 mb-1 font-semibold">
+                      <span className="text-brand-700">{pe.date}</span>
                       <span>{pe.attendees}</span>
                     </div>
-                    <h3 className="font-display font-bold text-charcoal-900 text-base mb-1">
+
+                    <h3 className="font-display font-bold text-charcoal-900 text-base mb-2">
                       {pe.title}
                     </h3>
-                    <p className="text-xs text-charcoal-600 leading-relaxed">{pe.desc}</p>
+
+                    {/* Pull-quote */}
+                    <div className="p-3 rounded-xl bg-cream-surface/70 border border-cream-border/60 text-xs italic text-charcoal-700 leading-relaxed relative">
+                      <Quote className="w-3.5 h-3.5 text-brand-300 inline mr-1 -mt-1" />
+                      <span>{pe.quote}</span>
+                      <span className="block font-bold text-charcoal-900 not-italic text-[10px] mt-1 text-right">
+                        — {pe.author}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -604,21 +715,24 @@ export default function Events() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          7. PRIVATE GROUP & CORPORATE INQUIRY CTA (Dark Cocoa Band)
+          7. PRIVATE GROUP & CORPORATE INQUIRY (Rich Cocoa & Berry Band)
       ───────────────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-charcoal-900 via-[#3B1F1C] to-charcoal-900 text-white">
+      <section className="py-16 sm:py-22 bg-gradient-to-br from-charcoal-900 via-[#3B1F1C] to-charcoal-900 text-white relative overflow-hidden">
+        {/* Subtle Ambient Radial Highlight */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full bg-brand-700/20 blur-3xl pointer-events-none" />
+
         <PageContainer size="md">
-          <div className="text-center space-y-4 sm:space-y-5">
-            <span className="px-3.5 py-1 rounded-full bg-brand-700 text-white text-xs font-bold uppercase tracking-wider inline-block">
-              Private Group Bookings
+          <div className="text-center space-y-4 sm:space-y-6 relative z-10">
+            <span className="px-4 py-1.5 rounded-full bg-brand-700/90 border border-brand-500/50 text-white text-xs font-extrabold uppercase tracking-widest inline-block shadow-sm">
+              Private Group Experiences &amp; Corporate Retreats
             </span>
 
             <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-              Looking for a private masterclass for your team or celebration?
+              Have something special to celebrate?
             </h2>
 
-            <p className="text-xs sm:text-base text-stone-300 leading-relaxed max-w-xl mx-auto">
-              We host bespoke corporate team retreats, bridal party masterclasses, and private milestone tasting evenings tailored to your preferred date and menu.
+            <p className="text-xs sm:text-base text-stone-300 leading-relaxed max-w-xl mx-auto font-normal">
+              We host bespoke corporate team masterclasses, bridal dessert tastings, and milestone celebration sessions tailored to your preferred date, guests, and custom pastry menu.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
@@ -627,20 +741,27 @@ export default function Events() {
                   variant="primary"
                   size="lg"
                   icon={Calendar}
-                  className="bg-brand-600 hover:bg-brand-500 font-semibold text-sm sm:text-base min-h-[48px]"
+                  className="w-full sm:w-auto bg-brand-600 hover:bg-brand-500 font-bold text-sm sm:text-base min-h-[48px] shadow-brand-md"
                 >
                   Inquire for Private Group Booking
                 </Button>
               </Link>
-              <Link to="/contact">
+
+              <a
+                href={whatsappInquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+              >
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-white/30 text-white hover:bg-white/10 font-semibold text-sm sm:text-base min-h-[48px]"
+                  icon={MessageCircle}
+                  className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 font-bold text-sm sm:text-base min-h-[48px]"
                 >
-                  Contact Our Event Concierge
+                  WhatsApp Event Concierge
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </PageContainer>

@@ -49,7 +49,7 @@ export default function ProductDetails() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
         {/* Left Gallery */}
         <div className="lg:col-span-6 space-y-4">
           <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-cream-surface border border-cream-border shadow-brand-md">
@@ -62,18 +62,18 @@ export default function ProductDetails() {
         </div>
 
         {/* Right Product Details */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-5 sm:space-y-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <Badge variant="secondary">{product.category}</Badge>
               <Badge variant="gold">★ Chef Special</Badge>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-charcoal-900 font-display">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-charcoal-900 font-display break-words">
               {product.name}
             </h1>
 
-            <div className="text-2xl sm:text-3xl font-extrabold text-brand-700 font-display mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-brand-700 font-display mt-2 sm:mt-3">
               {formatCurrency(product.price)}
             </div>
           </div>
@@ -95,13 +95,13 @@ export default function ProductDetails() {
           </Card>
 
           {/* Quantity and Add to Cart */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-4 border-t border-cream-border">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-cream-border">
             {/* Quantity Selector */}
             <div className="flex items-center justify-between sm:justify-start border border-cream-border bg-white rounded-full p-1 shadow-sm shrink-0">
               <button
                 type="button"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                className="w-10 h-10 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                 aria-label="Decrease quantity"
               >
                 <Minus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
@@ -112,7 +112,7 @@ export default function ProductDetails() {
               <button
                 type="button"
                 onClick={() => setQuantity(quantity + 1)}
-                className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                className="w-10 h-10 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                 aria-label="Increase quantity"
               >
                 <Plus className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
@@ -124,7 +124,7 @@ export default function ProductDetails() {
               size="lg"
               icon={ShoppingBag}
               onClick={handleAddToCart}
-              className="flex-1 w-full justify-center text-sm sm:text-base font-semibold"
+              className="flex-1 w-full justify-center text-sm sm:text-base font-semibold min-h-[48px]"
             >
               Add {quantity > 1 ? `${quantity} Treats` : 'to Basket'} • {formatCurrency(product.price * quantity)}
             </Button>

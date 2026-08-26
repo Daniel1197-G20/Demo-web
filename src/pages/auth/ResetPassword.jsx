@@ -23,7 +23,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <Card className="p-8 shadow-brand-md border-cream-border">
+    <Card className="p-6 sm:p-8 shadow-brand-md border-cream-border">
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
           Set New Password
@@ -54,7 +54,7 @@ export default function ResetPassword() {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        <Button type="submit" variant="primary" size="lg" icon={Check} className="w-full justify-center">
+        <Button type="submit" variant="primary" size="lg" icon={Check} className="w-full justify-center min-h-[48px]">
           Update Password
         </Button>
       </form>

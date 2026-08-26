@@ -16,6 +16,7 @@ import {
   Minus,
   Check,
   ShieldCheck,
+  MessageCircle,
 } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
@@ -25,7 +26,7 @@ import Input from '../../components/ui/Input';
 import Modal from '../../components/ui/Modal';
 import Badge from '../../components/ui/Badge';
 import EventCard from '../../components/ui/EventCard';
-import { formatCurrency } from '../../lib/formatters';
+import { formatCurrency, createWhatsAppUrl } from '../../lib/formatters';
 import { BRAND } from '../../lib/constants';
 import { useToast } from '../../hooks/useToast';
 
@@ -35,7 +36,6 @@ export default function EventDetails() {
   const toast = useToast();
 
   const [seats, setSeats] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
@@ -126,6 +126,43 @@ export default function EventDetails() {
     },
   };
 
+  const SIMILAR_EVENTS = [
+    {
+      id: 'secret-weekend-popup-oct-03',
+      slug: 'secret-weekend-popup-oct-03',
+      title: 'Secret Weekend Dessert Drop & Pop-Up Bakery',
+      category: 'Pop-Ups & Socials',
+      date: '2026-10-03',
+      displayDate: 'Oct 03',
+      dayOfWeek: 'Saturday',
+      time: '10:00 AM - 3:00 PM',
+      location: "Tory's Treats Flagship Lounge, VI, Lagos",
+      price: 0,
+      image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&auto=format&fit=crop&q=80',
+      status: 'AVAILABLE',
+      spotsLeft: 50,
+      description:
+        'Exclusive limited-run weekend flavors, fresh morning croissants, live mini éclair glazing station, and complimentary strawberry iced teas.',
+    },
+    {
+      id: 'tiered-wedding-cake-seminar-oct-17',
+      slug: 'tiered-wedding-cake-seminar-oct-17',
+      title: 'Luxury Tiered Wedding Cake Design Seminar',
+      category: 'Masterclasses & Workshops',
+      date: '2026-10-17',
+      displayDate: 'Oct 17',
+      dayOfWeek: 'Saturday',
+      time: '11:00 AM - 4:00 PM',
+      location: "The Tory's Studio, Lekki Phase 1, Lagos",
+      price: 50000,
+      image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=800&auto=format&fit=crop&q=80',
+      status: 'AVAILABLE',
+      spotsLeft: 6,
+      description:
+        'Learn internal cake structuring, flawless sharp-edge ganaching, sugar flower placement, and 24k gold leaf application for luxury wedding celebrations.',
+    },
+  ];
+
   // Fallback to first event if slug not found in mock
   const event = EVENTS_DATA[slug] || EVENTS_DATA['macaron-masterclass-sep-14'];
 
@@ -142,14 +179,19 @@ export default function EventDetails() {
     }, 1200);
   };
 
+  const whatsappDirectUrl = createWhatsAppUrl(
+    BRAND.whatsappNumber,
+    `Hello Tory's Treats! I have a question about the ${event.title} on ${event.displayDate}.`
+  );
+
   return (
-    <div className="overflow-x-hidden py-6 sm:py-10">
+    <div className="overflow-x-hidden py-6 sm:py-10 bg-cream-base">
       <PageContainer>
         {/* Navigation Breadcrumb / Back Link */}
         <div className="mb-6">
           <Link
             to="/events"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-500 hover:text-brand-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-600 hover:text-brand-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Events Calendar</span>
@@ -161,22 +203,22 @@ export default function EventDetails() {
           {/* Left Column: Details, Inclusions, Schedule */}
           <div className="lg:col-span-7 space-y-8 sm:space-y-10">
             {/* Hero Image */}
-            <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden bg-cream-surface shadow-brand-md border border-cream-border">
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden bg-cream-surface shadow-brand-md border-2 border-brand-200/80">
               <img
                 src={event.image}
                 alt={event.title}
                 className="w-full h-full object-cover"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-charcoal-900/10 to-transparent" />
 
               {/* Status and Category Badges */}
               <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
-                <span className="px-3 py-1 rounded-full bg-white/95 text-brand-700 text-xs font-bold uppercase tracking-wider shadow-xs">
+                <span className="px-3.5 py-1 rounded-full bg-white/95 text-brand-800 text-xs font-extrabold uppercase tracking-wider shadow-xs border border-brand-200">
                   {event.category}
                 </span>
                 {event.spotsLeft <= 4 && (
-                  <span className="px-3 py-1 rounded-full bg-warning-500 text-white text-xs font-bold shadow-xs animate-pulse">
+                  <span className="px-3.5 py-1 rounded-full bg-amber-500 text-white text-xs font-extrabold shadow-sm animate-pulse">
                     Only {event.spotsLeft} Seats Left
                   </span>
                 )}
@@ -189,40 +231,40 @@ export default function EventDetails() {
                 {event.title}
               </h1>
 
-              {/* Date, Time, Location Pills */}
+              {/* Date, Time, Location Colored Accent Pills */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-cream-surface border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-brand-50/70 border border-brand-200">
+                  <div className="w-10 h-10 rounded-xl bg-brand-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-charcoal-500 block">Date</span>
+                    <span className="text-[10px] uppercase font-extrabold text-brand-800 block">Date</span>
                     <span className="text-xs font-bold text-charcoal-900">{event.displayDate} ({event.dayOfWeek})</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-cream-surface border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
+                  <div className="w-10 h-10 rounded-xl bg-amber-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-charcoal-500 block">Time</span>
+                    <span className="text-[10px] uppercase font-extrabold text-amber-800 block">Time</span>
                     <span className="text-xs font-bold text-charcoal-900">{event.time.split(' ')[0]} {event.time.split(' ')[1]}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-cream-surface border border-cream-border">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-charcoal-500 block">Capacity</span>
+                    <span className="text-[10px] uppercase font-extrabold text-emerald-800 block">Capacity</span>
                     <span className="text-xs font-bold text-charcoal-900">{event.capacityNote}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-charcoal-600 pt-1">
+              <div className="flex items-center gap-2 text-xs text-charcoal-600 pt-1 font-medium">
                 <MapPin className="w-4 h-4 text-brand-700 shrink-0" />
                 <span>{event.location}</span>
               </div>
@@ -233,7 +275,7 @@ export default function EventDetails() {
               <h2 className="font-display text-xl sm:text-2xl font-bold text-charcoal-900">
                 About This Experience
               </h2>
-              <p className="text-sm sm:text-base text-charcoal-700 leading-relaxed">
+              <p className="text-sm sm:text-base text-charcoal-700 leading-relaxed font-normal">
                 {event.about || event.description}
               </p>
             </div>
@@ -245,7 +287,7 @@ export default function EventDetails() {
               </h2>
               <div className="space-y-2.5 pt-1">
                 {event.inclusions.map((inc, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl bg-white border border-cream-border shadow-xs">
+                  <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-cream-border shadow-xs hover:border-brand-200 transition-colors">
                     <CheckCircle2 className="w-5 h-5 text-brand-700 shrink-0 mt-0.5" />
                     <span className="text-xs sm:text-sm text-charcoal-800 font-medium leading-relaxed">{inc}</span>
                   </div>
@@ -253,7 +295,7 @@ export default function EventDetails() {
               </div>
             </div>
 
-            {/* Schedule Timeline */}
+            {/* Schedule Timeline with Step Nodes */}
             {event.timeline && (
               <div className="space-y-4 border-t border-cream-border pt-6">
                 <h2 className="font-display text-xl sm:text-2xl font-bold text-charcoal-900">
@@ -261,8 +303,8 @@ export default function EventDetails() {
                 </h2>
                 <div className="space-y-3">
                   {event.timeline.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-cream-surface/60 border border-cream-border">
-                      <span className="px-2.5 py-1 rounded-lg bg-brand-700 text-white text-xs font-bold font-display shrink-0">
+                    <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl bg-cream-surface/80 border border-cream-border hover:border-brand-200 transition-colors">
+                      <span className="px-3 py-1 rounded-xl bg-brand-700 text-white text-xs font-bold font-display shrink-0 shadow-xs">
                         {item.time}
                       </span>
                       <div>
@@ -281,12 +323,12 @@ export default function EventDetails() {
 
             {/* Chef Host Profile */}
             <div className="border-t border-cream-border pt-6">
-              <div className="p-6 rounded-3xl bg-brand-50 border border-brand-200/80 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+              <div className="p-6 rounded-3xl bg-gradient-to-br from-brand-50 via-cream-surface to-brand-50 border border-brand-200/90 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left shadow-xs">
                 <div className="w-16 h-16 rounded-2xl bg-brand-700 text-white font-display font-bold text-2xl flex items-center justify-center shadow-brand-sm shrink-0">
                   TT
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-brand-700">
+                  <span className="text-[10px] uppercase font-extrabold tracking-wider text-brand-700">
                     Lead Chef &amp; Instructor
                   </span>
                   <h4 className="font-display text-lg font-bold text-charcoal-900">
@@ -302,13 +344,13 @@ export default function EventDetails() {
 
           {/* Right Column: Sticky Booking & Reservation Card (5 cols) */}
           <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <Card className="p-6 sm:p-8 shadow-brand-lg border-2 border-brand-200 bg-white space-y-6">
+            <Card className="p-6 sm:p-8 shadow-brand-lg border-2 border-brand-300 bg-gradient-to-b from-white via-cream-surface/40 to-white space-y-6">
               <div>
-                <span className="text-xs uppercase font-bold tracking-wider text-brand-700">
+                <span className="text-xs uppercase font-extrabold tracking-wider text-brand-700">
                   Seat Reservation
                 </span>
                 <div className="flex items-baseline justify-between mt-1">
-                  <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-charcoal-900">
+                  <h3 className="font-display text-2xl sm:text-3xl font-black text-charcoal-900">
                     {formatCurrency(event.price)}
                   </h3>
                   <span className="text-xs text-charcoal-500 font-medium">/ seat</span>
@@ -319,8 +361,8 @@ export default function EventDetails() {
               </div>
 
               {bookingSuccess ? (
-                <div className="p-5 rounded-2xl bg-success-50 border border-success-100 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-success-500 text-white flex items-center justify-center mx-auto shadow-sm">
+                <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-sm">
                     <Check className="w-6 h-6" />
                   </div>
                   <h4 className="font-display text-lg font-bold text-charcoal-900">
@@ -345,11 +387,11 @@ export default function EventDetails() {
                     <label className="text-xs font-bold text-charcoal-900 block mb-1.5">
                       Number of Seats / Attendees
                     </label>
-                    <div className="flex items-center justify-between border border-cream-border bg-cream-surface/50 rounded-2xl p-1.5">
+                    <div className="flex items-center justify-between border border-cream-border bg-white rounded-2xl p-1.5 shadow-2xs">
                       <button
                         type="button"
                         onClick={() => setSeats(Math.max(1, seats - 1))}
-                        className="w-9 h-9 rounded-xl bg-white border border-cream-border flex items-center justify-center text-charcoal-700 hover:bg-cream-surface active:bg-brand-50"
+                        className="w-9 h-9 rounded-xl bg-cream-surface border border-cream-border flex items-center justify-center text-charcoal-700 hover:bg-white active:bg-brand-50"
                         aria-label="Decrease seats"
                       >
                         <Minus className="w-4 h-4" />
@@ -360,7 +402,7 @@ export default function EventDetails() {
                       <button
                         type="button"
                         onClick={() => setSeats(Math.min(event.spotsLeft || 4, seats + 1))}
-                        className="w-9 h-9 rounded-xl bg-white border border-cream-border flex items-center justify-center text-charcoal-700 hover:bg-cream-surface active:bg-brand-50"
+                        className="w-9 h-9 rounded-xl bg-cream-surface border border-cream-border flex items-center justify-center text-charcoal-700 hover:bg-white active:bg-brand-50"
                         aria-label="Increase seats"
                       >
                         <Plus className="w-4 h-4" />
@@ -410,7 +452,7 @@ export default function EventDetails() {
                     </div>
                     <div className="flex justify-between text-charcoal-600">
                       <span>Ingredient &amp; Pairing Fee</span>
-                      <span className="text-success-600 font-bold">Included</span>
+                      <span className="text-emerald-700 font-bold">Included</span>
                     </div>
                     <div className="flex justify-between font-display text-base font-extrabold text-charcoal-900 pt-2 border-t border-cream-border/80">
                       <span>Total Due</span>
@@ -423,18 +465,53 @@ export default function EventDetails() {
                     variant="primary"
                     size="lg"
                     isLoading={isSubmitting}
-                    className="w-full justify-center text-sm sm:text-base font-semibold min-h-[48px]"
+                    className="w-full justify-center text-sm sm:text-base font-bold min-h-[48px] bg-brand-700 hover:bg-brand-800 shadow-brand-sm"
                   >
                     Confirm &amp; Reserve {seats > 1 ? `${seats} Seats` : 'Seat'}
                   </Button>
 
                   <div className="flex items-center justify-center gap-1.5 text-[11px] text-charcoal-500 text-center pt-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-success-600" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                     <span>Instant confirmation &amp; 100% satisfaction guarantee</span>
+                  </div>
+
+                  <div className="pt-2 text-center">
+                    <a
+                      href={whatsappDirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-brand-700 hover:underline font-semibold inline-flex items-center gap-1"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>Have a question about this session? Chat on WhatsApp</span>
+                    </a>
                   </div>
                 </form>
               )}
             </Card>
+          </div>
+        </div>
+
+        {/* Similar Upcoming Experiences Section */}
+        <div className="mt-16 sm:mt-24 pt-10 border-t border-cream-border">
+          <div className="mb-6 flex items-baseline justify-between">
+            <div>
+              <span className="text-xs font-extrabold uppercase tracking-widest text-brand-700">
+                Explore More
+              </span>
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-charcoal-900 mt-0.5">
+                Other Upcoming Sessions
+              </h3>
+            </div>
+            <Link to="/events" className="text-xs font-bold text-brand-700 hover:underline">
+              View All Events →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl">
+            {SIMILAR_EVENTS.map((ev) => (
+              <EventCard key={ev.id} event={ev} />
+            ))}
           </div>
         </div>
       </PageContainer>

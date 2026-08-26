@@ -34,7 +34,7 @@ export default function ProductList() {
       <Card className="p-4 sm:p-6">
         {/* Mobile Cards List (< md) */}
         <div className="md:hidden space-y-3.5">
-          {MOCK_PRODUCTS.map((p) => (
+          {PRODUCTS.map((p) => (
             <div
               key={p.id}
               className="p-4 rounded-xl bg-cream-surface/50 border border-cream-border space-y-2.5 text-xs"
@@ -90,7 +90,7 @@ export default function ProductList() {
               </tr>
             </thead>
             <tbody className="divide-y divide-cream-border/60 text-charcoal-700">
-              {MOCK_PRODUCTS.map((p) => (
+              {PRODUCTS.map((p) => (
                 <tr key={p.id} className="hover:bg-cream-surface/40">
                   <td className="py-3.5 font-bold text-charcoal-900 font-display">
                     {p.name} {p.is_featured && <Badge variant="gold" size="sm" className="ml-1.5">Featured</Badge>}

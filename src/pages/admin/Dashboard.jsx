@@ -23,7 +23,7 @@ export default function Dashboard() {
       value: '142',
       trend: '+12 new today',
       icon: ShoppingBag,
-      color: 'bg-brand-100 text-brand-600',
+      color: 'bg-brand-100 text-brand-700',
     },
     {
       title: 'Pending Order Review',
@@ -55,7 +55,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -67,14 +67,14 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Link to="/admin/products/new">
-            <Button variant="primary" size="sm" icon={Plus}>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <Link to="/admin/products/new" className="w-full sm:w-auto">
+            <Button variant="primary" size="sm" icon={Plus} className="w-full sm:w-auto justify-center">
               New Treat Product
             </Button>
           </Link>
-          <Link to="/admin/contracts/new">
-            <Button variant="secondary" size="sm" icon={Plus}>
+          <Link to="/admin/contracts/new" className="w-full sm:w-auto">
+            <Button variant="secondary" size="sm" icon={Plus} className="w-full sm:w-auto justify-center">
               Post Contract Role
             </Button>
           </Link>
@@ -82,21 +82,21 @@ export default function Dashboard() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
         {KPIS.map((kpi, idx) => {
           const Icon = kpi.icon;
           return (
-            <Card key={idx} className="p-5">
+            <Card key={idx} className="p-3.5 sm:p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-charcoal-500">{kpi.title}</span>
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${kpi.color}`}>
-                  <Icon className="w-5 h-5" />
+                <span className="text-[11px] sm:text-xs font-semibold text-charcoal-500 line-clamp-1">{kpi.title}</span>
+                <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center shrink-0 ${kpi.color}`}>
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
               </div>
-              <div className="text-2xl font-extrabold text-charcoal-900 font-display mt-3">
+              <div className="text-xl sm:text-2xl font-extrabold text-charcoal-900 font-display mt-2 sm:mt-3">
                 {kpi.value}
               </div>
-              <p className="text-[11px] text-charcoal-500 font-medium mt-1">
+              <p className="text-[10px] sm:text-[11px] text-charcoal-500 font-medium mt-0.5 sm:mt-1 line-clamp-1">
                 {kpi.trend}
               </p>
             </Card>

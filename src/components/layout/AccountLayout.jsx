@@ -26,25 +26,25 @@ export default function AccountLayout() {
   return (
     <PageContainer>
       {/* Mobile Top Profile & Horizontal Scroll Navigation */}
-      <div className="md:hidden space-y-4 mb-6">
+      <div className="md:hidden space-y-3 mb-6">
         {/* Mobile Profile Bar */}
-        <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-cream-border shadow-brand-sm">
+        <div className="flex items-center justify-between p-3.5 sm:p-4 bg-white rounded-2xl border border-cream-border shadow-brand-sm">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-full bg-brand-700 text-white font-bold text-base flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brand-700 text-white font-bold text-sm sm:text-base flex items-center justify-center shrink-0 shadow-sm">
               {profile?.full_name?.charAt(0) || 'U'}
             </div>
             <div className="min-w-0">
-              <h3 className="text-sm font-bold text-charcoal-900 truncate font-display">
+              <h3 className="text-xs sm:text-sm font-bold text-charcoal-900 truncate font-display">
                 {profile?.full_name || 'Customer'}
               </h3>
-              <p className="text-[11px] text-charcoal-500 truncate">{profile?.email}</p>
+              <p className="text-[10px] sm:text-[11px] text-charcoal-500 truncate">{profile?.email}</p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={signOut}
-            className="p-2 rounded-xl text-error-500 hover:bg-error-50 transition-colors shrink-0"
+            className="p-2 rounded-xl text-error-500 hover:bg-error-50 active:bg-error-100 transition-colors shrink-0"
             aria-label="Sign Out"
             title="Sign Out"
           >
@@ -53,7 +53,7 @@ export default function AccountLayout() {
         </div>
 
         {/* Mobile Horizontal Scrollable Tab Navigation */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar -mx-4 px-4">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 custom-scrollbar no-scrollbar -mx-4 px-4">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -62,7 +62,7 @@ export default function AccountLayout() {
                 to={item.href}
                 end={item.end}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3.5 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
+                  `flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors shrink-0 focus-ring ${
                     isActive
                       ? 'bg-brand-700 text-white shadow-brand-sm font-bold'
                       : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'

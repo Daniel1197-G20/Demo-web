@@ -5,6 +5,34 @@ import { formatCurrency } from '../../lib/formatters';
 import { cn } from '../../lib/utils';
 import Badge from './Badge';
 
+// Harmonic, controlled category color tokens for the Events Design System
+const CATEGORY_STYLES = {
+  'Masterclasses & Workshops': {
+    pill: 'bg-brand-50/95 text-brand-900 border-brand-200/90',
+    dot: 'bg-brand-700',
+    headerBg: 'bg-brand-700 text-white',
+    hoverBorder: 'hover:border-brand-300',
+  },
+  'Tastings & Pairings': {
+    pill: 'bg-amber-50/95 text-amber-900 border-amber-200/90',
+    dot: 'bg-amber-600',
+    headerBg: 'bg-amber-700 text-white',
+    hoverBorder: 'hover:border-amber-300',
+  },
+  'Pop-Ups & Socials': {
+    pill: 'bg-emerald-50/95 text-emerald-900 border-emerald-200/90',
+    dot: 'bg-emerald-600',
+    headerBg: 'bg-emerald-700 text-white',
+    hoverBorder: 'hover:border-emerald-300',
+  },
+  'Private Celebrations': {
+    pill: 'bg-rose-50/95 text-rose-900 border-rose-200/90',
+    dot: 'bg-rose-600',
+    headerBg: 'bg-rose-700 text-white',
+    hoverBorder: 'hover:border-rose-300',
+  },
+};
+
 export default function EventCard({
   event,
   className = '',
@@ -13,7 +41,7 @@ export default function EventCard({
     id,
     slug = id,
     title,
-    category = 'Workshop',
+    category = 'Masterclasses & Workshops',
     date = '2026-09-14',
     displayDate = 'Sept 14',
     dayOfWeek = 'Saturday',
@@ -35,10 +63,13 @@ export default function EventCard({
   const isAlmostFull = status === 'ALMOST_FULL' || (spotsLeft > 0 && spotsLeft <= 4);
   const isPast = status === 'PAST';
 
+  const catStyle = CATEGORY_STYLES[category] || CATEGORY_STYLES['Masterclasses & Workshops'];
+
   return (
     <div
       className={cn(
-        'group flex flex-col overflow-hidden rounded-2xl border border-cream-border bg-white transition-all duration-300 hover:shadow-brand-md hover:border-brand-200 hover:-translate-y-1',
+        'group flex flex-col overflow-hidden rounded-2xl border border-cream-border bg-white transition-all duration-300 hover:shadow-brand-md hover:-translate-y-1',
+        catStyle.hoverBorder,
         isPast && 'opacity-75 grayscale-[20%]',
         className
       )}
@@ -54,12 +85,20 @@ export default function EventCard({
           className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/70 via-charcoal-900/15 to-transparent opacity-70 group-hover:opacity-50 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 via-charcoal-900/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
-        {/* Top-Left Category Badge */}
-        <span className="absolute top-3 left-3 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-brand-700 shadow-xs z-10">
-          {category}
-        </span>
+        {/* Top-Left Category Pill with Colored Indicator Dot */}
+        <div className="absolute top-3 left-3 z-10">
+          <span
+            className={cn(
+              'inline-flex items-center gap-1.5 rounded-full backdrop-blur-md px-3 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-xs border',
+              catStyle.pill
+            )}
+          >
+            <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', catStyle.dot)} />
+            <span>{category}</span>
+          </span>
+        </div>
 
         {/* Top-Right Status Badge */}
         <div className="absolute top-3 right-3 z-10">
@@ -68,7 +107,7 @@ export default function EventCard({
               Sold Out
             </Badge>
           ) : isAlmostFull ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-warning-500 px-2.5 py-0.5 text-[10px] font-bold text-white shadow-xs animate-pulse">
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-500 px-2.5 py-0.5 text-[10px] font-bold text-white shadow-xs animate-pulse">
               Only {spotsLeft} Left
             </span>
           ) : isPast ? (
@@ -80,20 +119,27 @@ export default function EventCard({
 
         {/* Prominent Visual Date Block (Bottom-Left) */}
         <div className="absolute bottom-3 left-3 flex items-center gap-2.5 z-10">
-          <div className="flex flex-col items-center justify-center rounded-xl bg-white/95 backdrop-blur-md px-2.5 py-1 text-charcoal-900 shadow-sm border border-white/40">
-            <span className="font-display font-extrabold text-base sm:text-lg leading-none text-brand-700">
-              {day || '14'}
-            </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-charcoal-600 leading-tight">
+          <div className="flex flex-col items-center justify-center rounded-xl bg-white/95 backdrop-blur-md shadow-md border border-white/80 overflow-hidden shrink-0 min-w-[50px]">
+            <div
+              className={cn(
+                'w-full py-0.5 px-2 text-center text-[9px] font-bold uppercase tracking-wider',
+                catStyle.headerBg
+              )}
+            >
               {month || 'SEP'}
-            </span>
+            </div>
+            <div className="px-2 py-0.5 text-center">
+              <span className="font-display font-black text-base sm:text-lg leading-none text-charcoal-900 block">
+                {day || '14'}
+              </span>
+            </div>
           </div>
 
           <div className="text-white drop-shadow-md">
-            <span className="text-[11px] font-semibold block leading-tight">
+            <span className="text-[11px] font-bold block leading-tight text-white">
               {dayOfWeek}
             </span>
-            <span className="text-[10px] text-white/80 flex items-center gap-1 leading-tight">
+            <span className="text-[10px] text-white/85 flex items-center gap-1 leading-tight font-medium">
               <Clock className="w-3 h-3 text-gold-400" />
               <span>{time}</span>
             </span>

@@ -33,7 +33,7 @@ export default function BookingDetails() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/bookings"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-700"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>

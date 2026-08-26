@@ -47,7 +47,7 @@ export default function ProductForm() {
       <div className="flex items-center gap-3">
         <Link
           to="/admin/products"
-          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-600"
+          className="p-2 rounded-xl bg-white border border-cream-border text-charcoal-700 hover:text-brand-700"
         >
           <ArrowLeft className="w-4 h-4" />
         </Link>
@@ -128,7 +128,7 @@ export default function ProductForm() {
                 type="checkbox"
                 checked={formData.isAvailable}
                 onChange={(e) => setFormData({ ...formData, isAvailable: e.target.checked })}
-                className="w-4 h-4 rounded text-brand-500 focus:ring-brand-400"
+                className="w-4 h-4 rounded text-brand-700 focus:ring-brand-500"
               />
               <span>Available for Instant Order</span>
             </label>
@@ -138,7 +138,7 @@ export default function ProductForm() {
                 type="checkbox"
                 checked={formData.isFeatured}
                 onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                className="w-4 h-4 rounded text-brand-500 focus:ring-brand-400"
+                className="w-4 h-4 rounded text-brand-700 focus:ring-brand-500"
               />
               <span>Highlight as Chef Special / Featured</span>
             </label>

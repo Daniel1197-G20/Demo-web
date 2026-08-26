@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   ShoppingBag,
-  Menu,
-  X,
   User,
   Heart,
   Calendar,
@@ -11,69 +9,33 @@ import {
   ShieldCheck,
   LogOut,
   ChevronDown,
-  Phone,
-  MessageCircle,
 } from 'lucide-react';
-import { BRAND, NAV_LINKS } from '../../lib/constants';
+import { NAV_LINKS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
-import { createWhatsAppUrl } from '../../lib/formatters';
 import Button from '../ui/Button';
 import Dropdown from '../ui/Dropdown';
 
 export default function CustomerNavbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, profile, isAuthenticated, isAdmin, signOut, toggleRole } = useAuth();
+  const { profile, isAuthenticated, isAdmin, signOut, toggleRole } = useAuth();
   const { itemCount } = useCart();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Close mobile drawer on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  // Handle ESC key and scroll lock
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [mobileMenuOpen]);
-
-  const whatsappUrl = createWhatsAppUrl(
-    BRAND.whatsappNumber,
-    "Hello Tory's Treats! I would like to inquire about your freshly baked treats & experiences."
-  );
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-20">
           {/* Brand Logo */}
           <Link
             to="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-1.5 sm:gap-2.5 group shrink-0"
+            className="flex items-center gap-2 group shrink-0"
+            aria-label="Tory's Treats Home"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-base sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
+              <span className="font-display font-extrabold text-lg sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
                 Tory's <span className="text-brand-700">Treats</span>
               </span>
               <span className="text-[9px] sm:text-[10px] text-charcoal-500 tracking-wider font-semibold uppercase hidden md:block">
@@ -82,7 +44,7 @@ export default function CustomerNavbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Visible only on lg+ screens) */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <NavLink
@@ -101,31 +63,9 @@ export default function CustomerNavbar() {
             ))}
           </nav>
 
-          {/* Right Actions */}
+          {/* Right Action Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3">
-            {/* Quick Call Icon (Mobile only) */}
-            <a
-              href={`tel:${BRAND.rawPhone}`}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-cream-border bg-white text-charcoal-800 transition-colors hover:border-brand-400 hover:text-brand-700 lg:hidden shadow-xs"
-              aria-label={`Call ${BRAND.phone}`}
-              title={`Call ${BRAND.phone}`}
-            >
-              <Phone className="w-4 h-4 text-brand-700" />
-            </a>
-
-            {/* Quick WhatsApp Icon (Mobile only) */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 transition-colors hover:bg-emerald-100 lg:hidden shadow-xs"
-              aria-label="Chat on WhatsApp"
-              title="Chat on WhatsApp"
-            >
-              <MessageCircle className="w-4 h-4 text-emerald-600 fill-current" />
-            </a>
-
-            {/* Quick Test Switcher (Reviewer Convenience) */}
+            {/* Quick Test Switcher (Admin/Customer role toggle for reviewers) */}
             {isAuthenticated && (
               <button
                 type="button"
@@ -138,17 +78,16 @@ export default function CustomerNavbar() {
               </button>
             )}
 
-            {/* Cart Button */}
-            <Link to="/cart" className="relative">
+            {/* Shopping Cart Button */}
+            <Link to="/cart" className="relative" aria-label={`Shopping cart with ${itemCount} items`}>
               <Button
                 variant="ghost"
                 size="icon"
                 className="relative text-charcoal-700 hover:text-brand-700 hover:bg-brand-50 w-9 h-9 sm:w-10 sm:h-10"
-                aria-label={`Shopping cart with ${itemCount} items`}
               >
                 <ShoppingBag className="w-5 h-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm animate-scale-in">
                     {itemCount}
                   </span>
                 )}
@@ -195,263 +134,25 @@ export default function CustomerNavbar() {
               </Link>
             )}
 
-            {/* Mobile Profile Icon */}
+            {/* Mobile Profile Icon (Clean and minimal on small screens) */}
             <Link
               to={isAuthenticated ? '/account' : '/auth/login'}
-              onClick={() => setMobileMenuOpen(false)}
-              className="sm:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
+              className="sm:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700 transition-colors"
               aria-label={isAuthenticated ? 'My Account' : 'Sign In'}
             >
               {isAuthenticated ? (
-                <div className="w-7 h-7 rounded-full bg-brand-700 text-white font-bold text-xs flex items-center justify-center">
+                <div className="w-7 h-7 rounded-full bg-brand-700 text-white font-bold text-xs flex items-center justify-center shadow-xs">
                   {profile?.full_name?.charAt(0) || 'U'}
                 </div>
               ) : (
-                <User className="w-5 h-5" />
+                <div className="w-8 h-8 rounded-full border border-cream-border flex items-center justify-center text-charcoal-700">
+                  <User className="w-4 h-4" />
+                </div>
               )}
             </Link>
-
-            {/* Mobile Hamburger Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-charcoal-800 hover:bg-cream-surface hover:text-brand-700 transition-colors focus-ring"
-              aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-navigation-drawer"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6 text-brand-700" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile Slide-in Drawer Navigation */}
-      {mobileMenuOpen && (
-        <div id="mobile-navigation-drawer" className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop Overlay */}
-          <div
-            className="fixed inset-0 bg-charcoal-900/60 backdrop-blur-sm transition-opacity"
-            onClick={() => setMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-
-          {/* Drawer Panel */}
-          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-xs sm:max-w-sm bg-white shadow-2xl z-10 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200">
-            {/* Drawer Header */}
-            <div>
-              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-cream-border bg-cream-surface/50">
-                <Link
-                  to="/"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-brand-700 flex items-center justify-center text-white">
-                    <Heart className="w-4 h-4 fill-current" />
-                  </div>
-                  <span className="font-display font-extrabold text-lg text-charcoal-900">
-                    Tory's <span className="text-brand-700">Treats</span>
-                  </span>
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-xl text-charcoal-600 hover:text-charcoal-900 hover:bg-cream-surface transition-colors"
-                  aria-label="Close navigation menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* User Greeting (if logged in) */}
-              {isAuthenticated && (
-                <div className="p-4 bg-brand-50/60 border-b border-brand-100 flex items-center justify-between">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-9 h-9 rounded-full bg-brand-700 text-white font-bold text-sm flex items-center justify-center shadow-sm shrink-0">
-                      {profile?.full_name?.charAt(0) || 'U'}
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-charcoal-900 truncate">
-                        {profile?.full_name || 'Customer'}
-                      </p>
-                      <p className="text-[11px] text-charcoal-500 truncate">{profile?.email}</p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={toggleRole}
-                    className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-brand-200 text-brand-700 shrink-0 ml-2"
-                  >
-                    {profile?.role || 'CUSTOMER'}
-                  </button>
-                </div>
-              )}
-
-              {/* Main Navigation Links */}
-              <div className="px-3 py-4 space-y-1">
-                <p className="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-charcoal-400">
-                  Menu Navigation
-                </p>
-                {NAV_LINKS.map((link) => (
-                  <NavLink
-                    key={link.href}
-                    to={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors ${
-                        isActive
-                          ? 'bg-brand-50 text-brand-700 font-bold'
-                          : 'text-charcoal-800 hover:bg-cream-surface hover:text-brand-700'
-                      }`
-                    }
-                  >
-                    <span>{link.name}</span>
-                    <span className="text-xs text-charcoal-400">→</span>
-                  </NavLink>
-                ))}
-
-                {/* Shopping Basket Drawer Link */}
-                <NavLink
-                  to="/cart"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors ${
-                      isActive
-                        ? 'bg-brand-50 text-brand-700 font-bold'
-                        : 'text-charcoal-800 hover:bg-cream-surface hover:text-brand-700'
-                    }`
-                  }
-                >
-                  <div className="flex items-center gap-3">
-                    <ShoppingBag className="w-4 h-4 text-brand-700" />
-                    <span>Shopping Basket</span>
-                  </div>
-                  {itemCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-full bg-brand-700 text-white text-xs font-bold">
-                      {itemCount}
-                    </span>
-                  )}
-                </NavLink>
-
-                {/* WhatsApp Concierge Action in Drawer */}
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 flex items-center justify-between rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 px-4 py-3 text-xs font-bold text-charcoal-900 hover:bg-[#25D366]/20 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <MessageCircle className="w-4 h-4 text-[#25D366] fill-current" />
-                    <span>WhatsApp Concierge</span>
-                  </div>
-                  <span className="text-[#128C7E] font-extrabold text-[11px]">Chat Now →</span>
-                </a>
-
-                {/* Quick Call in Drawer */}
-                <a
-                  href={`tel:${BRAND.rawPhone}`}
-                  className="mt-2 flex items-center justify-between rounded-xl border border-cream-border bg-cream-surface/70 px-4 py-3 text-xs font-semibold text-charcoal-900 hover:bg-cream-soft transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Phone className="w-4 h-4 text-brand-700" />
-                    <span>Call: {BRAND.phone}</span>
-                  </div>
-                  <span className="text-brand-700 font-bold">Call</span>
-                </a>
-              </div>
-
-              {/* Account Sub-Links (if authenticated) */}
-              {isAuthenticated && (
-                <div className="px-3 py-2 border-t border-cream-border space-y-1">
-                  <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-charcoal-400">
-                    My Account
-                  </p>
-                  <Link
-                    to="/account"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-semibold text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
-                  >
-                    <User className="w-4 h-4 text-charcoal-500" />
-                    <span>Account Overview</span>
-                  </Link>
-                  <Link
-                    to="/account/orders"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-semibold text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
-                  >
-                    <ShoppingBag className="w-4 h-4 text-charcoal-500" />
-                    <span>Order History</span>
-                  </Link>
-                  <Link
-                    to="/account/bookings"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-semibold text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
-                  >
-                    <Calendar className="w-4 h-4 text-charcoal-500" />
-                    <span>Catering Bookings</span>
-                  </Link>
-                  <Link
-                    to="/account/applications"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-semibold text-charcoal-700 hover:bg-cream-surface hover:text-brand-700"
-                  >
-                    <Briefcase className="w-4 h-4 text-charcoal-500" />
-                    <span>Contract Applications</span>
-                  </Link>
-
-                  {isAdmin && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-bold text-brand-700 bg-brand-50 hover:bg-brand-100 mt-2"
-                    >
-                      <ShieldCheck className="w-4 h-4 text-brand-700" />
-                      <span>Admin Management Portal</span>
-                    </Link>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Drawer Footer Actions */}
-            <div className="p-4 border-t border-cream-border bg-cream-surface/30 space-y-3">
-              {isAuthenticated ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    signOut();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold text-error-600 hover:bg-error-50 border border-error-100 transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
-                </button>
-              ) : (
-                <div className="space-y-2">
-                  <Link to="/auth/login" onClick={() => setMobileMenuOpen(false)} className="block">
-                    <Button variant="primary" className="w-full justify-center">
-                      Sign In
-                    </Button>
-                  </Link>
-                  <Link to="/auth/register" onClick={() => setMobileMenuOpen(false)} className="block">
-                    <Button variant="outline" className="w-full justify-center">
-                      Create Account
-                    </Button>
-                  </Link>
-                </div>
-              )}
-
-              <div className="pt-2 text-center">
-                <p className="text-[11px] text-charcoal-500">
-                  {BRAND.address} • {BRAND.phone}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

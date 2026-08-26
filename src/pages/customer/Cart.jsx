@@ -42,7 +42,7 @@ export default function Cart() {
                 <img
                   src={item.images?.[0] || 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300'}
                   alt={item.name}
-                  className="w-18 h-18 sm:w-20 sm:h-20 rounded-xl object-cover bg-cream-surface shrink-0 aspect-square"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover bg-cream-surface shrink-0 aspect-square"
                 />
 
                 <div className="flex-1 min-w-0">
@@ -54,7 +54,7 @@ export default function Cart() {
                     <button
                       type="button"
                       onClick={() => removeItem(item.id)}
-                      className="sm:hidden p-1 text-charcoal-400 hover:text-error-500 transition-colors shrink-0"
+                      className="sm:hidden p-2 text-charcoal-400 hover:text-error-500 active:bg-error-50 rounded-lg transition-colors shrink-0 -mr-1"
                       aria-label="Remove item"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -68,12 +68,12 @@ export default function Cart() {
               </div>
 
               {/* Quantity Modifier & Subtotal Row on Mobile / Inline on Desktop */}
-              <div className="flex items-center justify-between sm:justify-end gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-cream-border/60 shrink-0">
+              <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-cream-border/60 shrink-0">
                 <div className="flex items-center border border-cream-border bg-white rounded-full p-1 shadow-sm">
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                    className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                     aria-label="Reduce quantity"
                   >
                     <Minus className="w-3.5 h-3.5" />
@@ -84,7 +84,7 @@ export default function Cart() {
                   <button
                     type="button"
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
+                    className="w-9 h-9 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50"
                     aria-label="Increase quantity"
                   >
                     <Plus className="w-3.5 h-3.5" />
@@ -114,7 +114,7 @@ export default function Cart() {
 
         {/* Order Summary Sidebar */}
         <div className="lg:col-span-4">
-          <Card className="p-6 space-y-4 sticky top-28 bg-cream-surface/70">
+          <Card className="p-5 sm:p-6 space-y-4 sticky top-28 bg-cream-surface/70">
             <h3 className="text-lg font-bold font-display text-charcoal-900 border-b border-cream-border pb-3">
               Order Summary
             </h3>
@@ -136,7 +136,7 @@ export default function Cart() {
             </div>
 
             <Link to="/checkout" className="block pt-2">
-              <Button variant="primary" size="lg" className="w-full justify-center" icon={ArrowRight} iconPosition="right">
+              <Button variant="primary" size="lg" className="w-full justify-center min-h-[48px] text-sm sm:text-base font-semibold" icon={ArrowRight} iconPosition="right">
                 Proceed to Order Request
               </Button>
             </Link>
