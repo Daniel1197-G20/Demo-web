@@ -28,7 +28,7 @@ export default function CustomerNavbar() {
           {/* Brand Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 group shrink-0"
+            className="flex items-center gap-2 group shrink-0 focus-ring rounded-xl p-1"
             aria-label="Tory's Treats Home"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
@@ -51,7 +51,7 @@ export default function CustomerNavbar() {
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
-                  `px-3 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors ${
+                  `px-3 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors focus-ring ${
                     isActive
                       ? 'bg-brand-50 text-brand-700 font-bold'
                       : 'text-charcoal-700 hover:text-brand-700 hover:bg-cream-surface'

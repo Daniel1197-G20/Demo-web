@@ -95,27 +95,27 @@ export default function CustomerFooter() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
               <li>
-                <Link to="/shop" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Artisanal%20Cakes" className="hover:text-brand-700 transition-colors">
                   Artisanal Cakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Gourmet%20Cupcakes" className="hover:text-brand-700 transition-colors">
                   Gourmet Cupcakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Fresh%20Pastries" className="hover:text-brand-700 transition-colors">
                   Fresh Pastries
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-brand-700 transition-colors">
-                  Dessert Cups & Parfaits
+                <Link to="/shop?category=Dessert%20Cups" className="hover:text-brand-700 transition-colors">
+                  Dessert Cups &amp; Parfaits
                 </Link>
               </li>
               <li>
-                <Link to="/shop" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Celebration%20Platters" className="hover:text-brand-700 transition-colors">
                   Celebration Platters
                 </Link>
               </li>

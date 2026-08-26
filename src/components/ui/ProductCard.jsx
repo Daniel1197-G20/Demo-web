@@ -72,6 +72,11 @@ export default function ProductCard({
             <Badge variant="error" size="sm" className="shadow-xs font-bold">
               Sold Out
             </Badge>
+          ) : product?.badge ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 text-[10px] font-bold text-charcoal-900 shadow-xs">
+              <Sparkles className="w-3 h-3" />
+              <span>{product.badge}</span>
+            </span>
           ) : is_featured ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 text-[10px] font-bold text-charcoal-900 shadow-xs">
               <Sparkles className="w-3 h-3" />
@@ -91,7 +96,7 @@ export default function ProductCard({
       {/* Product Information */}
       <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-5 gap-3">
         <div>
-          <Link to={`/shop/${slug}`} className="focus:outline-none">
+          <Link to={`/shop/${slug}`} className="focus:outline-none block">
             <h4 className="font-display font-bold text-sm sm:text-base text-charcoal-900 group-hover:text-brand-700 transition-colors line-clamp-2 leading-snug">
               {name}
             </h4>
@@ -101,9 +106,9 @@ export default function ProductCard({
               {description}
             </p>
           )}
-          {min_order_quantity > 1 && (
-            <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-charcoal-500">
-              Min. batch: {min_order_quantity} pcs
+          {product?.servings && (
+            <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-charcoal-500 line-clamp-1">
+              ✨ {product.servings.split('(')[0]}
             </p>
           )}
         </div>
