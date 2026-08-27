@@ -33,12 +33,12 @@ export default function Register() {
   };
 
   return (
-    <Card className="p-6 sm:p-8 shadow-brand-md border-cream-border">
+    <Card className="p-6 sm:p-8 shadow-[0_10px_30px_rgba(232,44,124,0.08)] border-[#F0D9E1] bg-white rounded-3xl">
       <div className="text-center mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
+        <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-[#2B2024]">
           Create an Account
         </h2>
-        <p className="text-xs sm:text-sm text-charcoal-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#7A6B70] mt-1">
           Join Tory's Treats for fast checkout and booking history.
         </p>
       </div>
@@ -85,9 +85,9 @@ export default function Register() {
         </Button>
       </form>
 
-      <div className="text-center mt-6 text-xs text-charcoal-700">
+      <div className="text-center mt-6 text-xs text-[#7A6B70]">
         Already have an account?{' '}
-        <Link to="/auth/login" className="font-bold text-brand-700 hover:underline">
+        <Link to="/auth/login" className="font-bold text-[#E82C7C] hover:underline">
           Sign In &rarr;
         </Link>
       </div>

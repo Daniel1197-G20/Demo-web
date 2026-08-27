@@ -54,22 +54,22 @@ export default function Modal({
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative w-full bg-white rounded-t-3xl sm:rounded-2xl shadow-brand-lg border border-cream-border z-10 overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh] my-0 sm:my-auto animate-scaleUp',
+          'relative w-full bg-white rounded-t-3xl sm:rounded-3xl shadow-brand-lg border border-[#F0D9E1] z-10 overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh] my-0 sm:my-auto animate-scaleUp',
           sizes[size],
           className
         )}
       >
         {/* Header */}
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-cream-border/80 bg-cream-surface/40">
+          <div className="flex items-start justify-between p-4 sm:p-6 border-b border-[#F0D9E1] bg-[#FFF5F8]/40">
             <div className="pr-4">
               {title && (
-                <h3 className="text-lg sm:text-xl font-bold text-charcoal-900 font-display">
+                <h3 className="text-lg sm:text-xl font-extrabold text-[#2B2024] font-display">
                   {title}
                 </h3>
               )}
               {description && (
-                <p className="text-xs sm:text-sm text-charcoal-500 mt-1">{description}</p>
+                <p className="text-xs sm:text-sm text-[#7A6B70] mt-1">{description}</p>
               )}
             </div>
 
@@ -77,7 +77,7 @@ export default function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-charcoal-500 hover:text-charcoal-900 hover:bg-cream-surface transition-colors shrink-0 -mr-1"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[#7A6B70] hover:text-[#2B2024] hover:bg-[#FFF5F8] transition-colors shrink-0 -mr-1"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -93,7 +93,7 @@ export default function Modal({
 
         {/* Footer */}
         {footer && (
-          <div className="p-4 sm:p-6 border-t border-cream-border/80 bg-cream-surface/30 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
+          <div className="p-4 sm:p-6 border-t border-[#F0D9E1] bg-[#FFF5F8]/30 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
             {footer}
           </div>
         )}

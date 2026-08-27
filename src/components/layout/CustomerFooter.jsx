@@ -7,19 +7,19 @@ import Input from '../ui/Input';
 
 export default function CustomerFooter() {
   return (
-    <footer className="bg-white border-t border-cream-border mt-16 sm:mt-24">
+    <footer className="bg-white border-t border-[#F0D9E1] mt-16 sm:mt-24">
       {/* Newsletter / Sweet Perks Banner */}
-      <div className="bg-cream-surface border-b border-cream-border py-10 sm:py-14">
+      <div className="bg-[#FFF5F8] border-b border-[#F0D9E1] py-10 sm:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
             <div className="max-w-xl">
-              <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-100 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#E82C7C] bg-white border border-[#FCE4EC] px-3 py-1 rounded-full shadow-2xs">
                 Sweet Perks Club
               </span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-charcoal-900 font-display mt-2">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#2B2024] font-display mt-2">
                 Get 10% off your first treat order
               </h3>
-              <p className="text-sm text-charcoal-700 mt-1">
+              <p className="text-sm text-[#7A6B70] mt-1">
                 Subscribe to receive secret weekend bakery drops, catering discounts, and seasonal menu previews.
               </p>
             </div>
@@ -52,37 +52,37 @@ export default function CustomerFooter() {
           {/* Col 1: Brand Info */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm">
+              <div className="w-9 h-9 rounded-2xl bg-[#E82C7C] flex items-center justify-center text-white shadow-brand-sm">
                 <Heart className="w-4 h-4 fill-current" />
               </div>
-              <span className="font-display font-extrabold text-2xl text-charcoal-900">
-                Tory's <span className="text-brand-700">Treats</span>
+              <span className="font-display font-extrabold text-2xl text-[#2B2024]">
+                Tory's <span className="text-[#E82C7C]">Treats</span>
               </span>
             </Link>
 
-            <p className="text-sm text-charcoal-700 leading-relaxed max-w-sm">
+            <p className="text-sm text-[#7A6B70] leading-relaxed max-w-sm">
               Artisanal baked goods, handcrafted desserts, and bespoke luxury catering for weddings, corporate galas, and private celebrations across Lagos.
             </p>
 
-            <div className="space-y-2 pt-2 text-xs text-charcoal-700">
+            <div className="space-y-2 pt-2 text-xs text-[#7A6B70]">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-brand-700 shrink-0" />
+                <MapPin className="w-4 h-4 text-[#E82C7C] shrink-0" />
                 <span>{BRAND.address}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-brand-700 shrink-0" />
-                <a href={`tel:${BRAND.rawPhone}`} className="hover:text-brand-700 transition-colors">
+                <Phone className="w-4 h-4 text-[#E82C7C] shrink-0" />
+                <a href={`tel:${BRAND.rawPhone}`} className="hover:text-[#E82C7C] transition-colors">
                   {BRAND.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-brand-700 shrink-0" />
-                <a href={`mailto:${BRAND.email}`} className="hover:text-brand-700 transition-colors">
+                <Mail className="w-4 h-4 text-[#E82C7C] shrink-0" />
+                <a href={`mailto:${BRAND.email}`} className="hover:text-[#E82C7C] transition-colors">
                   {BRAND.email}
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-brand-700 shrink-0" />
+                <Clock className="w-4 h-4 text-[#E82C7C] shrink-0" />
                 <span>{BRAND.openingHours}</span>
               </div>
             </div>
@@ -90,32 +90,32 @@ export default function CustomerFooter() {
 
           {/* Col 2: Shop Treats */}
           <div>
-            <h4 className="font-display font-bold text-charcoal-900 text-sm uppercase tracking-wider mb-4">
+            <h4 className="font-display font-extrabold text-[#2B2024] text-sm uppercase tracking-wider mb-4">
               Our Treats
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-[#7A6B70]">
               <li>
-                <Link to="/shop?category=Artisanal%20Cakes" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Artisanal%20Cakes" className="hover:text-[#E82C7C] transition-colors">
                   Artisanal Cakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=Gourmet%20Cupcakes" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Gourmet%20Cupcakes" className="hover:text-[#E82C7C] transition-colors">
                   Gourmet Cupcakes
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=Fresh%20Pastries" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Fresh%20Pastries" className="hover:text-[#E82C7C] transition-colors">
                   Fresh Pastries
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=Dessert%20Cups" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Dessert%20Cups" className="hover:text-[#E82C7C] transition-colors">
                   Dessert Cups &amp; Parfaits
                 </Link>
               </li>
               <li>
-                <Link to="/shop?category=Celebration%20Platters" className="hover:text-brand-700 transition-colors">
+                <Link to="/shop?category=Celebration%20Platters" className="hover:text-[#E82C7C] transition-colors">
                   Celebration Platters
                 </Link>
               </li>
@@ -124,32 +124,32 @@ export default function CustomerFooter() {
 
           {/* Col 3: Services & Careers */}
           <div>
-            <h4 className="font-display font-bold text-charcoal-900 text-sm uppercase tracking-wider mb-4">
+            <h4 className="font-display font-extrabold text-[#2B2024] text-sm uppercase tracking-wider mb-4">
               Experiences
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-[#7A6B70]">
               <li>
-                <Link to="/events" className="hover:text-brand-700 transition-colors font-medium text-brand-700">
+                <Link to="/events" className="hover:text-[#E82C7C] transition-colors font-bold text-[#E82C7C]">
                   ★ Masterclasses &amp; Tastings
                 </Link>
               </li>
               <li>
-                <Link to="/catering" className="hover:text-brand-700 transition-colors">
+                <Link to="/catering" className="hover:text-[#E82C7C] transition-colors">
                   Event &amp; Wedding Catering
                 </Link>
               </li>
               <li>
-                <Link to="/contracts" className="hover:text-brand-700 transition-colors">
+                <Link to="/contracts" className="hover:text-[#E82C7C] transition-colors">
                   Contract Staff Roles
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-brand-700 transition-colors">
-                  Custom Orders & Tastings
+                <Link to="/contact" className="hover:text-[#E82C7C] transition-colors">
+                  Custom Orders &amp; Tastings
                 </Link>
               </li>
               <li>
-                <Link to="/account" className="hover:text-brand-700 transition-colors">
+                <Link to="/account" className="hover:text-[#E82C7C] transition-colors">
                   Track Your Order
                 </Link>
               </li>
@@ -158,22 +158,22 @@ export default function CustomerFooter() {
 
           {/* Col 4: Quick Links & Admin */}
           <div>
-            <h4 className="font-display font-bold text-charcoal-900 text-sm uppercase tracking-wider mb-4">
+            <h4 className="font-display font-extrabold text-[#2B2024] text-sm uppercase tracking-wider mb-4">
               Information
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-charcoal-700">
+            <ul className="space-y-2.5 text-xs sm:text-sm text-[#7A6B70]">
               <li>
-                <Link to="/contact" className="hover:text-brand-700 transition-colors">
-                  Contact & Location
+                <Link to="/contact" className="hover:text-[#E82C7C] transition-colors">
+                  Contact &amp; Location
                 </Link>
               </li>
               <li>
-                <Link to="/auth/login" className="hover:text-brand-700 transition-colors">
+                <Link to="/auth/login" className="hover:text-[#E82C7C] transition-colors">
                   Account Sign In
                 </Link>
               </li>
               <li>
-                <Link to="/admin" className="hover:text-brand-700 transition-colors text-charcoal-500">
+                <Link to="/admin" className="hover:text-[#E82C7C] transition-colors text-[#7A6B70]">
                   Staff / Admin Login
                 </Link>
               </li>
@@ -182,12 +182,12 @@ export default function CustomerFooter() {
         </div>
 
         {/* Bottom copyright row */}
-        <div className="border-t border-cream-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-charcoal-500">
+        <div className="border-t border-[#F0D9E1] mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A6B70]">
           <p>© {new Date().getFullYear()} {BRAND.name}. All rights reserved. Made with love in Lagos, Nigeria.</p>
           <div className="flex items-center gap-6">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Food Safety</span>
+            <span className="hover:text-[#E82C7C] cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-[#E82C7C] cursor-pointer">Terms of Service</span>
+            <span className="hover:text-[#E82C7C] cursor-pointer">Food Safety</span>
           </div>
         </div>
       </div>

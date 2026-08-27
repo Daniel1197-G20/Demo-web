@@ -15,20 +15,20 @@ export default function EmptyState({
   return (
     <div
       className={cn(
-        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-cream-surface/50 border border-dashed border-cream-border rounded-2xl my-4',
+        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-white border border-dashed border-[#F0D9E1] rounded-3xl my-4 shadow-2xs',
         className
       )}
     >
-      <div className="w-16 h-16 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 mb-4 shadow-sm relative">
-        <Icon className="w-8 h-8" />
-        <Sparkles className="w-4 h-4 text-gold-500 absolute -top-1 -right-1" />
+      <div className="w-16 h-16 rounded-3xl bg-[#FFF5F8] border border-[#FCE4EC] flex items-center justify-center text-[#E82C7C] mb-4 shadow-xs relative">
+        <Icon className="w-8 h-8 stroke-[2.2px]" />
+        <Sparkles className="w-4 h-4 text-[#E82C7C] absolute -top-1 -right-1" />
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold text-charcoal-900 font-display">
+      <h3 className="text-lg sm:text-xl font-extrabold text-[#2B2024] font-display">
         {title}
       </h3>
 
-      <p className="text-sm text-charcoal-500 max-w-md mt-1.5 mb-6">
+      <p className="text-sm text-[#7A6B70] max-w-md mt-1.5 mb-6">
         {description}
       </p>
 

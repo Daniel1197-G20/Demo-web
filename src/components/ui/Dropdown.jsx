@@ -42,7 +42,7 @@ export default function Dropdown({
       {isOpen && (
         <div
           className={cn(
-            'absolute z-40 mt-2 w-56 rounded-xl bg-white border border-cream-border shadow-brand-md py-1.5 focus:outline-none transition-all duration-200',
+            'absolute z-40 mt-2 w-56 rounded-2xl bg-white border border-[#F0D9E1] shadow-[0_10px_30px_rgba(232,44,124,0.08)] py-1.5 focus:outline-none transition-all duration-200',
             alignments[align],
             menuClassName
           )}
@@ -50,7 +50,7 @@ export default function Dropdown({
           {items.length > 0
             ? items.map((item, index) => {
                 if (item.divider) {
-                  return <div key={index} className="my-1 border-t border-cream-border" />;
+                  return <div key={index} className="my-1 border-t border-[#F0D9E1]" />;
                 }
                 const Icon = item.icon;
                 return (
@@ -63,14 +63,14 @@ export default function Dropdown({
                       setIsOpen(false);
                     }}
                     className={cn(
-                      'w-full px-4 py-2.5 text-xs sm:text-sm text-left flex items-center gap-2.5 transition-colors',
+                      'w-full px-4 py-2.5 text-xs sm:text-sm text-left flex items-center gap-2.5 font-bold transition-colors',
                       item.danger
-                        ? 'text-error-500 hover:bg-error-50'
-                        : 'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700',
+                        ? 'text-rose-600 hover:bg-rose-50'
+                        : 'text-[#2B2024] hover:bg-[#FFF5F8] hover:text-[#E82C7C]',
                       item.disabled && 'opacity-50 cursor-not-allowed'
                     )}
                   >
-                    {Icon && <Icon className="w-4 h-4 shrink-0" />}
+                    {Icon && <Icon className="w-4 h-4 shrink-0 text-[#E82C7C]" />}
                     <span>{item.label}</span>
                   </button>
                 );

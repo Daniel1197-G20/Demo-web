@@ -55,12 +55,12 @@ export default function Login() {
   };
 
   return (
-    <Card className="p-8 shadow-brand-md border-cream-border">
+    <Card className="p-8 shadow-[0_10px_30px_rgba(232,44,124,0.08)] border-[#F0D9E1] bg-white rounded-3xl">
       <div className="text-center mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold font-display text-charcoal-900">
+        <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-[#2B2024]">
           Sign In to Your Account
         </h2>
-        <p className="text-xs sm:text-sm text-charcoal-500 mt-1">
+        <p className="text-xs sm:text-sm text-[#7A6B70] mt-1">
           Access your treat orders, catering bookings, and job applications.
         </p>
       </div>
@@ -87,11 +87,11 @@ export default function Login() {
         />
 
         <div className="flex items-center justify-between text-xs">
-          <label className="flex items-center gap-1.5 text-charcoal-700 cursor-pointer">
-            <input type="checkbox" className="rounded border-cream-border text-brand-700 focus:ring-brand-500" />
+          <label className="flex items-center gap-1.5 text-[#2B2024] cursor-pointer">
+            <input type="checkbox" className="rounded-md border-[#F0D9E1] text-[#E82C7C] focus:ring-[#FCE4EC]" />
             <span>Remember me</span>
           </label>
-          <Link to="/auth/forgot-password" className="font-semibold text-brand-700 hover:underline">
+          <Link to="/auth/forgot-password" className="font-bold text-[#E82C7C] hover:underline">
             Forgot Password?
           </Link>
         </div>
@@ -109,8 +109,8 @@ export default function Login() {
       </form>
 
       {/* Quick Demo Login Preset Buttons for Testing */}
-      <div className="mt-6 pt-6 border-t border-cream-border space-y-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-charcoal-500 block text-center">
+      <div className="mt-6 pt-6 border-t border-[#F0D9E1] space-y-2.5">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-[#7A6B70] block text-center">
           Quick Test Authentication
         </span>
         <div className="grid grid-cols-2 gap-2">
@@ -135,9 +135,9 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="text-center mt-6 text-xs text-charcoal-700">
+      <div className="text-center mt-6 text-xs text-[#7A6B70]">
         Don't have an account yet?{' '}
-        <Link to="/auth/register" className="font-bold text-brand-700 hover:underline">
+        <Link to="/auth/register" className="font-bold text-[#E82C7C] hover:underline">
           Create Account &rarr;
         </Link>
       </div>

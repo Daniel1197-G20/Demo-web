@@ -15,23 +15,25 @@ export default function Button({
   ...props
 }) {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium transition-all duration-200 focus-ring select-none active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100';
+    'inline-flex items-center justify-center font-bold transition-all duration-200 focus-ring select-none active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100';
 
   const variants = {
     primary:
-      'bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-900 shadow-brand-sm hover:shadow-brand-md',
+      'bg-[#E82C7C] text-white hover:bg-[#D31665] active:bg-[#B10C51] shadow-brand-sm hover:shadow-brand-md',
     secondary:
-      'bg-cream-surface text-brand-700 border border-brand-300 hover:bg-brand-50 hover:border-brand-400 active:bg-brand-100 font-semibold',
+      'bg-white text-[#E82C7C] border border-[#E82C7C] hover:bg-[#FFF5F8] active:bg-[#FCE4EC]',
     outline:
-      'border-2 border-brand-700 text-brand-700 hover:bg-brand-50 active:bg-brand-100',
+      'border-2 border-[#E82C7C] text-[#E82C7C] hover:bg-[#FFF5F8] active:bg-[#FCE4EC]',
+    tertiary:
+      'bg-transparent text-[#2B2024] hover:bg-[#FFF5F8] hover:text-[#E82C7C]',
     ghost:
-      'text-charcoal-700 hover:bg-cream-surface hover:text-brand-700',
+      'bg-transparent text-[#2B2024] hover:bg-[#FFF5F8] hover:text-[#E82C7C]',
     danger:
-      'bg-error-500 text-white hover:bg-error-600 active:bg-error-700',
+      'bg-[#EF4444] text-white hover:bg-[#DC2626] active:bg-[#B91C1C] shadow-xs',
     gold:
-      'bg-gold-500 text-charcoal-900 font-semibold hover:bg-gold-400 active:bg-gold-600 shadow-sm',
+      'bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#FCE4EC] shadow-xs',
     white:
-      'bg-white text-charcoal-900 hover:bg-cream-surface border border-cream-border shadow-sm',
+      'bg-white text-[#2B2024] hover:bg-[#FFF5F8] hover:text-[#E82C7C] border border-[#F0D9E1] shadow-xs',
   };
 
   const sizes = {

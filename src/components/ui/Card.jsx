@@ -9,21 +9,21 @@ export function Card({
   ...props
 }) {
   const variants = {
-    default: 'bg-white border border-cream-border shadow-brand-sm',
-    cream: 'bg-cream-surface border border-cream-border shadow-brand-sm',
-    flat: 'bg-white border border-cream-border',
-    brand: 'bg-brand-50 border border-brand-100 shadow-brand-sm',
-    rose: 'bg-rose-50 border border-rose-100 shadow-brand-sm',
-    pink: 'bg-brand-50 border border-brand-100 shadow-brand-sm',
-    outlined: 'bg-transparent border-2 border-cream-border',
+    default: 'bg-white border border-[#F0D9E1] shadow-[0_4px_20px_rgba(232,44,124,0.04)]',
+    cream: 'bg-[#FFF5F8] border border-[#FCE4EC] shadow-[0_4px_20px_rgba(232,44,124,0.04)]',
+    flat: 'bg-white border border-[#F0D9E1]',
+    brand: 'bg-[#FFF5F8] border border-[#FCE4EC] shadow-[0_4px_20px_rgba(232,44,124,0.04)]',
+    rose: 'bg-[#FFF5F8] border border-[#FCE4EC] shadow-[0_4px_20px_rgba(232,44,124,0.04)]',
+    pink: 'bg-[#FFF5F8] border border-[#FCE4EC] shadow-[0_4px_20px_rgba(232,44,124,0.04)]',
+    outlined: 'bg-transparent border-2 border-[#F0D9E1]',
   };
 
   return (
     <div
       className={cn(
-        'rounded-xl transition-all duration-300 overflow-hidden',
+        'rounded-3xl transition-all duration-300 overflow-hidden',
         variants[variant],
-        hover && 'hover:-translate-y-1 hover:shadow-brand-md cursor-pointer',
+        hover && 'hover:-translate-y-1 hover:border-[#E82C7C] hover:shadow-[0_10px_30px_rgba(232,44,124,0.08)] cursor-pointer',
         className
       )}
       {...props}
@@ -35,7 +35,7 @@ export function Card({
 
 export function CardHeader({ children, className = '', ...props }) {
   return (
-    <div className={cn('p-5 sm:p-6 border-b border-cream-border/60', className)} {...props}>
+    <div className={cn('p-5 sm:p-6 border-b border-[#F0D9E1]', className)} {...props}>
       {children}
     </div>
   );
@@ -44,7 +44,7 @@ export function CardHeader({ children, className = '', ...props }) {
 export function CardTitle({ children, className = '', ...props }) {
   return (
     <h3
-      className={cn('text-lg sm:text-xl font-bold text-charcoal-900 font-display', className)}
+      className={cn('text-lg sm:text-xl font-extrabold text-[#2B2024] font-display', className)}
       {...props}
     >
       {children}
@@ -54,7 +54,7 @@ export function CardTitle({ children, className = '', ...props }) {
 
 export function CardDescription({ children, className = '', ...props }) {
   return (
-    <p className={cn('text-xs sm:text-sm text-charcoal-500 mt-1', className)} {...props}>
+    <p className={cn('text-xs sm:text-sm text-[#7A6B70] mt-1', className)} {...props}>
       {children}
     </p>
   );

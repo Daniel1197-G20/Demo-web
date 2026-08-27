@@ -22,23 +22,23 @@ export default function CustomerNavbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-cream-border transition-all duration-200">
+    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-[#F0D9E1] transition-all duration-200">
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-20">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Brand Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 group shrink-0 focus-ring rounded-xl p-1"
+            className="flex items-center gap-2.5 group shrink-0 focus:outline-none focus:ring-2 focus:ring-[#FCE4EC] rounded-2xl p-1"
             aria-label="Tory's Treats Home"
           >
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-brand-700 flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-[#E82C7C] flex items-center justify-center text-white shadow-brand-sm group-hover:scale-105 transition-transform">
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-lg sm:text-2xl text-charcoal-900 leading-tight tracking-tight">
-                Tory's <span className="text-brand-700">Treats</span>
+              <span className="font-display font-extrabold text-lg sm:text-2xl text-[#2B2024] leading-tight tracking-tight">
+                Tory's <span className="text-[#E82C7C]">Treats</span>
               </span>
-              <span className="text-[9px] sm:text-[10px] text-charcoal-500 tracking-wider font-semibold uppercase hidden md:block">
+              <span className="text-[9px] sm:text-[10px] text-[#7A6B70] tracking-wider font-bold uppercase hidden md:block">
                 Artisanal Bakery &amp; Catering
               </span>
             </div>
@@ -51,10 +51,10 @@ export default function CustomerNavbar() {
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
-                  `px-3 py-2 rounded-full text-xs font-semibold tracking-wide transition-colors focus-ring ${
+                  `px-3.5 py-2 rounded-full text-xs font-bold tracking-wide transition-colors focus:outline-none focus:ring-2 focus:ring-[#FCE4EC] ${
                     isActive
-                      ? 'bg-brand-50 text-brand-700 font-bold'
-                      : 'text-charcoal-700 hover:text-brand-700 hover:bg-cream-surface'
+                      ? 'bg-[#FFF5F8] text-[#E82C7C] font-extrabold border border-[#FCE4EC]'
+                      : 'text-[#2B2024] hover:text-[#E82C7C] hover:bg-[#FFF5F8]'
                   }`
                 }
               >
@@ -64,16 +64,16 @@ export default function CustomerNavbar() {
           </nav>
 
           {/* Right Action Controls */}
-          <div className="flex items-center gap-1.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Quick Test Switcher (Admin/Customer role toggle for reviewers) */}
             {isAuthenticated && (
               <button
                 type="button"
                 onClick={toggleRole}
                 title="Click to toggle between Customer and Admin role"
-                className="hidden xl:flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-cream-surface border border-cream-border rounded-full text-charcoal-700 hover:border-brand-300 transition-colors"
+                className="hidden xl:flex items-center gap-1 text-[11px] font-bold px-3 py-1.5 bg-[#FFF5F8] border border-[#FCE4EC] rounded-full text-[#2B2024] hover:border-[#E82C7C] transition-colors"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-brand-700" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#E82C7C]" />
                 <span>Role: {profile?.role || 'CUSTOMER'}</span>
               </button>
             )}
@@ -83,11 +83,11 @@ export default function CustomerNavbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative text-charcoal-700 hover:text-brand-700 hover:bg-brand-50 w-9 h-9 sm:w-10 sm:h-10"
+                className="relative text-[#2B2024] hover:text-[#E82C7C] hover:bg-[#FFF5F8] w-10 h-10 rounded-2xl"
               >
-                <ShoppingBag className="w-5 h-5" />
+                <ShoppingBag className="w-5 h-5 stroke-[2.2px]" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-700 text-white rounded-full text-[11px] font-bold flex items-center justify-center shadow-sm animate-scale-in">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#E82C7C] text-white rounded-full text-[10px] font-black flex items-center justify-center shadow-xs animate-scale-in">
                     {itemCount}
                   </span>
                 )}
@@ -100,14 +100,14 @@ export default function CustomerNavbar() {
                 <Dropdown
                   align="right"
                   trigger={
-                    <div className="flex items-center gap-1.5 pl-2 pr-3 py-1.5 rounded-full border border-cream-border hover:border-brand-300 bg-cream-surface/50 transition-colors cursor-pointer">
-                      <div className="w-7 h-7 rounded-full bg-brand-100 text-brand-800 font-bold text-xs flex items-center justify-center">
+                    <div className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full border border-[#F0D9E1] hover:border-[#E82C7C] bg-white transition-colors cursor-pointer shadow-2xs">
+                      <div className="w-7 h-7 rounded-full bg-[#FFF5F8] border border-[#FCE4EC] text-[#E82C7C] font-black text-xs flex items-center justify-center">
                         {profile?.full_name?.charAt(0) || 'U'}
                       </div>
-                      <span className="text-xs font-semibold text-charcoal-900 hidden md:inline max-w-[100px] truncate">
+                      <span className="text-xs font-bold text-[#2B2024] hidden md:inline max-w-[100px] truncate">
                         {profile?.full_name?.split(' ')[0] || 'Account'}
                       </span>
-                      <ChevronDown className="w-3.5 h-3.5 text-charcoal-500" />
+                      <ChevronDown className="w-3.5 h-3.5 text-[#7A6B70]" />
                     </div>
                   }
                   items={[
@@ -137,15 +137,15 @@ export default function CustomerNavbar() {
             {/* Mobile Profile Icon (Clean and minimal on small screens) */}
             <Link
               to={isAuthenticated ? '/account' : '/auth/login'}
-              className="sm:hidden p-1.5 rounded-xl text-charcoal-700 hover:bg-cream-surface hover:text-brand-700 transition-colors"
+              className="sm:hidden p-2 rounded-2xl text-[#2B2024] hover:bg-[#FFF5F8] hover:text-[#E82C7C] transition-colors"
               aria-label={isAuthenticated ? 'My Account' : 'Sign In'}
             >
               {isAuthenticated ? (
-                <div className="w-7 h-7 rounded-full bg-brand-700 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                <div className="w-7 h-7 rounded-full bg-[#E82C7C] text-white font-black text-xs flex items-center justify-center shadow-xs">
                   {profile?.full_name?.charAt(0) || 'U'}
                 </div>
               ) : (
-                <div className="w-8 h-8 rounded-full border border-cream-border flex items-center justify-center text-charcoal-700">
+                <div className="w-8 h-8 rounded-full border border-[#F0D9E1] flex items-center justify-center text-[#2B2024]">
                   <User className="w-4 h-4" />
                 </div>
               )}

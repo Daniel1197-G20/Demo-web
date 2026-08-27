@@ -49,22 +49,23 @@ export default function ProductCard({
   return (
     <div
       className={cn(
-        'group flex flex-col overflow-hidden rounded-2xl border border-cream-border bg-white transition-all duration-300 hover:shadow-brand-md hover:border-brand-200 hover:-translate-y-1',
+        'group flex flex-col overflow-hidden rounded-3xl border border-[#F0D9E1] bg-white transition-all duration-300 hover:shadow-[0_10px_30px_rgba(232,44,124,0.1)] hover:border-[#E82C7C] hover:-translate-y-1',
         className
       )}
     >
       {/* Image Container */}
       <Link
         to={`/shop/${slug}`}
-        className="relative block aspect-[4/3] w-full overflow-hidden bg-cream-surface focus:outline-none"
+        className="relative block aspect-[4/3] w-full overflow-hidden bg-[#FFF5F8] focus:outline-none"
       >
         <img
           src={primaryImage}
           alt={name}
           className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           loading="lazy"
+          decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#2B2024]/50 via-transparent to-transparent opacity-50 group-hover:opacity-20 transition-opacity" />
 
         {/* Top Overlay Badges */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex flex-wrap gap-1.5 z-10">
@@ -73,13 +74,13 @@ export default function ProductCard({
               Sold Out
             </Badge>
           ) : product?.badge ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 text-[10px] font-bold text-charcoal-900 shadow-xs">
-              <Sparkles className="w-3 h-3" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF5F8] border border-[#FCE4EC] px-2.5 py-0.5 text-[10px] font-bold text-[#E82C7C] shadow-xs">
+              <Sparkles className="w-3 h-3 text-[#E82C7C]" />
               <span>{product.badge}</span>
             </span>
           ) : is_featured ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-gold-500 px-2.5 py-0.5 text-[10px] font-bold text-charcoal-900 shadow-xs">
-              <Sparkles className="w-3 h-3" />
+            <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF5F8] border border-[#FCE4EC] px-2.5 py-0.5 text-[10px] font-bold text-[#E82C7C] shadow-xs">
+              <Sparkles className="w-3 h-3 text-[#E82C7C]" />
               <span>Chef's Choice</span>
             </span>
           ) : null}
@@ -87,39 +88,39 @@ export default function ProductCard({
 
         {/* Category Pill Tag */}
         {categoryName && (
-          <span className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-brand-700 backdrop-blur-md shadow-xs z-10">
+          <span className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 rounded-full bg-white/95 border border-[#FCE4EC] px-2.5 py-0.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#E82C7C] backdrop-blur-md shadow-xs z-10">
             {categoryName}
           </span>
         )}
       </Link>
 
       {/* Product Information */}
-      <div className="flex flex-1 flex-col justify-between p-3.5 sm:p-5 gap-3">
+      <div className="flex flex-1 flex-col justify-between p-4 sm:p-5 gap-3">
         <div>
           <Link to={`/shop/${slug}`} className="focus:outline-none block">
-            <h4 className="font-display font-bold text-sm sm:text-base text-charcoal-900 group-hover:text-brand-700 transition-colors line-clamp-2 leading-snug">
+            <h4 className="font-display font-extrabold text-sm sm:text-base text-[#2B2024] group-hover:text-[#E82C7C] transition-colors line-clamp-2 leading-snug">
               {name}
             </h4>
           </Link>
           {description && (
-            <p className="mt-1 text-xs text-charcoal-600 line-clamp-2 leading-relaxed hidden sm:block">
+            <p className="mt-1 text-xs text-[#7A6B70] line-clamp-2 leading-relaxed hidden sm:block">
               {description}
             </p>
           )}
           {product?.servings && (
-            <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-charcoal-500 line-clamp-1">
+            <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-[#7A6B70] line-clamp-1">
               ✨ {product.servings.split('(')[0]}
             </p>
           )}
         </div>
 
         {/* Price & Add Action */}
-        <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-cream-border/80 mt-auto">
+        <div className="flex items-center justify-between gap-2 pt-3 border-t border-[#F0D9E1] mt-auto">
           <div className="min-w-0">
-            <span className="text-[10px] text-charcoal-500 uppercase tracking-wider block font-semibold leading-none mb-1">
+            <span className="text-[10px] text-[#7A6B70] uppercase tracking-wider block font-bold leading-none mb-1">
               Price
             </span>
-            <span className="font-display font-extrabold text-sm sm:text-base md:text-lg text-charcoal-900 truncate block">
+            <span className="font-display font-black text-sm sm:text-base md:text-lg text-[#E82C7C] truncate block">
               {formatCurrency(price)}
             </span>
           </div>
@@ -130,12 +131,12 @@ export default function ProductCard({
             disabled={!is_available}
             aria-label={`Add ${name} to basket`}
             className={cn(
-              'inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-xs font-bold transition-all duration-200 shadow-xs active:scale-95 shrink-0 focus-ring',
+              'inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2 sm:px-4 sm:py-2.5 text-xs font-bold transition-all duration-200 shadow-xs active:scale-95 shrink-0 focus:outline-none focus:ring-2 focus:ring-[#FCE4EC]',
               !is_available
-                ? 'bg-charcoal-100 text-charcoal-400 cursor-not-allowed shadow-none'
+                ? 'bg-stone-100 text-[#7A6B70] cursor-not-allowed shadow-none'
                 : justAdded || isInCart
-                ? 'bg-brand-100 text-brand-800 border border-brand-200 hover:bg-brand-200'
-                : 'bg-brand-700 text-white hover:bg-brand-800 hover:shadow-brand-sm'
+                ? 'bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#FCE4EC]'
+                : 'bg-[#E82C7C] text-white hover:bg-[#D31665] shadow-brand-sm'
             )}
           >
             {justAdded ? (
@@ -150,7 +151,7 @@ export default function ProductCard({
               </>
             ) : (
               <>
-                <Plus className="w-3.5 h-3.5" />
+                <Plus className="w-3.5 h-3.5 stroke-[2.5px]" />
                 <span>+ Add</span>
               </>
             )}
