@@ -57,6 +57,7 @@ const ForgotPassword = lazy(() => import('../pages/auth/ForgotPassword'));
 const ResetPassword = lazy(() => import('../pages/auth/ResetPassword'));
 
 // Admin Pages (Lazy Loaded)
+const AdminLogin = lazy(() => import('../pages/admin/AdminLogin'));
 const Dashboard = lazy(() => import('../pages/admin/Dashboard'));
 const ProductList = lazy(() => import('../pages/admin/Products/ProductList'));
 const ProductForm = lazy(() => import('../pages/admin/Products/ProductForm'));
@@ -127,7 +128,10 @@ export default function AppRoutes() {
           <Route path="/auth/reset-password" element={<ResetPassword />} />
         </Route>
 
-        {/* 3. ADMIN PLATFORM ROUTES (ROLE-GUARDED) */}
+        {/* 3. ADMIN ENTRY POINT (LOGIN PAGE) */}
+        <Route path="/admin" element={<AdminLogin />} />
+
+        {/* 4. ADMIN PLATFORM PROTECTED ROUTES */}
         <Route
           path="/admin"
           element={
@@ -136,7 +140,7 @@ export default function AppRoutes() {
             </AdminRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="products" element={<ProductList />} />
           <Route path="products/new" element={<ProductForm />} />
           <Route path="products/:id/edit" element={<ProductForm />} />
@@ -155,7 +159,7 @@ export default function AppRoutes() {
           <Route path="settings" element={<StoreSettings />} />
         </Route>
 
-        {/* 4. CATCH-ALL 404 */}
+        {/* 5. CATCH-ALL 404 */}
         <Route element={<CustomerLayout />}>
           <Route path="*" element={<NotFound />} />
         </Route>

@@ -156,7 +156,7 @@ export default function CustomerFooter() {
             </ul>
           </div>
 
-          {/* Col 4: Quick Links & Admin */}
+          {/* Col 4: Quick Links / Information */}
           <div>
             <h4 className="font-display font-extrabold text-[#2B2024] text-sm uppercase tracking-wider mb-4">
               Information
@@ -170,11 +170,6 @@ export default function CustomerFooter() {
               <li>
                 <Link to="/auth/login" className="hover:text-[#E82C7C] transition-colors">
                   Account Sign In
-                </Link>
-              </li>
-              <li>
-                <Link to="/admin" className="hover:text-[#E82C7C] transition-colors text-[#7A6B70]">
-                  Staff / Admin Login
                 </Link>
               </li>
             </ul>

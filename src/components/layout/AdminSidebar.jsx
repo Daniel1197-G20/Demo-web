@@ -26,7 +26,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
   const NAV_ITEMS = [
     {
       name: 'Dashboard',
-      href: '/admin',
+      href: '/admin/dashboard',
       icon: LayoutDashboard,
       end: true,
     },
@@ -83,7 +83,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
   const handleSignOut = () => {
     signOut();
     if (onClose) onClose();
-    navigate('/');
+    navigate('/admin');
   };
 
   return (
@@ -105,7 +105,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
         {/* Top Branding Section */}
         <div>
           <div className="h-16 sm:h-[72px] px-5 border-b border-[#F7DCE5] flex items-center justify-between bg-[#FFF5F8]/50">
-            <Link to="/admin" onClick={() => onClose && onClose()} className="flex items-center gap-2.5">
+            <Link to="/admin/dashboard" onClick={() => onClose && onClose()} className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-2xl bg-[#E82C7C] flex items-center justify-center text-white shadow-[0_4px_12px_rgba(232,44,124,0.3)]">
                 <Heart className="w-5 h-5 fill-current" />
               </div>

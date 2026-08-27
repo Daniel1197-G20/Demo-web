@@ -65,7 +65,7 @@ export const NAV_LINKS = [
 ];
 
 export const ADMIN_NAV_LINKS = [
-  { name: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
+  { name: 'Dashboard', href: '/admin/dashboard', icon: 'LayoutDashboard' },
   { name: 'Products', href: '/admin/products', icon: 'Cake' },
   { name: 'Categories', href: '/admin/categories', icon: 'Layers' },
   { name: 'Order Requests', href: '/admin/orders', icon: 'ShoppingBag' },

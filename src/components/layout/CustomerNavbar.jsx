@@ -6,7 +6,6 @@ import {
   Heart,
   Calendar,
   Briefcase,
-  ShieldCheck,
   LogOut,
   ChevronDown,
 } from 'lucide-react';
@@ -17,7 +16,7 @@ import Button from '../ui/Button';
 import Dropdown from '../ui/Dropdown';
 
 export default function CustomerNavbar() {
-  const { profile, isAuthenticated, isAdmin, signOut, toggleRole } = useAuth();
+  const { profile, isAuthenticated, signOut } = useAuth();
   const { itemCount } = useCart();
   const navigate = useNavigate();
 
@@ -65,19 +64,6 @@ export default function CustomerNavbar() {
 
           {/* Right Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Quick Test Switcher (Admin/Customer role toggle for reviewers) */}
-            {isAuthenticated && (
-              <button
-                type="button"
-                onClick={toggleRole}
-                title="Click to toggle between Customer and Admin role"
-                className="hidden xl:flex items-center gap-1 text-[11px] font-bold px-3 py-1.5 bg-[#FFF5F8] border border-[#FCE4EC] rounded-full text-[#2B2024] hover:border-[#E82C7C] transition-colors"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#E82C7C]" />
-                <span>Role: {profile?.role || 'CUSTOMER'}</span>
-              </button>
-            )}
-
             {/* Shopping Cart Button */}
             <Link to="/cart" className="relative" aria-label={`Shopping cart with ${itemCount} items`}>
               <Button
@@ -115,12 +101,6 @@ export default function CustomerNavbar() {
                     { label: 'Order History', href: '/account/orders', onClick: () => navigate('/account/orders'), icon: ShoppingBag },
                     { label: 'Catering Bookings', href: '/account/bookings', onClick: () => navigate('/account/bookings'), icon: Calendar },
                     { label: 'Contract Applications', href: '/account/applications', onClick: () => navigate('/account/applications'), icon: Briefcase },
-                    ...(isAdmin
-                      ? [
-                          { divider: true },
-                          { label: 'Admin Portal', href: '/admin', onClick: () => navigate('/admin'), icon: ShieldCheck },
-                        ]
-                      : []),
                     { divider: true },
                     { label: 'Sign Out', onClick: signOut, danger: true, icon: LogOut },
                   ]}

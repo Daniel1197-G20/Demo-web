@@ -12,7 +12,6 @@ import {
   Phone,
   X,
   User,
-  ShieldCheck,
   ChevronRight,
   LogOut,
   Heart,
@@ -25,7 +24,7 @@ import Button from '../ui/Button';
 export default function MobileBottomNav() {
   const [moreSheetOpen, setMoreSheetOpen] = useState(false);
   const location = useLocation();
-  const { profile, isAuthenticated, isAdmin, signOut } = useAuth();
+  const { profile, isAuthenticated, signOut } = useAuth();
   const { itemCount } = useCart();
 
   // Close More sheet on route change
@@ -346,26 +345,6 @@ export default function MobileBottomNav() {
                     </Link>
                   );
                 })}
-
-                {/* Admin Portal (if admin user) */}
-                {isAdmin && (
-                  <Link
-                    to="/admin"
-                    onClick={() => setMoreSheetOpen(false)}
-                    className="flex items-center justify-between p-3 rounded-2xl bg-[#FFF5F8] border border-[#FCE4EC] text-[#2B2024] mt-2"
-                  >
-                    <div className="flex items-center gap-3">
-                      <ShieldCheck className="w-5 h-5 text-[#E82C7C]" />
-                      <div>
-                        <h4 className="text-xs font-bold leading-tight text-[#2B2024]">Admin Management Portal</h4>
-                        <p className="text-[10px] text-[#7A6B70] leading-tight mt-0.5">
-                          Manage orders, catering bookings &amp; catalog
-                        </p>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-[#E82C7C]" />
-                  </Link>
-                )}
               </div>
             </div>
 

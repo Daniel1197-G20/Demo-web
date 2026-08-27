@@ -12,7 +12,6 @@ import {
   MapPin,
   Phone,
   User,
-  ShieldCheck,
   LogOut,
   ChevronRight,
   Clock,
@@ -25,7 +24,7 @@ import Button from '../ui/Button';
 export default function MobileMoreSheet({ isOpen, onClose }) {
   const [mounted, setMounted] = useState(false);
   const [animating, setAnimating] = useState(false);
-  const { profile, isAuthenticated, isAdmin, signOut, toggleRole } = useAuth();
+  const { profile, isAuthenticated, signOut } = useAuth();
   const { itemCount } = useCart();
   const location = useLocation();
 
@@ -139,14 +138,13 @@ export default function MobileMoreSheet({ isOpen, onClose }) {
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={toggleRole}
-                title="Toggle role for testing"
-                className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-white border border-brand-200 text-brand-700 shrink-0 ml-2 shadow-xs"
+              <Link
+                to="/account"
+                onClick={onClose}
+                className="text-[11px] font-bold text-[#E82C7C] hover:underline shrink-0 ml-2"
               >
-                {profile?.role || 'CUSTOMER'}
-              </button>
+                View Account →
+              </Link>
             </div>
           )}
 
@@ -362,20 +360,6 @@ export default function MobileMoreSheet({ isOpen, onClose }) {
                   <span>Applications</span>
                 </Link>
               </div>
-
-              {isAdmin && (
-                <Link
-                  to="/admin"
-                  onClick={onClose}
-                  className="mt-2 flex items-center justify-between p-3 rounded-2xl bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <ShieldCheck className="w-4 h-4 text-brand-700" />
-                    <span>Admin Management Portal</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              )}
             </div>
           ) : null}
 

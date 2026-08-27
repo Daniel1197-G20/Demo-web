@@ -29,7 +29,7 @@ export default function Login() {
     if (res.success) {
       toast.success(`Welcome back, ${res.profile.full_name}!`, 'Signed In');
       if (res.profile.role === 'ADMIN') {
-        navigate('/admin');
+        navigate('/admin/dashboard');
       } else {
         navigate(from);
       }
@@ -47,7 +47,7 @@ export default function Login() {
     if (res.success) {
       toast.success(`Signed in as ${res.profile.full_name} (${res.profile.role})`, 'Quick Sign In');
       if (role === 'ADMIN') {
-        navigate('/admin');
+        navigate('/admin/dashboard');
       } else {
         navigate(from === '/auth/login' ? '/' : from);
       }

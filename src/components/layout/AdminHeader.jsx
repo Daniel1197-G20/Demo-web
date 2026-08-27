@@ -194,7 +194,7 @@ export default function AdminHeader({ onOpenSidebar }) {
               label: 'Sign Out',
               onClick: () => {
                 signOut();
-                navigate('/');
+                navigate('/admin');
               },
               danger: true,
               icon: LogOut,
