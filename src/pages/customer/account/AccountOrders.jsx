@@ -5,6 +5,10 @@ import Card from '../../../components/ui/Card';
 import Badge from '../../../components/ui/Badge';
 import Button from '../../../components/ui/Button';
 import { formatCurrency, formatDate } from '../../../lib/formatters';
+import { useCachedData } from '../../../hooks/useCachedData';
+import { CACHE_TTL } from '../../../lib/cache';
+import { SkeletonOrderItem } from '../../../components/ui/Skeleton';
+import Tooltip from '../../../components/ui/Tooltip';
 
 export default function AccountOrders() {
   const MOCK_ORDERS = [
@@ -40,6 +44,14 @@ export default function AccountOrders() {
     },
   ];
 
+  const { data: orders, isLoading } = useCachedData(
+    'account:orders',
+    () => MOCK_ORDERS,
+    { ttl: CACHE_TTL.DEFAULT }
+  );
+
+  const orderList = orders || MOCK_ORDERS;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -48,8 +60,14 @@ export default function AccountOrders() {
         </h2>
       </div>
 
-      <div className="space-y-3">
-        {MOCK_ORDERS.map((order) => (
+      {isLoading ? (
+        <div className="space-y-3" aria-busy="true">
+          <SkeletonOrderItem />
+          <SkeletonOrderItem />
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {orderList.map((order) => (
           <Card key={order.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">

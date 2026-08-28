@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MOCK_PRODUCTS } from './productsData';
+import frontendCache from './cache';
 
 const PRODUCTS_STORAGE_KEY = 'torys_treats_admin_products_v1';
 const CATEGORIES_STORAGE_KEY = 'torys_treats_admin_categories_v1';
@@ -146,6 +147,17 @@ function saveToStorage(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
     window.dispatchEvent(new Event('torys_admin_store_updated'));
+
+    // Synchronize frontend query cache
+    if (key === PRODUCTS_STORAGE_KEY) {
+      frontendCache.invalidate('products');
+    } else if (key === CATEGORIES_STORAGE_KEY) {
+      frontendCache.invalidate('categories');
+    } else if (key === SETTINGS_STORAGE_KEY) {
+      frontendCache.invalidate('store:settings');
+    } else if (key === BOOKINGS_STORAGE_KEY) {
+      frontendCache.invalidate('bookings');
+    }
   } catch (err) {
     console.error(`Failed to save ${key} to storage:`, err);
   }

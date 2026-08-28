@@ -29,6 +29,10 @@ import EventCard from '../../components/ui/EventCard';
 import { formatCurrency, createWhatsAppUrl } from '../../lib/formatters';
 import { BRAND } from '../../lib/constants';
 import { useToast } from '../../hooks/useToast';
+import { useCachedData } from '../../hooks/useCachedData';
+import { CACHE_TTL } from '../../lib/cache';
+import { Skeleton, SkeletonText, SkeletonForm } from '../../components/ui/Skeleton';
+import Tooltip from '../../components/ui/Tooltip';
 
 export default function EventDetails() {
   const { slug } = useParams();
@@ -163,8 +167,14 @@ export default function EventDetails() {
     },
   ];
 
-  // Fallback to first event if slug not found in mock
-  const event = EVENTS_DATA[slug] || EVENTS_DATA['macaron-masterclass-sep-14'];
+  // Cached event detail lookup with stale-while-revalidate
+  const { data: cachedEvent, isLoading } = useCachedData(
+    `event:${slug || 'default'}`,
+    () => EVENTS_DATA[slug] || EVENTS_DATA['macaron-masterclass-sep-14'],
+    { ttl: CACHE_TTL.LONG }
+  );
+
+  const event = cachedEvent || EVENTS_DATA[slug] || EVENTS_DATA['macaron-masterclass-sep-14'];
 
   const totalPrice = event.price * seats;
 
@@ -172,11 +182,10 @@ export default function EventDetails() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setBookingSuccess(true);
-      toast.success(`Reserved ${seats} seat(s) for ${event.title}!`, 'Spot Confirmed');
-    }, 1200);
+    // Immediate confirmation & state update
+    setIsSubmitting(false);
+    setBookingSuccess(true);
+    toast.success(`Reserved ${seats} seat(s) for ${event.title}!`, 'Spot Confirmed');
   };
 
   const whatsappDirectUrl = createWhatsAppUrl(

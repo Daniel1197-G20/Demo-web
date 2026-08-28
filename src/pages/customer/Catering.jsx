@@ -30,10 +30,13 @@ import Card from '../../components/ui/Card';
 import { useToast } from '../../hooks/useToast';
 import { BRAND } from '../../lib/constants';
 import { createWhatsAppUrl } from '../../lib/formatters';
+import { useAdminStore } from '../../lib/adminStore';
+import Tooltip, { TooltipInfo } from '../../components/ui/Tooltip';
 
 export default function Catering() {
   const toast = useToast();
   const navigate = useNavigate();
+  const store = useAdminStore();
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -130,15 +133,35 @@ export default function Catering() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      const mockBookingNumber = 'TT-BK-202608-2041';
-      toast.success(
-        'Your event catering inquiry has been received. Our team will formulate your tailored proposal.',
-        'Inquiry Submitted'
-      );
-      navigate(`/catering/confirmation/${mockBookingNumber}`);
-    }, 1200);
+    const newBookingNumber = `TT-BK-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const newBooking = {
+      bookingNumber: newBookingNumber,
+      customer: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      eventType: formData.eventType,
+      eventDate: formData.eventDate,
+      guests: Number(formData.guestCount) || 50,
+      venueLocation: formData.venueLocation,
+      foodRequirements: formData.foodRequirements,
+      specialRequests: formData.specialRequests,
+      status: 'PENDING',
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      store.addBooking(newBooking);
+    } catch (err) {
+      console.error('Failed to store booking locally:', err);
+    }
+
+    setIsSubmitting(false);
+    toast.success(
+      'Your event catering inquiry has been received. Our team will formulate your tailored proposal.',
+      'Inquiry Submitted'
+    );
+    navigate(`/catering/confirmation/${newBookingNumber}`);
   };
 
   const whatsappInquiryUrl = createWhatsAppUrl(

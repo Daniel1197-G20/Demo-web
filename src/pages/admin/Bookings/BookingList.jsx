@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Calendar,
   Eye,
@@ -13,19 +13,33 @@ import {
   Filter,
   ChevronLeft,
   ChevronRight,
+  RotateCcw,
 } from 'lucide-react';
 import { useAdminStore } from '../../../lib/adminStore';
 import { formatDate, formatCurrency, createWhatsAppUrl } from '../../../lib/formatters';
 import { useToast } from '../../../hooks/useToast';
+import { useCachedData } from '../../../hooks/useCachedData';
+import { CACHE_TTL } from '../../../lib/cache';
 import AdminSearchBar from '../../../components/admin/AdminSearchBar';
 import AdminFilterPill from '../../../components/admin/AdminFilterPill';
 import AdminBadge from '../../../components/admin/AdminBadge';
 import AdminModal from '../../../components/admin/AdminModal';
+import { SkeletonBookingRow, SkeletonTableRow, Skeleton } from '../../../components/ui/Skeleton';
+import Tooltip from '../../../components/ui/Tooltip';
 
 export default function BookingList() {
+  const navigate = useNavigate();
   const store = useAdminStore();
   const toast = useToast();
-  const bookings = store.getBookings();
+
+  // Cached bookings query with stale-while-revalidate
+  const { data: cachedBookings, isLoading, setData: setBookingsCache } = useCachedData(
+    'bookings:all',
+    () => store.getBookings(),
+    { ttl: CACHE_TTL.SHORT }
+  );
+
+  const bookings = cachedBookings || [];
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('ALL');
@@ -74,12 +88,26 @@ export default function BookingList() {
     setCurrentPage(1);
   };
 
-  // Fast status updater
+  // Optimistic status updater with rollback snapshot
   const handleQuickStatusChange = (bookingNumber, newStatus) => {
-    store.updateBooking(bookingNumber, { status: newStatus });
+    const previousBookings = [...bookings];
+
+    // Optimistically update cache
+    setBookingsCache((prev) =>
+      (prev || []).map((b) => (b.bookingNumber === bookingNumber ? { ...b, status: newStatus } : b))
+    );
+
     toast.success(`Booking ${bookingNumber} status updated to ${newStatus}.`, 'Stage Updated');
     if (quickViewBooking && quickViewBooking.bookingNumber === bookingNumber) {
       setQuickViewBooking({ ...quickViewBooking, status: newStatus });
+    }
+
+    try {
+      store.updateBooking(bookingNumber, { status: newStatus });
+    } catch (err) {
+      console.error('Failed to update booking status:', err);
+      setBookingsCache(previousBookings);
+      toast.error('Failed to update status. Reverted.', 'Error');
     }
   };
 
@@ -174,7 +202,7 @@ export default function BookingList() {
       {/* ─────────────────────────────────────────────────────────────
           3. BOOKINGS LIST / TABLE
       ───────────────────────────────────────────────────────────── */}
-      <div className="bg-white rounded-3xl border border-[#F7DCE5] p-5 sm:p-7 shadow-[0_4px_20px_rgba(232,44,124,0.04)]">
+        {/* Header count summary & reset */}
         <div className="flex items-center justify-between border-b border-[#F7DCE5] pb-4 mb-4">
           <span className="text-xs font-bold text-[#7A6B70]">
             Showing <strong className="text-[#2B2024]">{filteredBookings.length > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0}</strong> -{' '}
@@ -183,21 +211,54 @@ export default function BookingList() {
           </span>
 
           {(searchQuery || selectedStatus !== 'ALL') && (
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedStatus('ALL');
-                setCurrentPage(1);
-              }}
-              className="text-xs font-bold text-[#E82C7C] hover:underline"
-            >
-              Reset Filters
-            </button>
+            <Tooltip content="Clear search & show all booking stages" position="left">
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedStatus('ALL');
+                  setCurrentPage(1);
+                }}
+                className="text-xs font-bold text-[#E82C7C] hover:underline flex items-center gap-1 focus-ring rounded-lg px-1"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset Filters</span>
+              </button>
+            </Tooltip>
           )}
         </div>
 
-        {filteredBookings.length > 0 ? (
+        {isLoading ? (
+          <div className="space-y-4" aria-busy="true" aria-live="polite">
+            {/* Mobile Skeletons */}
+            <div className="lg:hidden space-y-4">
+              <SkeletonBookingRow />
+              <SkeletonBookingRow />
+            </div>
+
+            {/* Desktop Table Skeletons */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead>
+                  <tr className="border-b border-[#F7DCE5] text-[#7A6B70] uppercase tracking-wider text-[10px] font-extrabold">
+                    <th className="pb-3.5 font-bold">Booking Ref</th>
+                    <th className="pb-3.5 font-bold">Client Name</th>
+                    <th className="pb-3.5 font-bold">Event Type</th>
+                    <th className="pb-3.5 font-bold">Event Date</th>
+                    <th className="pb-3.5 font-bold">Guests</th>
+                    <th className="pb-3.5 font-bold">Booking Stage</th>
+                    <th className="pb-3.5 font-bold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#F7DCE5]/60">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <SkeletonTableRow key={i} cols={7} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : filteredBookings.length > 0 ? (
           <>
             {/* Mobile Cards List (< lg) */}
             <div className="lg:hidden space-y-4">
@@ -234,21 +295,27 @@ export default function BookingList() {
                   </div>
 
                   <div className="pt-2.5 border-t border-[#F7DCE5] flex flex-wrap items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setQuickViewBooking(b)}
-                      className="px-3.5 py-1.5 rounded-full bg-white border border-[#F7DCE5] text-xs font-bold text-[#2B2024] hover:border-[#E82C7C] hover:text-[#E82C7C] transition-colors"
-                    >
-                      Quick Details
-                    </button>
+                    <Tooltip content="Quickly review event details modal" position="top">
+                      <button
+                        type="button"
+                        onClick={() => setQuickViewBooking(b)}
+                        className="px-3.5 py-1.5 rounded-full bg-white border border-[#F7DCE5] text-xs font-bold text-[#2B2024] hover:border-[#E82C7C] hover:text-[#E82C7C] transition-colors focus-ring"
+                        aria-label={`Quick details for booking ${b.bookingNumber}`}
+                      >
+                        Quick Details
+                      </button>
+                    </Tooltip>
 
-                    <Link
-                      to={`/admin/bookings/${b.bookingNumber}`}
-                      className="px-4 py-1.5 rounded-full bg-[#E82C7C] text-white text-xs font-bold hover:bg-[#D31665] transition-colors flex items-center gap-1 shrink-0 ml-auto"
-                    >
-                      <span>Review &amp; Quote</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
+                    <Tooltip content="Open full quote calculator and event manager" position="top">
+                      <Link
+                        to={`/admin/bookings/${b.bookingNumber}`}
+                        className="px-4 py-1.5 rounded-full bg-[#E82C7C] text-white text-xs font-bold hover:bg-[#D31665] transition-colors flex items-center gap-1 shrink-0 ml-auto focus-ring"
+                        aria-label={`Review and quote ${b.bookingNumber}`}
+                      >
+                        <span>Review &amp; Quote</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </Tooltip>
                   </div>
                 </div>
               ))}
@@ -292,22 +359,27 @@ export default function BookingList() {
                       </td>
                       <td className="py-3.5 text-right">
                         <div className="flex items-center justify-end gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => setQuickViewBooking(b)}
-                            className="p-1.5 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-[#FFF5F8] border border-[#F7DCE5] transition-colors"
-                            title="Quick View"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </button>
+                          <Tooltip content="Quick summary" position="top">
+                            <button
+                              type="button"
+                              onClick={() => setQuickViewBooking(b)}
+                              className="p-1.5 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-[#FFF5F8] border border-[#F7DCE5] transition-colors focus-ring"
+                              aria-label={`Quick View ${b.bookingNumber}`}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </Tooltip>
 
-                          <Link
-                            to={`/admin/bookings/${b.bookingNumber}`}
-                            className="px-3.5 py-1.5 rounded-full bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#E82C7C] hover:text-white font-bold text-xs transition-colors flex items-center gap-1"
-                          >
-                            <span>Review</span>
-                            <ArrowRight className="w-3 h-3" />
-                          </Link>
+                          <Tooltip content="Open full quote proposal" position="top">
+                            <Link
+                              to={`/admin/bookings/${b.bookingNumber}`}
+                              className="px-3.5 py-1.5 rounded-full bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#E82C7C] hover:text-white font-bold text-xs transition-colors flex items-center gap-1 focus-ring"
+                              aria-label={`Review ${b.bookingNumber}`}
+                            >
+                              <span>Review</span>
+                              <ArrowRight className="w-3 h-3" />
+                            </Link>
+                          </Tooltip>
                         </div>
                       </td>
                     </tr>
@@ -324,15 +396,17 @@ export default function BookingList() {
                 </span>
 
                 <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Previous page"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Previous page" position="top">
+                    <button
+                      type="button"
+                      disabled={currentPage === 1}
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-ring"
+                      aria-label="Previous page"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
 
                   <div className="flex items-center gap-1">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -340,26 +414,29 @@ export default function BookingList() {
                         key={page}
                         type="button"
                         onClick={() => setCurrentPage(page)}
-                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all ${
+                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${
                           currentPage === page
                             ? 'bg-[#E82C7C] text-white shadow-xs'
                             : 'bg-white border border-[#F7DCE5] text-[#7A6B70] hover:border-[#E82C7C] hover:text-[#E82C7C]'
                         }`}
+                        aria-label={`Go to page ${page}`}
                       >
                         {page}
                       </button>
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Next page"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Next page" position="top">
+                    <button
+                      type="button"
+                      disabled={currentPage === totalPages}
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-ring"
+                      aria-label="Next page"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
             )}

@@ -105,6 +105,49 @@
   .bottom-safe {
     bottom: env(safe-area-inset-bottom, 0px);
   }
+
+  /* Tory's Treats Brand Skeleton Shimmer */
+  @keyframes torysShimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      #FFF5F8 0%,
+      #FCE4EC 35%,
+      #FFFFFF 50%,
+      #FCE4EC 65%,
+      #FFF5F8 100%
+    );
+    background-size: 200% 100%;
+    animation: torysShimmer 2.2s infinite ease-in-out;
+  }
+
+  .skeleton-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Tooltip animation */
+  @keyframes tooltipFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-tooltip {
+    animation: tooltipFadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -114,4 +157,9 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .skeleton-shimmer {
+    animation: none !important;
+    background: #FFF5F8 !important;
+  }
 }
+

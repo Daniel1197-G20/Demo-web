@@ -15,9 +15,13 @@ import {
 } from 'lucide-react';
 import PageContainer from '../../components/common/PageContainer';
 import ProductCard from '../../components/ui/ProductCard';
+import { Skeleton, SkeletonText, SkeletonButton, SkeletonProductCard } from '../../components/ui/Skeleton';
+import Tooltip from '../../components/ui/Tooltip';
 import { formatCurrency, createWhatsAppUrl } from '../../lib/formatters';
 import { BRAND } from '../../lib/constants';
-import { getProductBySlug, getRelatedProducts } from '../../lib/productsData';
+import { adminStore } from '../../lib/adminStore';
+import { CACHE_TTL } from '../../lib/cache';
+import { useCachedData } from '../../hooks/useCachedData';
 import { useCart } from '../../hooks/useCart';
 import { useToast } from '../../hooks/useToast';
 
@@ -29,11 +33,73 @@ export default function ProductDetails() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [justAdded, setJustAdded] = useState(false);
 
-  const product = getProductBySlug(slug);
-  const relatedProducts = getRelatedProducts(slug, 3);
+  // Cached product catalog
+  const { data: allProducts, isLoading } = useCachedData(
+    'products:all',
+    () => adminStore.getProducts(),
+    { ttl: CACHE_TTL.PRODUCTS }
+  );
+
+  const product = (allProducts || []).find(
+    (p) => p.slug === slug || String(p.id) === String(slug)
+  );
+
+  const relatedProducts = (allProducts || [])
+    .filter((p) => p.id !== product?.id && p.category === product?.category)
+    .slice(0, 3);
 
   const isInCart = items.some((i) => i.id === product?.id);
   const currentCartQty = items.find((i) => i.id === product?.id)?.quantity || 0;
+
+  if (isLoading) {
+    return (
+      <div className="overflow-x-hidden py-4 sm:py-8" aria-busy="true" aria-live="polite">
+        <PageContainer>
+          {/* Breadcrumb Skeleton */}
+          <div className="flex items-center gap-2 mb-6">
+            <Skeleton className="h-4 w-14 rounded-full" />
+            <span className="text-stone-300">/</span>
+            <Skeleton className="h-4 w-20 rounded-full" />
+            <span className="text-stone-300">/</span>
+            <Skeleton className="h-4 w-32 rounded-full" />
+          </div>
+
+          {/* Main 2-Column Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Left Column: Image Skeleton */}
+            <div className="lg:col-span-6 space-y-4">
+              <Skeleton className="w-full aspect-[4/3] rounded-3xl" />
+              <div className="flex gap-3">
+                <Skeleton className="h-18 w-24 rounded-2xl" />
+                <Skeleton className="h-18 w-24 rounded-2xl" />
+                <Skeleton className="h-18 w-24 rounded-2xl" />
+              </div>
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <Skeleton className="h-16 rounded-2xl" />
+                <Skeleton className="h-16 rounded-2xl" />
+                <Skeleton className="h-16 rounded-2xl" />
+              </div>
+            </div>
+
+            {/* Right Column: Info Skeleton */}
+            <div className="lg:col-span-6 space-y-6">
+              <div className="space-y-3">
+                <Skeleton className="h-4 w-24 rounded-full" />
+                <Skeleton className="h-10 w-4/5 rounded-2xl" />
+                <Skeleton className="h-8 w-36 rounded-xl" />
+              </div>
+              <SkeletonText lines={3} />
+              <Skeleton className="h-32 w-full rounded-2xl" />
+              <div className="flex gap-4">
+                <Skeleton className="h-12 w-32 rounded-full" />
+                <Skeleton className="h-12 flex-1 rounded-full" />
+              </div>
+            </div>
+          </div>
+        </PageContainer>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -240,25 +306,29 @@ export default function ProductDetails() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 {/* Quantity Pill */}
                 <div className="flex items-center justify-between sm:justify-start border border-cream-border bg-white rounded-full p-1 shadow-xs shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50 focus-ring"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Decrease quantity" position="top">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50 focus-ring"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
                   <span className="w-12 text-center text-sm font-bold text-charcoal-900 font-display">
                     {quantity}
                   </span>
-                  <button
-                    type="button"
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50 focus-ring"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Increase quantity" position="top">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-cream-surface text-charcoal-700 active:bg-brand-50 focus-ring"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
                 </div>
 
                 {/* Primary Add to Basket Button */}
@@ -293,15 +363,17 @@ export default function ProductDetails() {
 
             {/* Direct WhatsApp Consultation Button */}
             <div className="pt-2">
-              <a
-                href={whatsappInquiryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 py-3 px-4 text-xs font-bold transition-colors"
-              >
-                <MessageCircle className="w-4 h-4 text-emerald-600 fill-current" />
-                <span>Need custom sizing, date scheduling or inscriptions? Chat on WhatsApp →</span>
-              </a>
+              <Tooltip content="Open direct WhatsApp chat with head pastry chef" position="bottom">
+                <a
+                  href={whatsappInquiryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 py-3 px-4 text-xs font-bold transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-600 fill-current" />
+                  <span>Need custom sizing, date scheduling or inscriptions? Chat on WhatsApp →</span>
+                </a>
+              </Tooltip>
             </div>
           </div>
         </div>

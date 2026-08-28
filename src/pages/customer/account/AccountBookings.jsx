@@ -4,6 +4,10 @@ import Card from '../../../components/ui/Card';
 import Badge from '../../../components/ui/Badge';
 import Button from '../../../components/ui/Button';
 import { formatDate } from '../../../lib/formatters';
+import { useCachedData } from '../../../hooks/useCachedData';
+import { CACHE_TTL } from '../../../lib/cache';
+import { SkeletonBookingRow } from '../../../components/ui/Skeleton';
+import Tooltip from '../../../components/ui/Tooltip';
 
 export default function AccountBookings() {
   const MOCK_BOOKINGS = [
@@ -20,6 +24,14 @@ export default function AccountBookings() {
     },
   ];
 
+  const { data: bookings, isLoading } = useCachedData(
+    'account:bookings',
+    () => MOCK_BOOKINGS,
+    { ttl: CACHE_TTL.DEFAULT }
+  );
+
+  const bookingList = bookings || MOCK_BOOKINGS;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -28,8 +40,13 @@ export default function AccountBookings() {
         </h2>
       </div>
 
-      <div className="space-y-3">
-        {MOCK_BOOKINGS.map((booking) => (
+      {isLoading ? (
+        <div className="space-y-3" aria-busy="true">
+          <SkeletonBookingRow />
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {bookingList.map((booking) => (
           <Card key={booking.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">

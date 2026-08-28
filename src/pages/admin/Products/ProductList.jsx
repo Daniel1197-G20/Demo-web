@@ -13,20 +13,40 @@ import {
   ArrowUpDown,
   ChevronLeft,
   ChevronRight,
+  RotateCcw,
 } from 'lucide-react';
 import { useAdminStore } from '../../../lib/adminStore';
 import { formatCurrency } from '../../../lib/formatters';
 import { useToast } from '../../../hooks/useToast';
+import { useCachedData } from '../../../hooks/useCachedData';
+import { CACHE_TTL } from '../../../lib/cache';
 import AdminSearchBar from '../../../components/admin/AdminSearchBar';
 import AdminFilterPill from '../../../components/admin/AdminFilterPill';
 import AdminBadge from '../../../components/admin/AdminBadge';
 import AdminModal from '../../../components/admin/AdminModal';
+import { SkeletonProductCard, SkeletonTableRow, Skeleton } from '../../../components/ui/Skeleton';
+import Tooltip from '../../../components/ui/Tooltip';
 
 export default function ProductList() {
   const store = useAdminStore();
   const toast = useToast();
-  const products = store.getProducts();
-  const categories = store.getCategories();
+
+  // Cached Products query with background revalidation
+  const { data: cachedProducts, isLoading: isProductsLoading, setData: setProductsCache } = useCachedData(
+    'products:all',
+    () => store.getProducts(),
+    { ttl: CACHE_TTL.PRODUCTS }
+  );
+
+  // Cached Categories query
+  const { data: cachedCategories, isLoading: isCategoriesLoading } = useCachedData(
+    'categories:all',
+    () => store.getCategories(),
+    { ttl: CACHE_TTL.CATEGORIES }
+  );
+
+  const products = cachedProducts || [];
+  const categories = cachedCategories || [];
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -79,21 +99,50 @@ export default function ProductList() {
     setCurrentPage(1);
   };
 
-  // Handle Availability Toggle
+  // Optimistic Availability Toggle with Rollback Snapshot
   const handleToggleAvailability = (productId, currentStatus, productName) => {
-    store.toggleProductAvailability(productId);
+    const previousProducts = [...products];
+    const nextStatus = !currentStatus;
+
+    // 1. Apply optimistic update immediately to local cache
+    setProductsCache((prev) =>
+      (prev || []).map((p) => (p.id === productId ? { ...p, is_available: nextStatus } : p))
+    );
+
     toast.success(
-      `${productName} is now marked as ${!currentStatus ? 'Available (In Stock)' : 'Sold Out'}.`,
+      `${productName} is now marked as ${nextStatus ? 'Available (In Stock)' : 'Sold Out'}.`,
       'Status Updated'
     );
+
+    // 2. Persist in background store
+    try {
+      store.toggleProductAvailability(productId);
+    } catch (err) {
+      console.error('Failed to update product availability:', err);
+      // Rollback on error
+      setProductsCache(previousProducts);
+      toast.error('Failed to update product availability. Reverted.', 'Error');
+    }
   };
 
   // Handle Delete Confirmation
   const handleConfirmDelete = () => {
     if (!deleteModalProduct) return;
-    store.deleteProduct(deleteModalProduct.id);
-    toast.success(`${deleteModalProduct.name} was removed from your catalog.`, 'Product Deleted');
+    const previousProducts = [...products];
+    const prodToDelete = deleteModalProduct;
+
+    // Optimistically remove from cache
+    setProductsCache((prev) => (prev || []).filter((p) => p.id !== prodToDelete.id));
+    toast.success(`${prodToDelete.name} was removed from your catalog.`, 'Product Deleted');
     setDeleteModalProduct(null);
+
+    try {
+      store.deleteProduct(prodToDelete.id);
+    } catch (err) {
+      console.error('Failed to delete product:', err);
+      setProductsCache(previousProducts);
+      toast.error('Failed to delete product. Restored.', 'Error');
+    }
   };
 
   return (
@@ -205,7 +254,7 @@ export default function ProductList() {
       {/* ─────────────────────────────────────────────────────────────
           3. PRODUCT CATALOG DATA DISPLAY (Table + Mobile Cards)
       ───────────────────────────────────────────────────────────── */}
-      <div className="bg-white rounded-3xl border border-[#F7DCE5] p-5 sm:p-7 shadow-[0_4px_20px_rgba(232,44,124,0.04)]">
+        {/* Top summary counter */}
         <div className="flex items-center justify-between border-b border-[#F7DCE5] pb-4 mb-4">
           <span className="text-xs font-bold text-[#7A6B70]">
             Showing <strong className="text-[#2B2024]">{filteredProducts.length > 0 ? (currentPage - 1) * ITEMS_PER_PAGE + 1 : 0}</strong> -{' '}
@@ -214,22 +263,54 @@ export default function ProductList() {
           </span>
 
           {(searchQuery || selectedCategory !== 'All' || availabilityFilter !== 'all') && (
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory('All');
-                setAvailabilityFilter('all');
-                setCurrentPage(1);
-              }}
-              className="text-xs font-bold text-[#E82C7C] hover:underline"
-            >
-              Reset Filters
-            </button>
+            <Tooltip content="Reset search term and category filters" position="left">
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('All');
+                  setAvailabilityFilter('all');
+                  setCurrentPage(1);
+                }}
+                className="text-xs font-bold text-[#E82C7C] hover:underline flex items-center gap-1 focus-ring rounded-lg px-1"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset Filters</span>
+              </button>
+            </Tooltip>
           )}
         </div>
 
-        {filteredProducts.length > 0 ? (
+        {isProductsLoading ? (
+          <div className="space-y-4" aria-busy="true" aria-live="polite">
+            {/* Mobile Skeletons */}
+            <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <SkeletonProductCard />
+              <SkeletonProductCard />
+            </div>
+
+            {/* Desktop Table Skeletons */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead>
+                  <tr className="border-b border-[#F7DCE5] text-[#7A6B70] uppercase tracking-wider text-[10px] font-extrabold">
+                    <th className="pb-3.5 font-bold">Product</th>
+                    <th className="pb-3.5 font-bold">Category</th>
+                    <th className="pb-3.5 font-bold">Price</th>
+                    <th className="pb-3.5 font-bold">Daily Stock</th>
+                    <th className="pb-3.5 font-bold">Availability</th>
+                    <th className="pb-3.5 font-bold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#F7DCE5]/60">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <SkeletonTableRow key={i} cols={6} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <>
             {/* Mobile Cards List (< lg) */}
             <div className="lg:hidden space-y-4">
@@ -274,47 +355,55 @@ export default function ProductList() {
 
                   {/* Availability Switch and Actions */}
                   <div className="pt-3 border-t border-[#F7DCE5] flex flex-wrap items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleToggleAvailability(prod.id, prod.is_available, prod.name)}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
-                        prod.is_available
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : 'bg-stone-100 text-stone-600 border border-stone-200'
-                      }`}
-                    >
-                      <span className={`w-2 h-2 rounded-full ${prod.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
-                      <span>{prod.is_available ? 'In Stock' : 'Sold Out'}</span>
-                    </button>
+                    <Tooltip content={`Toggle availability for ${prod.name}`} position="top">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleAvailability(prod.id, prod.is_available, prod.name)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 focus-ring ${
+                          prod.is_available
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                            : 'bg-stone-100 text-stone-600 border border-stone-200'
+                        }`}
+                        aria-label={`Mark ${prod.name} as ${prod.is_available ? 'Sold Out' : 'Available'}`}
+                      >
+                        <span className={`w-2 h-2 rounded-full ${prod.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
+                        <span>{prod.is_available ? 'In Stock' : 'Sold Out'}</span>
+                      </button>
+                    </Tooltip>
 
                     <div className="flex items-center gap-1.5 shrink-0 ml-auto">
-                      <button
-                        type="button"
-                        onClick={() => setPreviewProduct(prod)}
-                        className="p-2 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-white border border-[#F7DCE5] transition-colors"
-                        title="Quick View"
-                        aria-label="Quick View Treat"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
+                      <Tooltip content="Quick Preview" position="top">
+                        <button
+                          type="button"
+                          onClick={() => setPreviewProduct(prod)}
+                          className="p-2 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-white border border-[#F7DCE5] transition-colors focus-ring"
+                          aria-label="Quick View Treat"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
 
-                      <Link
-                        to={`/admin/products/${prod.id}/edit`}
-                        className="px-3.5 py-1.5 rounded-full bg-[#E82C7C] text-white text-xs font-bold hover:bg-[#D31665] transition-colors flex items-center gap-1"
-                      >
-                        <Edit className="w-3.5 h-3.5" />
-                        <span>Edit</span>
-                      </Link>
+                      <Tooltip content="Edit treat specifications" position="top">
+                        <Link
+                          to={`/admin/products/${prod.id}/edit`}
+                          className="px-3.5 py-1.5 rounded-full bg-[#E82C7C] text-white text-xs font-bold hover:bg-[#D31665] transition-colors flex items-center gap-1 focus-ring"
+                          aria-label={`Edit ${prod.name}`}
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                          <span>Edit</span>
+                        </Link>
+                      </Tooltip>
 
-                      <button
-                        type="button"
-                        onClick={() => setDeleteModalProduct(prod)}
-                        className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 transition-colors"
-                        title="Delete Treat"
-                        aria-label="Delete Treat"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <Tooltip content="Delete treat" position="top">
+                        <button
+                          type="button"
+                          onClick={() => setDeleteModalProduct(prod)}
+                          className="p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 transition-colors focus-ring"
+                          aria-label={`Delete ${prod.name}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
                     </div>
                   </div>
                 </div>
@@ -375,49 +464,58 @@ export default function ProductList() {
 
                       {/* Instant Toggle Availability Switch */}
                       <td className="py-3.5">
-                        <button
-                          type="button"
-                          onClick={() => handleToggleAvailability(p.id, p.is_available, p.name)}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs ${
-                            p.is_available
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
-                              : 'bg-stone-100 text-stone-600 border border-stone-200 hover:bg-stone-200'
-                          }`}
-                          title="Click to toggle availability"
-                        >
-                          <span className={`w-2 h-2 rounded-full ${p.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
-                          <span>{p.is_available ? 'Available' : 'Sold Out'}</span>
-                        </button>
+                        <Tooltip content={`Click to mark as ${p.is_available ? 'Sold Out' : 'Available'}`} position="top">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleAvailability(p.id, p.is_available, p.name)}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs focus-ring ${
+                              p.is_available
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
+                                : 'bg-stone-100 text-stone-600 border border-stone-200 hover:bg-stone-200'
+                            }`}
+                            aria-label={`Toggle availability for ${p.name}`}
+                          >
+                            <span className={`w-2 h-2 rounded-full ${p.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
+                            <span>{p.is_available ? 'Available' : 'Sold Out'}</span>
+                          </button>
+                        </Tooltip>
                       </td>
 
                       {/* Actions */}
                       <td className="py-3.5 text-right">
                         <div className="flex items-center justify-end gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => setPreviewProduct(p)}
-                            className="p-1.5 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-[#FFF5F8] border border-[#F7DCE5] transition-colors"
-                            title="Quick View"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </button>
+                          <Tooltip content="Quick Preview" position="top">
+                            <button
+                              type="button"
+                              onClick={() => setPreviewProduct(p)}
+                              className="p-1.5 rounded-xl text-[#7A6B70] hover:text-[#2B2024] hover:bg-[#FFF5F8] border border-[#F7DCE5] transition-colors focus-ring"
+                              aria-label={`Quick view ${p.name}`}
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </Tooltip>
 
-                          <Link
-                            to={`/admin/products/${p.id}/edit`}
-                            className="px-3 py-1.5 rounded-full bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#E82C7C] hover:text-white font-bold text-xs transition-colors flex items-center gap-1"
-                          >
-                            <Edit className="w-3.5 h-3.5" />
-                            <span>Edit</span>
-                          </Link>
+                          <Tooltip content="Edit treat details" position="top">
+                            <Link
+                              to={`/admin/products/${p.id}/edit`}
+                              className="px-3 py-1.5 rounded-full bg-[#FFF5F8] text-[#E82C7C] border border-[#FCE4EC] hover:bg-[#E82C7C] hover:text-white font-bold text-xs transition-colors flex items-center gap-1 focus-ring"
+                              aria-label={`Edit ${p.name}`}
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                              <span>Edit</span>
+                            </Link>
+                          </Tooltip>
 
-                          <button
-                            type="button"
-                            onClick={() => setDeleteModalProduct(p)}
-                            className="p-1.5 rounded-xl text-rose-500 hover:bg-rose-50 border border-rose-200 transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          <Tooltip content="Delete treat" position="top">
+                            <button
+                              type="button"
+                              onClick={() => setDeleteModalProduct(p)}
+                              className="p-1.5 rounded-xl text-rose-500 hover:bg-rose-50 border border-rose-200 transition-colors focus-ring"
+                              aria-label={`Delete ${p.name}`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </Tooltip>
                         </div>
                       </td>
                     </tr>
@@ -434,15 +532,17 @@ export default function ProductList() {
                 </span>
 
                 <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Previous page"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Previous page" position="top">
+                    <button
+                      type="button"
+                      disabled={currentPage === 1}
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-ring"
+                      aria-label="Previous page"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
 
                   <div className="flex items-center gap-1">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -450,26 +550,29 @@ export default function ProductList() {
                         key={page}
                         type="button"
                         onClick={() => setCurrentPage(page)}
-                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all ${
+                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${
                           currentPage === page
                             ? 'bg-[#E82C7C] text-white shadow-xs'
                             : 'bg-white border border-[#F7DCE5] text-[#7A6B70] hover:border-[#E82C7C] hover:text-[#E82C7C]'
                         }`}
+                        aria-label={`Go to page ${page}`}
                       >
                         {page}
                       </button>
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Next page"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <Tooltip content="Next page" position="top">
+                    <button
+                      type="button"
+                      disabled={currentPage === totalPages}
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      className="p-2 rounded-xl border border-[#F7DCE5] bg-white text-[#2B2024] hover:bg-[#FFF5F8] disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-ring"
+                      aria-label="Next page"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
             )}

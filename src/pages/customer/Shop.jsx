@@ -13,9 +13,14 @@ import {
 import PageContainer from '../../components/common/PageContainer';
 import SectionHeading from '../../components/ui/SectionHeading';
 import ProductCard from '../../components/ui/ProductCard';
+import { SkeletonProductCard, Skeleton, SkeletonButton } from '../../components/ui/Skeleton';
+import Tooltip from '../../components/ui/Tooltip';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
-import { MOCK_PRODUCTS, CATEGORIES_LIST } from '../../lib/productsData';
+import { adminStore } from '../../lib/adminStore';
+import { CACHE_TTL } from '../../lib/cache';
+import { useCachedData } from '../../hooks/useCachedData';
+import { useDebounce } from '../../hooks/useDebounce';
 import { BRAND } from '../../lib/constants';
 import { createWhatsAppUrl } from '../../lib/formatters';
 import { useCart } from '../../hooks/useCart';
@@ -28,8 +33,29 @@ export default function Shop() {
   const { addItem, items } = useCart();
   const toast = useToast();
   const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 200);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState('featured'); // featured, price-low, price-high, name-asc
+
+  // Cached Products & Categories data
+  const { data: productsData, isLoading: isProductsLoading } = useCachedData(
+    'products:all',
+    () => adminStore.getProducts(),
+    { ttl: CACHE_TTL.PRODUCTS }
+  );
+
+  const { data: categoriesData, isLoading: isCategoriesLoading } = useCachedData(
+    'categories:all',
+    () => adminStore.getCategories(),
+    { ttl: CACHE_TTL.CATEGORIES }
+  );
+
+  const productsList = productsData || [];
+  const categoriesList = useMemo(() => {
+    const raw = categoriesData || [];
+    const names = ['All', ...raw.map((c) => c.name)];
+    return Array.from(new Set(names));
+  }, [categoriesData]);
 
   // Sync state if URL param changes
   useEffect(() => {
@@ -51,15 +77,15 @@ export default function Shop() {
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    let result = MOCK_PRODUCTS.filter((p) => {
+    let result = productsList.filter((p) => {
       const matchesCat =
         selectedCategory === 'All' ||
-        p.category.toLowerCase() === selectedCategory.toLowerCase();
+        p.category?.toLowerCase() === selectedCategory.toLowerCase();
       const matchesSearch =
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        p.category.toLowerCase().includes(search.toLowerCase()) ||
-        (p.description && p.description.toLowerCase().includes(search.toLowerCase())) ||
-        (p.tastingNotes && p.tastingNotes.toLowerCase().includes(search.toLowerCase()));
+        p.name?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        p.category?.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        (p.description && p.description.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+        (p.tastingNotes && p.tastingNotes.toLowerCase().includes(debouncedSearch.toLowerCase()));
       return matchesCat && matchesSearch;
     });
 
@@ -76,7 +102,7 @@ export default function Shop() {
     }
 
     return result;
-  }, [selectedCategory, search, sortBy]);
+  }, [productsList, selectedCategory, debouncedSearch, sortBy]);
 
   const whatsappInquiryUrl = createWhatsAppUrl(
     BRAND.whatsappNumber,
@@ -114,14 +140,16 @@ export default function Shop() {
                 inputClassName="bg-white text-xs sm:text-sm"
               />
               {search && (
-                <button
-                  type="button"
-                  onClick={() => setSearch('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-400 hover:text-charcoal-700 p-1"
-                  aria-label="Clear search"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                <Tooltip content="Clear search" position="left">
+                  <button
+                    type="button"
+                    onClick={() => setSearch('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-400 hover:text-charcoal-700 p-1 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E82C7C]"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </Tooltip>
               )}
             </div>
 
@@ -146,36 +174,42 @@ export default function Shop() {
 
           {/* Category Filter Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-            {CATEGORIES_LIST.map((cat) => {
-              const count =
-                cat === 'All'
-                  ? MOCK_PRODUCTS.length
-                  : MOCK_PRODUCTS.filter((p) => p.category.toLowerCase() === cat.toLowerCase()).length;
+            {isCategoriesLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="h-8 w-24 rounded-full shrink-0" />
+              ))
+            ) : (
+              categoriesList.map((cat) => {
+                const count =
+                  cat === 'All'
+                    ? productsList.length
+                    : productsList.filter((p) => p.category?.toLowerCase() === cat.toLowerCase()).length;
 
-              const isSelected = selectedCategory.toLowerCase() === cat.toLowerCase();
+                const isSelected = selectedCategory.toLowerCase() === cat.toLowerCase();
 
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => handleCategorySelect(cat)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 focus-ring ${
-                    isSelected
-                      ? 'bg-brand-700 text-white shadow-brand-sm scale-102 font-bold'
-                      : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
-                  }`}
-                >
-                  <span>{cat}</span>
-                  <span
-                    className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-cream-surface text-charcoal-500'
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => handleCategorySelect(cat)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all shrink-0 focus-ring ${
+                      isSelected
+                        ? 'bg-brand-700 text-white shadow-brand-sm scale-102 font-bold'
+                        : 'bg-white border border-cream-border text-charcoal-700 hover:bg-cream-surface'
                     }`}
                   >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
+                    <span>{cat}</span>
+                    <span
+                      className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${
+                        isSelected ? 'bg-white/20 text-white' : 'bg-cream-surface text-charcoal-500'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })
+            )}
           </div>
 
           {/* Active Filter Chips & Result Counter */}
@@ -190,23 +224,35 @@ export default function Shop() {
             </div>
 
             {(selectedCategory !== 'All' || search) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearch('');
-                  handleCategorySelect('All');
-                }}
-                className="text-xs font-bold text-brand-700 hover:underline flex items-center gap-1"
-              >
-                <X className="w-3.5 h-3.5" />
-                <span>Reset all filters</span>
-              </button>
+              <Tooltip content="Reset search term and category filters" position="left">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch('');
+                    handleCategorySelect('All');
+                  }}
+                  className="text-xs font-bold text-brand-700 hover:underline flex items-center gap-1 focus-ring rounded-lg px-1"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  <span>Reset all filters</span>
+                </button>
+              </Tooltip>
             )}
           </div>
         </div>
 
-        {/* Product Grid */}
-        {filteredProducts.length > 0 ? (
+        {/* Product Grid / Skeleton State */}
+        {isProductsLoading ? (
+          <div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6"
+            aria-busy="true"
+            aria-live="polite"
+          >
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonProductCard key={i} />
+            ))}
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
             {filteredProducts.map((prod) => (
               <ProductCard
@@ -298,15 +344,17 @@ export default function Shop() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
-            <a
-              href={whatsappInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white px-5 py-3 text-xs sm:text-sm font-semibold transition-all shadow-xs"
-            >
-              <MessageCircle className="w-4 h-4 fill-current" />
-              <span>WhatsApp Chef Inquiry</span>
-            </a>
+            <Tooltip content="Chat directly with Chef Tory on WhatsApp" position="top">
+              <a
+                href={whatsappInquiryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white px-5 py-3 text-xs sm:text-sm font-semibold transition-all shadow-xs"
+              >
+                <MessageCircle className="w-4 h-4 fill-current" />
+                <span>WhatsApp Chef Inquiry</span>
+              </a>
+            </Tooltip>
             <Link
               to="/catering"
               className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full border border-cream-border bg-white hover:bg-cream-surface px-5 py-3 text-xs sm:text-sm font-semibold text-charcoal-900 hover:text-brand-700 transition-all shadow-xs"
@@ -319,3 +367,4 @@ export default function Shop() {
     </div>
   );
 }
+

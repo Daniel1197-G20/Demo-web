@@ -25,6 +25,10 @@ import Input from '../../components/ui/Input';
 import EventCard from '../../components/ui/EventCard';
 import { formatCurrency, createWhatsAppUrl } from '../../lib/formatters';
 import { BRAND } from '../../lib/constants';
+import { useCachedData } from '../../hooks/useCachedData';
+import { CACHE_TTL } from '../../lib/cache';
+import { SkeletonEventCard } from '../../components/ui/Skeleton';
+import Tooltip from '../../components/ui/Tooltip';
 
 export default function Events() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -192,8 +196,17 @@ export default function Events() {
     },
   ];
 
+  // Cached upcoming events query with stale-while-revalidate
+  const { data: cachedEvents, isLoading } = useCachedData(
+    'events:upcoming',
+    () => UPCOMING_EVENTS,
+    { ttl: CACHE_TTL.LONG }
+  );
+
+  const eventsList = cachedEvents || UPCOMING_EVENTS;
+
   // Filtered upcoming events
-  const filteredEvents = UPCOMING_EVENTS.filter((ev) => {
+  const filteredEvents = eventsList.filter((ev) => {
     const matchesCat =
       selectedCategory === 'All' ||
       ev.category.toLowerCase().includes(selectedCategory.toLowerCase());
@@ -453,8 +466,14 @@ export default function Events() {
             })}
           </div>
 
-          {/* Events Grid or Empty State */}
-          {filteredEvents.length > 0 ? (
+          {/* Events Grid or Skeletons or Empty State */}
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-busy="true">
+              <SkeletonEventCard />
+              <SkeletonEventCard />
+              <SkeletonEventCard />
+            </div>
+          ) : filteredEvents.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredEvents.map((ev) => (
                 <EventCard key={ev.id} event={ev} />
