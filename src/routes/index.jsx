@@ -6,22 +6,15 @@ import CustomerLayout from '../components/layout/CustomerLayout';
 import AdminLayout from '../components/layout/AdminLayout';
 import AuthLayout from '../components/layout/AuthLayout';
 import AccountLayout from '../components/layout/AccountLayout';
+import DeveloperLayout from '../components/developer/DeveloperLayout';
 
 // Route Guards
 import ProtectedRoute from '../components/common/ProtectedRoute';
 import AdminRoute from '../components/common/AdminRoute';
+import DeveloperRoute from '../components/common/DeveloperRoute';
 
-// Loading fallback component
-function RouteLoadingFallback() {
-  return (
-    <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-4">
-      <div className="w-10 h-10 rounded-full border-3 border-[#FCE4EC] border-t-[#E82C7C] animate-spin" />
-      <span className="text-xs font-bold text-[#7A6B70] tracking-wider uppercase">
-        Loading Tory's Treats...
-      </span>
-    </div>
-  );
-}
+// Route Skeleton Fallback System
+import { RouteSkeletonFallback } from '../components/ui/Skeleton';
 
 // Customer Pages (Lazy Loaded)
 const Home = lazy(() => import('../pages/customer/Home'));
@@ -74,12 +67,25 @@ const CustomerList = lazy(() => import('../pages/admin/Customers/CustomerList'))
 const AnalyticsOverview = lazy(() => import('../pages/admin/Analytics/AnalyticsOverview'));
 const StoreSettings = lazy(() => import('../pages/admin/Settings/StoreSettings'));
 
+// Developer Console Pages (Lazy Loaded)
+const DeveloperOverview = lazy(() => import('../pages/developer/DeveloperOverview'));
+const DeveloperPerformance = lazy(() => import('../pages/developer/DeveloperPerformance'));
+const DeveloperTraffic = lazy(() => import('../pages/developer/DeveloperTraffic'));
+const DeveloperSecurity = lazy(() => import('../pages/developer/DeveloperSecurity'));
+const DeveloperIpAnomaly = lazy(() => import('../pages/developer/DeveloperIpAnomaly'));
+const DeveloperErrors = lazy(() => import('../pages/developer/DeveloperErrors'));
+const DeveloperApi = lazy(() => import('../pages/developer/DeveloperApi'));
+const DeveloperDatabase = lazy(() => import('../pages/developer/DeveloperDatabase'));
+const DeveloperDeployments = lazy(() => import('../pages/developer/DeveloperDeployments'));
+const DeveloperAuditLogs = lazy(() => import('../pages/developer/DeveloperAuditLogs'));
+const DeveloperSystemHealth = lazy(() => import('../pages/developer/DeveloperSystemHealth'));
+
 // Not Found (Lazy Loaded)
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 export default function AppRoutes() {
   return (
-    <Suspense fallback={<RouteLoadingFallback />}>
+    <Suspense fallback={<RouteSkeletonFallback />}>
       <Routes>
         {/* 1. CUSTOMER PLATFORM ROUTES */}
         <Route element={<CustomerLayout />}>
@@ -159,7 +165,29 @@ export default function AppRoutes() {
           <Route path="settings" element={<StoreSettings />} />
         </Route>
 
-        {/* 5. CATCH-ALL 404 */}
+        {/* 5. DEVELOPER CONSOLE PROTECTED ROUTES */}
+        <Route
+          path="/developer"
+          element={
+            <DeveloperRoute>
+              <DeveloperLayout />
+            </DeveloperRoute>
+          }
+        >
+          <Route index element={<DeveloperOverview />} />
+          <Route path="performance" element={<DeveloperPerformance />} />
+          <Route path="traffic" element={<DeveloperTraffic />} />
+          <Route path="security" element={<DeveloperSecurity />} />
+          <Route path="ip-anomaly" element={<DeveloperIpAnomaly />} />
+          <Route path="errors" element={<DeveloperErrors />} />
+          <Route path="api" element={<DeveloperApi />} />
+          <Route path="database" element={<DeveloperDatabase />} />
+          <Route path="deployments" element={<DeveloperDeployments />} />
+          <Route path="audit-logs" element={<DeveloperAuditLogs />} />
+          <Route path="system-health" element={<DeveloperSystemHealth />} />
+        </Route>
+
+        {/* 6. CATCH-ALL 404 */}
         <Route element={<CustomerLayout />}>
           <Route path="*" element={<NotFound />} />
         </Route>

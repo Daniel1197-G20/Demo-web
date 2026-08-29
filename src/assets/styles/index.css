@@ -129,6 +129,19 @@
     animation: torysShimmer 2.2s infinite ease-in-out;
   }
 
+  .skeleton-shimmer-dark {
+    background: linear-gradient(
+      90deg,
+      #161b22 0%,
+      #21262d 35%,
+      #30363d 50%,
+      #21262d 65%,
+      #161b22 100%
+    );
+    background-size: 200% 100%;
+    animation: torysShimmer 2.2s infinite ease-in-out;
+  }
+
   .skeleton-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
@@ -160,6 +173,10 @@
   .skeleton-shimmer {
     animation: none !important;
     background: #FFF5F8 !important;
+  }
+  .skeleton-shimmer-dark {
+    animation: none !important;
+    background: #161b22 !important;
   }
 }
 

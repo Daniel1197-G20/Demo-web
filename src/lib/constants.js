@@ -17,6 +17,7 @@ export const USER_ROLES = {
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN',
   STAFF: 'STAFF',
+  DEVELOPER: 'DEVELOPER',
 };
 
 export const ORDER_STATUSES = {
@@ -76,3 +77,25 @@ export const ADMIN_NAV_LINKS = [
   { name: 'Demand Analytics', href: '/admin/analytics', icon: 'BarChart3' },
   { name: 'Store Settings', href: '/admin/settings', icon: 'Settings' },
 ];
+
+export const DEVELOPER_NAV_LINKS = [
+  { name: 'Overview', href: '/developer', icon: 'LayoutDashboard', description: 'System health, real-time telemetry and service matrix' },
+  { name: 'Performance', href: '/developer/performance', icon: 'Activity', description: 'Core Web Vitals, API Latency, P50/P95/P99 distributions' },
+  { name: 'Traffic', href: '/developer/traffic', icon: 'Globe', description: 'Real-time request trends, route usage, device telemetry' },
+  { name: 'Security Center', href: '/developer/security', icon: 'ShieldAlert', description: 'Vercel WAF events, threat logs, blocked IPs and rules' },
+  { name: 'IP Anomalies', href: '/developer/ip-anomaly', icon: 'Fingerprint', description: 'Behavioral risk engine, automated challenge & reputation' },
+  { name: 'Errors', href: '/developer/errors', icon: 'AlertOctagon', description: 'Sanitized error traces, unhandled exceptions & recurrence' },
+  { name: 'API Monitoring', href: '/developer/api', icon: 'Network', description: 'Endpoint health, latency percentiles & status distribution' },
+  { name: 'Database', href: '/developer/database', icon: 'Database', description: 'PostgreSQL connection, schema inspector, RLS integrity' },
+  { name: 'Deployments', href: '/developer/deployments', icon: 'GitBranch', description: 'Vercel production build releases, commit hash & environment' },
+  { name: 'Audit Logs', href: '/developer/audit-logs', icon: 'ScrollText', description: 'Zero-trust developer & administrative audit trail' },
+  { name: 'System Health', href: '/developer/system-health', icon: 'HeartPulse', description: 'Edge, database, storage & API infrastructure status' },
+];
+
+export const RISK_LEVELS = {
+  LOW: { label: 'LOW', range: '0–20', color: 'emerald', action: 'Monitor' },
+  MEDIUM: { label: 'MEDIUM', range: '21–50', color: 'amber', action: 'Elevated Monitoring' },
+  HIGH: { label: 'HIGH', range: '51–80', color: 'orange', action: 'Rate Limit / Challenge' },
+  CRITICAL: { label: 'CRITICAL', range: '81–100', color: 'rose', action: 'Block & Security Alert' },
+};
+

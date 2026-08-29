@@ -67,7 +67,11 @@ export default function Dashboard() {
           <p className="text-xs sm:text-sm text-[#7A6B70] mt-1 max-w-xl leading-relaxed">
             Here is what's happening at Tory's Treats today. You have{' '}
             <strong className="text-[#E82C7C] font-bold">
-              {isLoading ? '...' : `${stats.pendingBookings} new event inquiries`}
+              {isLoading ? (
+                <Skeleton className="inline-block h-3.5 w-24 rounded-full align-middle" />
+              ) : (
+                `${stats.pendingBookings} new event inquiries`
+              )}
             </strong>{' '}
             awaiting your review.
           </p>
@@ -93,7 +97,9 @@ export default function Dashboard() {
                 className="flex items-center gap-2 px-4 py-3 rounded-full border border-[#F7DCE5] bg-[#FFF5F8] text-[#E82C7C] hover:bg-[#FCE4EC] text-xs font-bold transition-all active:scale-95 focus-ring"
               >
                 <Calendar className="w-4 h-4" />
-                <span>View Bookings ({isLoading ? '...' : stats.pendingBookings})</span>
+                <span>
+                  View Bookings ({isLoading ? <Skeleton className="inline-block h-3 w-4 rounded-full align-middle" /> : stats.pendingBookings})
+                </span>
               </button>
             </Link>
           </Tooltip>
@@ -175,7 +181,9 @@ export default function Dashboard() {
                 to="/admin/products"
                 className="text-xs font-bold text-[#E82C7C] hover:underline flex items-center gap-1 focus-ring rounded-lg px-1"
               >
-                <span>Manage All ({isLoading ? '...' : stats.totalProducts})</span>
+                <span>
+                  Manage All ({isLoading ? <Skeleton className="inline-block h-3 w-4 rounded-full align-middle" /> : stats.totalProducts})
+                </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </Tooltip>

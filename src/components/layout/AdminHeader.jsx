@@ -188,6 +188,7 @@ export default function AdminHeader({ onOpenSidebar }) {
           }
           items={[
             { label: 'Store Settings', href: '/admin/settings', onClick: () => navigate('/admin/settings'), icon: User },
+            { label: 'Developer Operations', href: '/developer', onClick: () => navigate('/developer'), icon: Sparkles },
             { label: 'View Live Bakery', href: '/', onClick: () => navigate('/'), icon: ExternalLink },
             { divider: true },
             {

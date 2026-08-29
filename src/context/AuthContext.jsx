@@ -29,17 +29,20 @@ export function AuthProvider({ children }) {
   const signIn = async (email, password) => {
     setIsLoading(true);
     try {
-      // Prepared mock authentication (will integrate Supabase in Phase 2)
-      const isAdmin = email.toLowerCase().includes('admin');
+      // Check role mapping
+      const isDev = email.toLowerCase().includes('dev');
+      const isAdmin = !isDev && email.toLowerCase().includes('admin');
+      
       const mockUser = {
-        id: isAdmin ? 'admin-user-id-001' : 'customer-user-id-001',
+        id: isDev ? 'dev-user-id-001' : (isAdmin ? 'admin-user-id-001' : 'customer-user-id-001'),
         email,
       };
+      
       const mockProfile = {
         id: mockUser.id,
         email,
-        full_name: isAdmin ? 'Tory Admin' : 'Adaobi Okafor',
-        role: isAdmin ? USER_ROLES.ADMIN : USER_ROLES.CUSTOMER,
+        full_name: isDev ? 'Lead DevSecOps Engineer' : (isAdmin ? 'Tory Admin' : 'Adaobi Okafor'),
+        role: isDev ? USER_ROLES.DEVELOPER : (isAdmin ? USER_ROLES.ADMIN : USER_ROLES.CUSTOMER),
         phone: '+234 903 835 8985',
         city: 'Lagos',
       };
@@ -51,6 +54,37 @@ export function AuthProvider({ children }) {
         JSON.stringify({ user: mockUser, profile: mockProfile })
       );
       return { success: true, user: mockUser, profile: mockProfile };
+    } catch (err) {
+      return { success: false, error: err.message };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const signInDeveloper = async (email, password) => {
+    setIsLoading(true);
+    try {
+      const devEmail = email || 'dev@torystreats.com';
+      const devUser = {
+        id: 'dev-user-id-001',
+        email: devEmail,
+      };
+      const devProfile = {
+        id: devUser.id,
+        email: devEmail,
+        full_name: 'Lead DevSecOps Engineer',
+        role: USER_ROLES.DEVELOPER,
+        phone: '+234 903 835 8985',
+        city: 'Lagos',
+      };
+
+      setUser(devUser);
+      setProfile(devProfile);
+      localStorage.setItem(
+        MOCK_STORAGE_KEY,
+        JSON.stringify({ user: devUser, profile: devProfile })
+      );
+      return { success: true, user: devUser, profile: devProfile };
     } catch (err) {
       return { success: false, error: err.message };
     } finally {
@@ -94,11 +128,45 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(MOCK_STORAGE_KEY);
   };
 
-  // Helper for quick testing/switching in Phase 1
+  // Helper for quick testing/switching in dev prototype
   const toggleRole = () => {
     if (!profile) return;
-    const newRole = profile.role === USER_ROLES.ADMIN ? USER_ROLES.CUSTOMER : USER_ROLES.ADMIN;
-    const updatedProfile = { ...profile, role: newRole };
+    let newRole = USER_ROLES.CUSTOMER;
+    if (profile.role === USER_ROLES.CUSTOMER) newRole = USER_ROLES.ADMIN;
+    else if (profile.role === USER_ROLES.ADMIN) newRole = USER_ROLES.DEVELOPER;
+    else newRole = USER_ROLES.CUSTOMER;
+
+    const updatedProfile = { 
+      ...profile, 
+      role: newRole,
+      full_name: newRole === USER_ROLES.DEVELOPER ? 'Lead DevSecOps Engineer' : (newRole === USER_ROLES.ADMIN ? 'Tory Admin' : 'Adaobi Okafor')
+    };
+    setProfile(updatedProfile);
+    localStorage.setItem(
+      MOCK_STORAGE_KEY,
+      JSON.stringify({ user, profile: updatedProfile })
+    );
+  };
+
+  const setExplicitRole = (targetRole) => {
+    if (!profile && !user) {
+      const dummyUser = { id: 'user-' + targetRole.toLowerCase(), email: `${targetRole.toLowerCase()}@torystreats.com` };
+      const dummyProfile = {
+        id: dummyUser.id,
+        email: dummyUser.email,
+        full_name: targetRole === USER_ROLES.DEVELOPER ? 'Lead DevSecOps Engineer' : (targetRole === USER_ROLES.ADMIN ? 'Tory Admin' : 'Adaobi Okafor'),
+        role: targetRole,
+      };
+      setUser(dummyUser);
+      setProfile(dummyProfile);
+      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify({ user: dummyUser, profile: dummyProfile }));
+      return;
+    }
+    const updatedProfile = { 
+      ...profile, 
+      role: targetRole,
+      full_name: targetRole === USER_ROLES.DEVELOPER ? 'Lead DevSecOps Engineer' : (targetRole === USER_ROLES.ADMIN ? 'Tory Admin' : 'Adaobi Okafor')
+    };
     setProfile(updatedProfile);
     localStorage.setItem(
       MOCK_STORAGE_KEY,
@@ -112,10 +180,13 @@ export function AuthProvider({ children }) {
     isLoading,
     isAuthenticated: !!user,
     isAdmin: profile?.role === USER_ROLES.ADMIN || profile?.role === USER_ROLES.SUPER_ADMIN,
+    isDeveloper: profile?.role === USER_ROLES.DEVELOPER || profile?.role === USER_ROLES.SUPER_ADMIN,
     signIn,
+    signInDeveloper,
     signUp,
     signOut,
     toggleRole,
+    setExplicitRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -128,3 +199,4 @@ export function useAuthContext() {
   }
   return context;
 }
+
