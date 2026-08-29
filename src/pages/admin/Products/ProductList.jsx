@@ -195,33 +195,30 @@ export default function ProductList() {
             <button
               type="button"
               onClick={() => handleAvailabilityChange('all')}
-              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${
-                availabilityFilter === 'all'
+              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${availabilityFilter === 'all'
                   ? 'bg-white text-[#2B2024] shadow-xs'
                   : 'text-[#7A6B70] hover:text-[#2B2024]'
-              }`}
+                }`}
             >
               All
             </button>
             <button
               type="button"
               onClick={() => handleAvailabilityChange('available')}
-              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${
-                availabilityFilter === 'available'
+              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${availabilityFilter === 'available'
                   ? 'bg-[#E82C7C] text-white shadow-xs'
                   : 'text-[#7A6B70] hover:text-[#2B2024]'
-              }`}
+                }`}
             >
               Available
             </button>
             <button
               type="button"
               onClick={() => handleAvailabilityChange('soldout')}
-              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${
-                availabilityFilter === 'soldout'
+              className={`flex-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all ${availabilityFilter === 'soldout'
                   ? 'bg-stone-800 text-white shadow-xs'
                   : 'text-[#7A6B70] hover:text-[#2B2024]'
-              }`}
+                }`}
             >
               Sold Out
             </button>
@@ -254,6 +251,7 @@ export default function ProductList() {
       {/* ─────────────────────────────────────────────────────────────
           3. PRODUCT CATALOG DATA DISPLAY (Table + Mobile Cards)
       ───────────────────────────────────────────────────────────── */}
+      <div className="bg-white rounded-3xl border border-[#F7DCE5] p-5 sm:p-7 shadow-[0_4px_20px_rgba(232,44,124,0.04)]">
         {/* Top summary counter */}
         <div className="flex items-center justify-between border-b border-[#F7DCE5] pb-4 mb-4">
           <span className="text-xs font-bold text-[#7A6B70]">
@@ -359,11 +357,10 @@ export default function ProductList() {
                       <button
                         type="button"
                         onClick={() => handleToggleAvailability(prod.id, prod.is_available, prod.name)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 focus-ring ${
-                          prod.is_available
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 focus-ring ${prod.is_available
                             ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                             : 'bg-stone-100 text-stone-600 border border-stone-200'
-                        }`}
+                          }`}
                         aria-label={`Mark ${prod.name} as ${prod.is_available ? 'Sold Out' : 'Available'}`}
                       >
                         <span className={`w-2 h-2 rounded-full ${prod.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
@@ -468,11 +465,10 @@ export default function ProductList() {
                           <button
                             type="button"
                             onClick={() => handleToggleAvailability(p.id, p.is_available, p.name)}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs focus-ring ${
-                              p.is_available
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xs focus-ring ${p.is_available
                                 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100'
                                 : 'bg-stone-100 text-stone-600 border border-stone-200 hover:bg-stone-200'
-                            }`}
+                              }`}
                             aria-label={`Toggle availability for ${p.name}`}
                           >
                             <span className={`w-2 h-2 rounded-full ${p.is_available ? 'bg-emerald-500' : 'bg-stone-400'}`} />
@@ -550,11 +546,10 @@ export default function ProductList() {
                         key={page}
                         type="button"
                         onClick={() => setCurrentPage(page)}
-                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${
-                          currentPage === page
+                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${currentPage === page
                             ? 'bg-[#E82C7C] text-white shadow-xs'
                             : 'bg-white border border-[#F7DCE5] text-[#7A6B70] hover:border-[#E82C7C] hover:text-[#E82C7C]'
-                        }`}
+                          }`}
                         aria-label={`Go to page ${page}`}
                       >
                         {page}

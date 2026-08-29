@@ -47,41 +47,42 @@ export default function AccountBookings() {
       ) : (
         <div className="space-y-3">
           {bookingList.map((booking) => (
-          <Card key={booking.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-charcoal-900 font-display">
-                  {booking.bookingNumber}
-                </span>
-                <Badge variant={booking.statusVariant} size="sm" dot>
-                  {booking.statusLabel}
-                </Badge>
+            <Card key={booking.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-sm text-charcoal-900 font-display">
+                    {booking.bookingNumber}
+                  </span>
+                  <Badge variant={booking.statusVariant} size="sm" dot>
+                    {booking.statusLabel}
+                  </Badge>
+                </div>
+
+                <h4 className="text-sm font-bold text-charcoal-900">{booking.eventType}</h4>
+
+                <div className="flex flex-wrap items-center gap-3 text-xs text-charcoal-500">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{formatDate(booking.eventDate)}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="w-3.5 h-3.5" />
+                    <span>{booking.guestCount} Guests</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>{booking.venue}</span>
+                  </div>
+                </div>
               </div>
 
-              <h4 className="text-sm font-bold text-charcoal-900">{booking.eventType}</h4>
-
-              <div className="flex flex-wrap items-center gap-3 text-xs text-charcoal-500">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{formatDate(booking.eventDate)}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="w-3.5 h-3.5" />
-                  <span>{booking.guestCount} Guests</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>{booking.venue}</span>
-                </div>
-              </div>
-            </div>
-
-            <Button variant="outline" size="sm">
-              View Quote Details
-            </Button>
-          </Card>
-        ))}
-      </div>
+              <Button variant="outline" size="sm">
+                View Quote Details
+              </Button>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -202,6 +202,7 @@ export default function BookingList() {
       {/* ─────────────────────────────────────────────────────────────
           3. BOOKINGS LIST / TABLE
       ───────────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between border-b border-[#F7DCE5] pb-4 mb-4">
         {/* Header count summary & reset */}
         <div className="flex items-center justify-between border-b border-[#F7DCE5] pb-4 mb-4">
           <span className="text-xs font-bold text-[#7A6B70]">
@@ -414,11 +415,10 @@ export default function BookingList() {
                         key={page}
                         type="button"
                         onClick={() => setCurrentPage(page)}
-                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${
-                          currentPage === page
+                        className={`w-8 h-8 rounded-xl text-xs font-bold transition-all focus-ring ${currentPage === page
                             ? 'bg-[#E82C7C] text-white shadow-xs'
                             : 'bg-white border border-[#F7DCE5] text-[#7A6B70] hover:border-[#E82C7C] hover:text-[#E82C7C]'
-                        }`}
+                          }`}
                         aria-label={`Go to page ${page}`}
                       >
                         {page}

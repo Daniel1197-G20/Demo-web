@@ -68,32 +68,33 @@ export default function AccountOrders() {
       ) : (
         <div className="space-y-3">
           {orderList.map((order) => (
-          <Card key={order.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-sm text-charcoal-900 font-display">
-                  {order.orderNumber}
-                </span>
-                <Badge variant={order.statusVariant} size="sm" dot>
-                  {order.statusLabel}
-                </Badge>
+            <Card key={order.id} className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-sm text-charcoal-900 font-display">
+                    {order.orderNumber}
+                  </span>
+                  <Badge variant={order.statusVariant} size="sm" dot>
+                    {order.statusLabel}
+                  </Badge>
+                </div>
+                <p className="text-xs text-charcoal-500">
+                  Placed on {formatDate(order.date)} • {order.itemsCount} {order.itemsCount === 1 ? 'item' : 'items'}
+                </p>
+                <div className="text-sm font-bold text-brand-700 pt-1">
+                  {formatCurrency(order.total)}
+                </div>
               </div>
-              <p className="text-xs text-charcoal-500">
-                Placed on {formatDate(order.date)} • {order.itemsCount} {order.itemsCount === 1 ? 'item' : 'items'}
-              </p>
-              <div className="text-sm font-bold text-brand-700 pt-1">
-                {formatCurrency(order.total)}
-              </div>
-            </div>
 
-            <Link to={`/account/orders/${order.orderNumber}`}>
-              <Button variant="outline" size="sm" icon={ArrowRight} iconPosition="right" className="w-full sm:w-auto">
-                View Receipt
-              </Button>
-            </Link>
-          </Card>
-        ))}
-      </div>
+              <Link to={`/account/orders/${order.orderNumber}`}>
+                <Button variant="outline" size="sm" icon={ArrowRight} iconPosition="right" className="w-full sm:w-auto">
+                  View Receipt
+                </Button>
+              </Link>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
